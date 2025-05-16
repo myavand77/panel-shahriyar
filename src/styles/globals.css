@@ -1,0 +1,63 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Font declarations for Vazir */
+@font-face {
+  font-family: "Vazir";
+  src: url("/fonts/Vazir/woff2/Vazir-Thin-FD.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("/fonts/Vazir/woff2/Vazir-Light-FD.woff2") format("woff2"),
+    url("/fonts/Vazir/woff/Vazir-Light-FD.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("/fonts/Vazir/woff2/Vazir-Regular-FD.woff2") format("woff2"),
+    url("/fonts/Vazir/woff/Vazir-Regular-FD.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("/fonts/Vazir/woff2/Vazir-Medium-FD.woff2") format("woff2"),
+    url("/fonts/Vazir/woff/Vazir-Medium-FD.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("/fonts/Vazir/woff2/Vazir-Bold-FD.woff2") format("woff2"),
+    url("/fonts/Vazir/woff/Vazir-Bold-FD.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("/fonts/Vazir/woff2/Vazir-Black-FD.woff2") format("woff2"),
+    url("/fonts/Vazir/woff/Vazir-Black-FD.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply font to all elements */
+html,
+body {
+  font-family: "Vazir", sans-serif;
+  font-size: 16px;
+}
