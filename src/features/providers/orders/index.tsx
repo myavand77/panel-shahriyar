@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Table } from "@/components/Table/Table";
-import { Column, TableData } from "@/components/Table/types";
+import { Column, SortOrder, TableData } from "@/components/Table/types";
+import { useRouter } from "next/navigation";
 
 const columns: Column[] = [
   { key: "row", title: "ردیف", width: "60px" },
@@ -64,7 +65,13 @@ const mockData: TableData[] = [
 
 export function OrdersView() {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 4;
+  const [sortOrder, setSortOrder] = useState<SortOrder>("default");
+  const router = useRouter();
+  const totalPages = 8;
+
+  const handleRowClick = (row: TableData) => {
+    router.push(`/admin/sellers/${row.id}`);
+  };
 
   return (
     <div className="h-[calc(100vh-7rem)] flex flex-col">
@@ -75,6 +82,15 @@ export function OrdersView() {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
+          onRowClick={handleRowClick}
+          controls={{
+            rowsPerPage: 10,
+            onRowsPerPageChange: () => {},
+            searchQuery: "",
+            onSearchChange: () => {},
+            sortOrder,
+            onSortOrderChange: setSortOrder,
+          }}
         />
       </div>
     </div>
