@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@config "../../tailwind.config.js";
 
 /* Font declarations for Vazir */
 @font-face {
@@ -60,4 +61,5 @@ html,
 body {
   font-family: "Vazir", sans-serif;
   font-size: 16px;
+  direction: rtl;
 }

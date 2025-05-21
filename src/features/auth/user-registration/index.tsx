@@ -1,11 +1,33 @@
+"use client";
+import React, { useState } from "react";
+import Step1 from "./steps/Step1";
+import Step2 from "./steps/Step2";
+import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
+import Step5 from "./steps/Step5";
+import Step6 from "./steps/Step6";
+import Step7 from "./steps/Step7";
+
 const UserRegistration = () => {
+  const [step, setStep] = useState(1);
+
+  const handleNext = () => setStep((s) => s + 1);
+  const handlePrev = () => setStep((s) => s - 1);
+
   return (
-    <div className="w-[400px] p-8 shadow-md rounded-lg bg-white">
-      <h1 className="mb-6 text-center text-2xl font-semibold">Register</h1>
-      {/* Registration form will go here */}
-      <div className="h-48 bg-gray-100 rounded flex items-center justify-center">
-        <span>User Registration form placeholder</span>
-      </div>
+    <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-primary-50">
+      {step === 1 && <Step1 onNext={handleNext} />}
+      {step === 2 && <Step2 onNext={handleNext} onPrev={handlePrev} />}
+      {step === 3 && <Step3 onNext={handleNext} onPrev={handlePrev} />}
+      {step === 4 && <Step4 onNext={handleNext} onPrev={handlePrev} />}
+      {step === 5 && <Step5 onNext={handleNext} onPrev={handlePrev} />}
+      {step === 6 && (
+        <Step6 onNext={handleNext} onPrev={handlePrev} goToStep={setStep} />
+      )}
+      {step === 7 && (
+        <Step7 onPrev={handlePrev} goToStep={setStep} onNext={() => {}} />
+      )}
+      {/* Future: Render other steps based on step state */}
     </div>
   );
 };
