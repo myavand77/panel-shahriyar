@@ -18,7 +18,7 @@ const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany }) => {
       isCompany={isCompany}
     >
       <InfoBanner className="w-full mb-2">
-        توجه داشته باشید ورود شما به وایب تنها بوسیله "اطلاعات نماینده"
+        توجه داشته باشید ورود شما به وایب تنها بوسیله &quot;اطلاعات نماینده&quot;
         امکان‌پذیر خواهد بود.
       </InfoBanner>
       {/* Row 1 */}

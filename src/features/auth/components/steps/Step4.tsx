@@ -2,7 +2,7 @@ import React from "react";
 import InfoBanner from "@/components/ui/InfoBanner";
 import IPInput from "@/components/ui/IPInput";
 import Input from "@/components/ui/Input";
-import { Mail, Globe, Key, Link, Check } from "lucide-react";
+import { Mail, Globe, Key, Link } from "lucide-react";
 import StepLayout from "@/features/auth/components/StepLayout";
 
 interface Step4Props {

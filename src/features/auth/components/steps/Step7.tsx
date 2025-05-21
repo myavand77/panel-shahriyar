@@ -10,12 +10,9 @@ import {
 interface Step7Props {
   onNext: () => void;
   onPrev: () => void;
-  goToStep?: (step: number) => void;
-  isCompany?: boolean;
-  totalSteps?: number;
 }
 
-const Step7: React.FC<Step7Props> = ({ onNext, onPrev, goToStep, isCompany, totalSteps }) => {
+const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(120); // 2 minutes
 

@@ -96,11 +96,7 @@ const Registration = () => {
         ))}
       {state.step === 5 &&
         (state.tab === "personal" ? (
-          <Step7
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
+          <Step7 onNext={handleNext} onPrev={handlePrev} />
         ) : (
           <Step6
             onNext={handleNext}
@@ -108,14 +104,7 @@ const Registration = () => {
             isCompany={isCompany}
           />
         ))}
-      {state.step === 6 && (
-        <Step7
-          onPrev={handlePrev}
-          goToStep={(step) => setState((s) => ({ ...s, step }))}
-          onNext={() => {}}
-          isCompany={isCompany}
-        />
-      )}
+      {state.step === 6 && <Step7 onPrev={handlePrev} onNext={() => {}} />}
     </div>
   );
 };

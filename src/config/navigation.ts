@@ -12,6 +12,7 @@ import { FC } from "react";
 interface NavItem {
   title: string;
   href: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: FC<any>;
   subject: string;
 }

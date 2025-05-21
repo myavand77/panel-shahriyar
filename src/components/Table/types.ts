@@ -6,10 +6,11 @@ export interface Column {
 
 export interface TableData {
   id: string | number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
-export type SortOrder = 'newest' | 'oldest' | 'default';
+export type SortOrder = "newest" | "oldest" | "default";
 
 export interface TableControlsProps {
   rowsPerPage: number;
@@ -27,8 +28,10 @@ export interface TableProps {
     title: string;
     width?: string;
   }[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
   loading?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onRowClick?: (row: any) => void;
   currentPage: number;
   totalPages: number;
@@ -46,4 +49,4 @@ export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-} 
+}

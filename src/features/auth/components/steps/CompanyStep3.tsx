@@ -31,14 +31,12 @@ const CompanyStep3 = ({
   onNext,
   onPrev,
   isCompany,
-  totalSteps,
 }: {
   tab: "personal" | "company";
   setTab: (tab: "personal" | "company") => void;
   onNext: () => void;
   onPrev: () => void;
   isCompany?: boolean;
-  totalSteps?: number;
 }) => {
   const [form, setForm] = useState({
     companyName: "",
