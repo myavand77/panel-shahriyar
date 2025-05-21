@@ -2,7 +2,13 @@ import React from "react";
 import Logo from "@/components/ui/Logo";
 import Stepper from "@/components/ui/Stepper";
 
-const AuthHeader = ({ currentStep }: { currentStep: number }) => (
+const AuthHeader = ({
+  currentStep,
+  isCompany,
+}: {
+  currentStep: number;
+  isCompany?: boolean;
+}) => (
   <>
     <Logo className="h-[40px]" />
     <div className="text-[22px] font-bold text-text-500 leading-[1.5] text-center w-full">
@@ -12,7 +18,7 @@ const AuthHeader = ({ currentStep }: { currentStep: number }) => (
       بیش از چهار میلیون مشتری بالقوه به صورت رایگان منتظر خرید از کسب و کار شما
       هستند!
     </div>
-    <Stepper currentStep={currentStep} />
+    <Stepper currentStep={currentStep} isCompany={isCompany} />
   </>
 );
 

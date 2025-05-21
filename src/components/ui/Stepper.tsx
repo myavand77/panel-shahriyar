@@ -4,6 +4,7 @@ import { Check } from "lucide-react";
 export interface StepperProps {
   currentStep: number;
   steps?: string[];
+  isCompany?: boolean;
 }
 
 const defaultSteps = [
@@ -13,10 +14,25 @@ const defaultSteps = [
   "تایید اطلاعات",
 ];
 
-const Stepper: React.FC<StepperProps> = ({ currentStep, steps = defaultSteps }) => {
+const Stepper: React.FC<StepperProps> = ({
+  currentStep,
+  steps = defaultSteps,
+  isCompany = false,
+}) => {
+  let computedSteps = steps;
+  if (isCompany) {
+    const identityIndex = steps.indexOf("مشخصات هویتی");
+    if (identityIndex !== -1 && steps[identityIndex + 1] !== "بارگذاری مدارک") {
+      computedSteps = [
+        ...steps.slice(0, identityIndex + 1),
+        "بارگذاری مدارک",
+        ...steps.slice(identityIndex + 1),
+      ];
+    }
+  }
   return (
     <div className="flex items-center justify-center w-full mb-6 mt-2">
-      {steps.map((label, idx) => (
+      {computedSteps.map((label, idx) => (
         <React.Fragment key={label}>
           <div className="flex flex-col items-center">
             <div
@@ -34,7 +50,7 @@ const Stepper: React.FC<StepperProps> = ({ currentStep, steps = defaultSteps }) 
               {label}
             </span>
           </div>
-          {idx < steps.length - 1 && (
+          {idx < computedSteps.length - 1 && (
             <div className="w-8 h-0.5 bg-neutral-200 mx-2" />
           )}
         </React.Fragment>
@@ -43,4 +59,4 @@ const Stepper: React.FC<StepperProps> = ({ currentStep, steps = defaultSteps }) 
   );
 };
 
-export default Stepper; 
+export default Stepper;

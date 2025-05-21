@@ -7,6 +7,7 @@ interface StepLayoutProps {
   onNext: () => void;
   onPrev: () => void;
   children: React.ReactNode;
+  isCompany?: boolean;
 }
 
 const StepLayout: React.FC<StepLayoutProps> = ({
@@ -14,9 +15,10 @@ const StepLayout: React.FC<StepLayoutProps> = ({
   onNext,
   onPrev,
   children,
+  isCompany = false,
 }) => (
   <div className="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-8 m-3 flex flex-col gap-4 items-center border border-neutral-200">
-    <AuthHeader currentStep={currentStep} />
+    <AuthHeader currentStep={currentStep} isCompany={isCompany} />
     <div className="w-full flex flex-col gap-4">{children}</div>
     <div className="flex gap-4 mt-4 justify-center">
       <Button

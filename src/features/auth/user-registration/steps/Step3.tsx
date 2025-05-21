@@ -31,13 +31,16 @@ const categories = [
 ];
 
 const Step3 = ({
+  tab,
+  setTab,
   onNext,
   onPrev,
 }: {
+  tab: string;
+  setTab: (tab: string) => void;
   onNext: () => void;
   onPrev: () => void;
 }) => {
-  const [tab, setTab] = useState("personal");
   const [form, setForm] = useState({
     name: "",
     lastName: "",
