@@ -6,6 +6,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { showToast } from "@/lib/toast";
 
 const Step2 = ({
   onNext,
@@ -27,6 +28,8 @@ const Step2 = ({
   const handleChange = (value: string) => setOtp(value);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("eee");
+    showToast({ text: "ورود شما با موفقیت انجام شد.", type: "success" });
     // handle OTP submit
     onNext();
   };
@@ -63,7 +66,7 @@ const Step2 = ({
         <InputOTP
           value={otp}
           onChange={handleChange}
-          maxLength={5}
+          maxLength={4}
           containerClassName="justify-center"
           className="text-center text-lg font-bold tracking-widest ltr"
         >
@@ -93,7 +96,7 @@ const Step2 = ({
         <Button
           className="w-full mt-6 rounded-[6px] h-9 text-[14px] font-medium"
           disabled={otp.length !== 4}
-          onClick={onNext}
+          type="submit"
         >
           تایید کد
         </Button>

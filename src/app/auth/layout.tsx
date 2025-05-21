@@ -1,5 +1,7 @@
 import React from "react";
 import "@/styles/globals.css";
+// Toast support is available globally via showToast from src/lib/toast
+
 export default function AuthLayout({
   children,
 }: {

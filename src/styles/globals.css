@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "toastify-js/src/toastify.css";
 @config "../../tailwind.config.js";
 
 /* Font declarations for Vazir */
