@@ -19,21 +19,10 @@ const Stepper: React.FC<StepperProps> = ({
   steps = defaultSteps,
   isCompany = false,
 }) => {
-  let computedSteps = steps;
-  if (isCompany) {
-    const identityIndex = steps.indexOf("مشخصات هویتی");
-    if (identityIndex !== -1 && steps[identityIndex + 1] !== "بارگذاری مدارک") {
-      computedSteps = [
-        ...steps.slice(0, identityIndex + 1),
-        "بارگذاری مدارک",
-        ...steps.slice(identityIndex + 1),
-      ];
-    }
-  }
   return (
     <div className="flex items-center justify-center w-full mb-6 mt-2">
-      {computedSteps.map((label, idx) => (
-        <React.Fragment key={label}>
+      {steps.map((label, idx) => (
+        <React.Fragment key={label + idx}>
           <div className="flex flex-col items-center">
             <div
               className={`w-7 h-7 flex items-center justify-center rounded-full border-2 text-base font-bold ${
@@ -50,7 +39,7 @@ const Stepper: React.FC<StepperProps> = ({
               {label}
             </span>
           </div>
-          {idx < computedSteps.length - 1 && (
+          {idx < steps.length - 1 && (
             <div className="w-8 h-0.5 bg-neutral-200 mx-2" />
           )}
         </React.Fragment>

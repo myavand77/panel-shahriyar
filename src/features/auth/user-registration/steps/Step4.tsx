@@ -12,11 +12,13 @@ import StepLayout from "@/features/auth/user-registration/components/StepLayout"
 interface Step4Props {
   onNext: () => void;
   onPrev: () => void;
+  isCompany?: boolean;
+  totalSteps?: number;
 }
 
-const Step4: React.FC<Step4Props> = ({ onNext, onPrev }) => {
+const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany, totalSteps }) => {
   return (
-    <StepLayout currentStep={2} onNext={onNext} onPrev={onPrev}>
+    <StepLayout currentStep={2} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
       {/* Row 1 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
         {/* Website Input */}

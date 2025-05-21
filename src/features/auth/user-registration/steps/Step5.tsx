@@ -6,13 +6,15 @@ import InfoBanner from "@/components/ui/InfoBanner";
 interface Step5Props {
   onNext: () => void;
   onPrev: () => void;
+  isCompany?: boolean;
+  totalSteps?: number;
 }
 
-const Step5: React.FC<Step5Props> = ({ onNext, onPrev }) => {
+const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany, totalSteps }) => {
   return (
-    <StepLayout currentStep={3} onNext={onNext} onPrev={onPrev}>
+    <StepLayout currentStep={3} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
       <InfoBanner className="w-full mb-2">
-        توجه داشته باشید ورود شما به وایب تنها بوسیله “اطلاعات نماینده” امکان‌پذیر خواهد بود.
+        توجه داشته باشید ورود شما به وایب تنها بوسیله "اطلاعات نماینده" امکان‌پذیر خواهد بود.
       </InfoBanner>
       {/* Row 1 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">

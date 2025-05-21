@@ -2,6 +2,21 @@ import React from "react";
 import Logo from "@/components/ui/Logo";
 import Stepper from "@/components/ui/Stepper";
 
+const personalSteps = [
+  "مشخصات هویتی",
+  "مشخصات فنی",
+  "مشخصات نماینده",
+  "تایید اطلاعات",
+];
+
+const companySteps = [
+  "مشخصات هویتی",
+  "بارگذاری مدارک",
+  "مشخصات فنی",
+  "مشخصات نماینده",
+  "تایید اطلاعات",
+];
+
 const AuthHeader = ({
   currentStep,
   isCompany,
@@ -18,7 +33,11 @@ const AuthHeader = ({
       بیش از چهار میلیون مشتری بالقوه به صورت رایگان منتظر خرید از کسب و کار شما
       هستند!
     </div>
-    <Stepper currentStep={currentStep} isCompany={isCompany} />
+    <Stepper
+      currentStep={currentStep}
+      steps={isCompany ? companySteps : personalSteps}
+      isCompany={isCompany}
+    />
   </>
 );
 

@@ -8,9 +8,11 @@ interface Step6Props {
   onNext: () => void;
   // Add navigation to specific steps
   goToStep?: (step: number) => void;
+  isCompany?: boolean;
+  totalSteps?: number;
 }
 
-const Step6: React.FC<Step6Props> = ({ onPrev, onNext, goToStep }) => {
+const Step6: React.FC<Step6Props> = ({ onPrev, onNext, goToStep, isCompany, totalSteps }) => {
   // Placeholder data, replace with real data from context/store
   const step5Data = {
     name: "امید",
@@ -48,7 +50,7 @@ const Step6: React.FC<Step6Props> = ({ onPrev, onNext, goToStep }) => {
   };
 
   return (
-    <StepLayout currentStep={6} onNext={onNext} onPrev={onPrev}>
+    <StepLayout currentStep={6} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
       {/* First row: Step 5 info, full width */}
       <div className="w-full mb-6">
         <div className="relative bg-white rounded-2xl border border-neutral-200 shadow p-6">

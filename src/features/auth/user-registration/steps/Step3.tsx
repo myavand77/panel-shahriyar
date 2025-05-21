@@ -35,11 +35,15 @@ const Step3 = ({
   setTab,
   onNext,
   onPrev,
+  isCompany,
+  totalSteps,
 }: {
-  tab: string;
-  setTab: (tab: string) => void;
+  tab: 'personal' | 'company';
+  setTab: (tab: 'personal' | 'company') => void;
   onNext: () => void;
   onPrev: () => void;
+  isCompany?: boolean;
+  totalSteps?: number;
 }) => {
   const [form, setForm] = useState({
     name: "",
@@ -71,14 +75,14 @@ const Step3 = ({
   };
 
   return (
-    <StepLayout currentStep={1} onNext={onNext} onPrev={onPrev}>
+    <StepLayout currentStep={1} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
       <Tabs
         tabs={[
           { label: "حقیقی", value: "personal" },
           { label: "حقوقی", value: "company" },
         ]}
         value={tab}
-        onChange={setTab}
+        onChange={value => setTab(value as 'personal' | 'company')}
         className="mb-4 justify-center"
       />
       {tab === "personal" && (
