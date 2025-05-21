@@ -8,7 +8,6 @@ interface StepLayoutProps {
   onPrev: () => void;
   children: React.ReactNode;
   isCompany?: boolean;
-  totalSteps?: number;
 }
 
 const StepLayout: React.FC<StepLayoutProps> = ({
@@ -17,7 +16,6 @@ const StepLayout: React.FC<StepLayoutProps> = ({
   onPrev,
   children,
   isCompany = false,
-  totalSteps = 0,
 }) => (
   <div className="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-8 m-3 flex flex-col gap-4 items-center border border-neutral-200">
     <AuthHeader currentStep={currentStep} isCompany={isCompany} />

@@ -7,21 +7,32 @@ interface Step5Props {
   onNext: () => void;
   onPrev: () => void;
   isCompany?: boolean;
-  totalSteps?: number;
 }
 
-const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany, totalSteps }) => {
+const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany }) => {
   return (
-    <StepLayout currentStep={3} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
+    <StepLayout
+      currentStep={isCompany ? 4 : 3}
+      onNext={onNext}
+      onPrev={onPrev}
+      isCompany={isCompany}
+    >
       <InfoBanner className="w-full mb-2">
-        توجه داشته باشید ورود شما به وایب تنها بوسیله "اطلاعات نماینده" امکان‌پذیر خواهد بود.
+        توجه داشته باشید ورود شما به وایب تنها بوسیله "اطلاعات نماینده"
+        امکان‌پذیر خواهد بود.
       </InfoBanner>
       {/* Row 1 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
         <Input label="نام نماینده" placeholder="نام نماینده را وارد کنید" />
-        <Input label="نام خانوادگی نماینده" placeholder="نام خانوادگی نماینده را وارد کنید" />
+        <Input
+          label="نام خانوادگی نماینده"
+          placeholder="نام خانوادگی نماینده را وارد کنید"
+        />
         <Input label="کدملی نماینده" placeholder="کدملی نماینده را وارد کنید" />
-        <Input label="تلفن همراه نماینده" placeholder="تلفن همراه نماینده را وارد کنید" />
+        <Input
+          label="تلفن همراه نماینده"
+          placeholder="تلفن همراه نماینده را وارد کنید"
+        />
       </div>
       {/* Row 2 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
@@ -34,4 +45,4 @@ const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany, totalSteps }) 
   );
 };
 
-export default Step5; 
+export default Step5;

@@ -36,7 +36,6 @@ const AuthHeader = ({
     <Stepper
       currentStep={currentStep}
       steps={isCompany ? companySteps : personalSteps}
-      isCompany={isCompany}
     />
   </>
 );

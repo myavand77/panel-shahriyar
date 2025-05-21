@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
-import Logo from "@/components/ui/Logo";
 import Select from "@/components/ui/Select";
 import Tabs from "@/components/ui/Tabs";
 import FileUpload from "@/components/ui/FileUpload";
-import Stepper from "@/components/ui/Stepper";
-import AuthHeader from "@/features/auth/user-registration/components/AuthHeader";
 import StepLayout from "@/features/auth/user-registration/components/StepLayout";
 
 const provinces = [
@@ -36,14 +32,12 @@ const Step3 = ({
   onNext,
   onPrev,
   isCompany,
-  totalSteps,
 }: {
-  tab: 'personal' | 'company';
-  setTab: (tab: 'personal' | 'company') => void;
+  tab: "personal" | "company";
+  setTab: (tab: "personal" | "company") => void;
   onNext: () => void;
   onPrev: () => void;
   isCompany?: boolean;
-  totalSteps?: number;
 }) => {
   const [form, setForm] = useState({
     name: "",
@@ -75,14 +69,19 @@ const Step3 = ({
   };
 
   return (
-    <StepLayout currentStep={1} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
+    <StepLayout
+      currentStep={1}
+      onNext={onNext}
+      onPrev={onPrev}
+      isCompany={isCompany}
+    >
       <Tabs
         tabs={[
           { label: "حقیقی", value: "personal" },
           { label: "حقوقی", value: "company" },
         ]}
         value={tab}
-        onChange={value => setTab(value as 'personal' | 'company')}
+        onChange={(value) => setTab(value as "personal" | "company")}
         className="mb-4 justify-center"
       />
       {tab === "personal" && (

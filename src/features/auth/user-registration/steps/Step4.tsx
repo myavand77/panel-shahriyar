@@ -2,23 +2,23 @@ import React from "react";
 import InfoBanner from "@/components/ui/InfoBanner";
 import IPInput from "@/components/ui/IPInput";
 import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
 import { Mail, Globe, Key, Link, Check } from "lucide-react";
-import Logo from "@/components/ui/Logo";
-import Stepper from "@/components/ui/Stepper";
-import AuthHeader from "@/features/auth/user-registration/components/AuthHeader";
 import StepLayout from "@/features/auth/user-registration/components/StepLayout";
 
 interface Step4Props {
   onNext: () => void;
   onPrev: () => void;
   isCompany?: boolean;
-  totalSteps?: number;
 }
 
-const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany, totalSteps }) => {
+const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
   return (
-    <StepLayout currentStep={2} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
+    <StepLayout
+      currentStep={isCompany ? 3 : 2}
+      onNext={onNext}
+      onPrev={onPrev}
+      isCompany={isCompany}
+    >
       {/* Row 1 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
         {/* Website Input */}

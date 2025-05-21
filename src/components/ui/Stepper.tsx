@@ -4,7 +4,6 @@ import { Check } from "lucide-react";
 export interface StepperProps {
   currentStep: number;
   steps?: string[];
-  isCompany?: boolean;
 }
 
 const defaultSteps = [
@@ -17,7 +16,6 @@ const defaultSteps = [
 const Stepper: React.FC<StepperProps> = ({
   currentStep,
   steps = defaultSteps,
-  isCompany = false,
 }) => {
   return (
     <div className="flex items-center justify-center w-full mb-6 mt-2">

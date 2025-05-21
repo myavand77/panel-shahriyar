@@ -6,12 +6,10 @@ const CompanyStep4 = ({
   onNext,
   onPrev,
   isCompany,
-  totalSteps,
 }: {
   onNext: () => void;
   onPrev: () => void;
   isCompany?: boolean;
-  totalSteps?: number;
 }) => {
   const [form, setForm] = useState({
     establishmentNotice: null as File | null,
@@ -26,7 +24,12 @@ const CompanyStep4 = ({
   };
 
   return (
-    <StepLayout currentStep={2} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
+    <StepLayout
+      currentStep={2}
+      onNext={onNext}
+      onPrev={onPrev}
+      isCompany={isCompany}
+    >
       <form className="w-full flex flex-col gap-4 mt-2" dir="rtl">
         {/* Row 1 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -67,4 +70,4 @@ const CompanyStep4 = ({
   );
 };
 
-export default CompanyStep4; 
+export default CompanyStep4;

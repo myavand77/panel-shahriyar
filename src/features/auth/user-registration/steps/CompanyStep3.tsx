@@ -65,7 +65,7 @@ const CompanyStep3 = ({
   };
 
   return (
-    <StepLayout currentStep={1} onNext={onNext} onPrev={onPrev} isCompany={isCompany} totalSteps={totalSteps}>
+    <StepLayout currentStep={1} onNext={onNext} onPrev={onPrev} isCompany={isCompany}  >
       <Tabs
         tabs={[
           { label: "حقیقی", value: "personal" },

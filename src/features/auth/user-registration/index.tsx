@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
@@ -13,7 +13,7 @@ import CompanyStep4 from "./steps/CompanyStep4";
 const UserRegistration = () => {
   const [state, setState] = useState<{
     step: number;
-    tab: 'personal' | 'company';
+    tab: "personal" | "company";
   }>({
     step: 1,
     tab: "personal",
@@ -30,7 +30,10 @@ const UserRegistration = () => {
       : state.tab === "personal"
       ? false
       : undefined;
-  const totalSteps = state.tab ? 5 : 0;
+
+  useEffect(() => {
+    console.log("state", state);
+  }, [state]);
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-primary-50">
@@ -45,7 +48,6 @@ const UserRegistration = () => {
             onNext={handleNext}
             onPrev={handlePrev}
             isCompany={isCompany}
-            totalSteps={totalSteps}
           />
         ) : (
           <CompanyStep3
@@ -54,7 +56,6 @@ const UserRegistration = () => {
             onNext={handleNext}
             onPrev={handlePrev}
             isCompany={isCompany}
-            totalSteps={totalSteps}
           />
         ))}
       {state.step === 4 &&
@@ -63,40 +64,64 @@ const UserRegistration = () => {
             onNext={handleNext}
             onPrev={handlePrev}
             isCompany={isCompany}
-            totalSteps={totalSteps}
           />
         ) : (
           <CompanyStep4
             onNext={handleNext}
             onPrev={handlePrev}
             isCompany={isCompany}
-            totalSteps={totalSteps}
           />
         ))}
-      {state.step === 5 && (
-        <Step5
-          onNext={handleNext}
-          onPrev={handlePrev}
-          isCompany={isCompany}
-          totalSteps={totalSteps}
-        />
-      )}
-      {state.step === 6 && (
-        <Step6
-          onNext={handleNext}
-          onPrev={handlePrev}
-          goToStep={(step) => setState((s) => ({ ...s, step }))}
-          isCompany={isCompany}
-          totalSteps={totalSteps}
-        />
-      )}
-      {state.step === 7 && (
+
+      {state.step === 5 &&
+        (state.tab === "personal" ? (
+          <Step5
+            onNext={handleNext}
+            onPrev={handlePrev}
+            isCompany={isCompany}
+          />
+        ) : (
+          <Step4
+            onNext={handleNext}
+            onPrev={handlePrev}
+            isCompany={isCompany}
+          />
+        ))}
+
+      {state.step === 6 &&
+        (state.tab === "personal" ? (
+          <Step6
+            onNext={handleNext}
+            onPrev={handlePrev}
+            isCompany={isCompany}
+          />
+        ) : (
+          <Step5
+            onNext={handleNext}
+            onPrev={handlePrev}
+            isCompany={isCompany}
+          />
+        ))}
+      {state.step === 7 &&
+        (state.tab === "personal" ? (
+          <Step7
+            onNext={handleNext}
+            onPrev={handlePrev}
+            isCompany={isCompany}
+          />
+        ) : (
+          <Step6
+            onNext={handleNext}
+            onPrev={handlePrev}
+            isCompany={isCompany}
+          />
+        ))}
+      {state.step === 8 && (
         <Step7
           onPrev={handlePrev}
           goToStep={(step) => setState((s) => ({ ...s, step }))}
           onNext={() => {}}
           isCompany={isCompany}
-          totalSteps={totalSteps}
         />
       )}
       {/* Future: Render other steps based on step state */}
