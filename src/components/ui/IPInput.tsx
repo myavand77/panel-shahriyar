@@ -6,9 +6,14 @@ import Button from "./Button";
 import IconButton from "./IconButton";
 import Label from "./Label";
 
-const IPInput: React.FC<{ label?: string }> = ({ label }) => {
+interface IPInputProps {
+  label?: string;
+  value?: string[];
+  onChange?: (ips: string[]) => void;
+}
+
+const IPInput: React.FC<IPInputProps> = ({ label, value = [], onChange }) => {
   const [input, setInput] = useState("");
-  const [ips, setIps] = useState<string[]>([]);
   const [error, setError] = useState("");
 
   const addIP = () => {
@@ -17,11 +22,12 @@ const IPInput: React.FC<{ label?: string }> = ({ label }) => {
       setError("آی پی معتبر نیست");
       return;
     }
-    if (ips.includes(input.trim())) {
+    if (value.includes(input.trim())) {
       setError("این آی پی قبلاً اضافه شده است");
       return;
     }
-    setIps([...ips, input.trim()]);
+    const newIps = [...value, input.trim()];
+    onChange?.(newIps);
     setInput("");
     setError("");
   };
@@ -34,7 +40,8 @@ const IPInput: React.FC<{ label?: string }> = ({ label }) => {
   };
 
   const removeIP = (ip: string) => {
-    setIps(ips.filter((item) => item !== ip));
+    const newIps = value.filter((item) => item !== ip);
+    onChange?.(newIps);
   };
 
   return (
@@ -60,7 +67,7 @@ const IPInput: React.FC<{ label?: string }> = ({ label }) => {
       </div>
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
       <div className="flex flex-wrap gap-2 mt-3">
-        {ips.map((ip) => (
+        {value.map((ip) => (
           <span
             key={ip}
             className="flex items-center gap-1 bg-neutral-100 text-neutral-500 px-3 py-1 rounded-full text-xs font-bold"

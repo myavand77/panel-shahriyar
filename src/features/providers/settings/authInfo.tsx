@@ -1,5 +1,7 @@
 import InfoBox from "@/components/ui/InfoBox";
 import { useState } from "react";
+import AuthInfoEditModal from "./authInfoEditModal";
+
 
 // Example authentication info (replace with real data as needed)
 const authInfo = {
@@ -24,11 +26,18 @@ const AuthInfoTab = ({}: AuthInfoTabProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <InfoBox
-      title="مشخصات هویتی"
-      info={authInfo}
-      onEdit={() => setModalOpen(true)}
-    />
+    <>
+      <InfoBox
+        title="مشخصات هویتی"
+        info={authInfo}
+        onEdit={() => setModalOpen(true)}
+      />
+      <AuthInfoEditModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        defaultValues={authInfo}
+      />
+    </>
   );
 };
 

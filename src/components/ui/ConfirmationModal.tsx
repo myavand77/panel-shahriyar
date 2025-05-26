@@ -15,9 +15,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   open,
   onConfirm,
   onCancel,
-  title = "آیا از ویرایش مشخصات هویتی اطمینان دارید؟",
-  subtitle =
-    "کاربر گرامی، توجه داشته باشید پس از ثبت تغییرات، درخواست شما می‌بایست توسط کارشناسان وایب بررسی شود.",
+  title = "آیا از ویرایش اطلاعات اطمینان دارید؟",
+  subtitle = "کاربر گرامی، توجه داشته باشید پس از ثبت تغییرات، درخواست شما می‌بایست توسط کارشناسان وایب بررسی شود.",
   confirmText = "تایید و ادامه",
   cancelText = "انصراف",
 }) => {
@@ -36,4 +35,4 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   );
 };
 
-export default ConfirmationModal; 
+export default ConfirmationModal;
