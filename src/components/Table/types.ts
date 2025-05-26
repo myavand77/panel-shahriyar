@@ -44,6 +44,7 @@ export interface TabFilterProps {
   tabs: { id: string; label: string; count?: number }[];
   activeTab: string;
   onTabChange: (tabId: string) => void;
+  className?: string;
 }
 
 export interface PaginationProps {

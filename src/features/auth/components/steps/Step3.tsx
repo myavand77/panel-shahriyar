@@ -77,13 +77,14 @@ const Step3 = ({
     >
       <Tabs
         tabs={[
-          { label: "حقیقی", value: "personal" },
-          { label: "حقوقی", value: "company" },
+          { id: "personal", label: "حقیقی" },
+          { id: "company", label: "حقوقی" },
         ]}
-        value={tab}
-        onChange={(value) => setTab(value as "personal" | "company")}
+        activeTab={tab}
+        onTabChange={(value) => setTab(value as "personal" | "company")}
         className="mb-4 justify-center"
       />
+
       {tab === "personal" && (
         <form className="w-full flex flex-col gap-4 mt-2" dir="rtl">
           {/* Row 1 */}

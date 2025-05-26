@@ -1,6 +1,6 @@
-import { TabFilterProps } from "./types";
+import { TabFilterProps } from "../Table/types";
 
-export const TabFilter: React.FC<TabFilterProps> = ({
+const TabFilter: React.FC<TabFilterProps> = ({
   tabs,
   activeTab,
   onTabChange,
@@ -38,3 +38,4 @@ export const TabFilter: React.FC<TabFilterProps> = ({
     </div>
   );
 };
+export default TabFilter;

@@ -1,6 +1,6 @@
 import React from "react";
 import { TableControlsProps, SortOrder } from "./types";
-import { TabFilter } from "./TabFilter";
+import TabFilter from "../ui/TabFilter";
 
 export const TableControls: React.FC<TableControlsProps> = ({
   tabs,
