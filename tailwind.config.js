@@ -22,7 +22,6 @@ module.exports = {
           800: "#0C2434",
           900: "#091922",
           950: "#050F15",
-          foreground: "hsl(var(--primary-foreground))",
         },
         // Secondary Colors
         secondary: {
@@ -37,7 +36,6 @@ module.exports = {
           800: "#5B350A",
           900: "#391C05",
           950: "#1F0D03",
-          foreground: "hsl(var(--secondary-foreground))",
         },
         // Neutral Colors
         neutral: {
@@ -115,31 +113,6 @@ module.exports = {
           50: "#64748B",
           100: "#D3DDE3",
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        foreground: "hsl(var(--foreground))",
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
       },
     },
   },

@@ -1,5 +1,6 @@
 import React from "react";
 import { TableControlsProps, SortOrder } from "./types";
+import Input from "../ui/Input";
 
 export const TableControls: React.FC<TableControlsProps> = ({
   rowsPerPage,

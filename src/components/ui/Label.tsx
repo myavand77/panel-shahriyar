@@ -6,9 +6,11 @@ interface LabelProps {
 }
 
 const Label: React.FC<LabelProps> = ({ children, className = "" }) => (
-  <label className={`text-sm font-medium text-gray-700 mb-1 ${className}`}>
+  <label
+    className={`w-full text-sm text-right font-medium text-gray-700 mb-1 ${className}`}
+  >
     {children}
   </label>
 );
 
-export default Label; 
+export default Label;

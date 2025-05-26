@@ -1,5 +1,10 @@
 import HomeView from "@/features/providers/home";
+import PageLayout from "@/components/layout/pageLayout";
 
 export default function HomePage() {
-  return <HomeView />;
+  return (
+    <PageLayout title="وضعیت فروشگاه">
+      <HomeView />
+    </PageLayout>
+  );
 }

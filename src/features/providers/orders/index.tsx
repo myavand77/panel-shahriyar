@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Table } from "@/components/Table/Table";
 import { Column, SortOrder, TableData } from "@/components/Table/types";
 import { useRouter } from "next/navigation";
+import { TabFilter } from "@/components/Table/TabFilter";
 
 const columns: Column[] = [
   { key: "row", title: "ردیف", width: "60px" },
@@ -63,7 +64,14 @@ const mockData: TableData[] = [
   },
 ];
 
+const tabs = [
+  { id: "all", label: "همه", count: 15 },
+  { id: "new", label: "سفارشات موفق", count: 6 },
+  { id: "failed", label: "سفارشات ناموفق", count: 4 },
+];
+
 export function OrdersView() {
+  const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
   const router = useRouter();
@@ -75,6 +83,13 @@ export function OrdersView() {
 
   return (
     <div className="h-[calc(100vh-7rem)] flex flex-col">
+      <div className="mb-10">
+        <TabFilter
+          tabs={tabs}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+      </div>
       <div className="flex-1 overflow-hidden">
         <Table
           columns={columns}

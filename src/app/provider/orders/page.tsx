@@ -1,5 +1,10 @@
 import { OrdersView } from "@/features/providers/orders";
+import PageLayout from "@/components/layout/pageLayout";
 
 export default function OrdersPage() {
-  return <OrdersView />;
+  return (
+    <PageLayout title="سفارشات">
+      <OrdersView />
+    </PageLayout>
+  );
 }
