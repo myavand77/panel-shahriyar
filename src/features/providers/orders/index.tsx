@@ -4,70 +4,57 @@ import { useState } from "react";
 import { Table } from "@/components/Table/Table";
 import { Column, SortOrder, TableData } from "@/components/Table/types";
 import { useRouter } from "next/navigation";
-import { TabFilter } from "@/components/Table/TabFilter";
+import Badge from "@/components/ui/Badge";
+import { EyeIcon } from "@/components/Icons";
 
 const columns: Column[] = [
   { key: "row", title: "ردیف", width: "60px" },
-  { key: "storeName", title: "نام فروشگاه" },
-  { key: "product", title: "کالا" },
+  { key: "orderNumber", title: "شماره سفارش" },
+  { key: "itemCount", title: "تعداد کالا در سبد" },
   { key: "purchaseDate", title: "تاریخ خرید" },
-  { key: "amount", title: "مبلغ سفارش (ریال)" },
-  { key: "paidAmount", title: "مبلغ نقدی (ریال)" },
-  { key: "totalInstallments", title: "کل اقساط" },
-  { key: "paidInstallments", title: "اقساط باقی‌مانده" },
+  { key: "basketAmount", title: "مبلغ سبد (ریال)" },
+  { key: "settlementAmount", title: "مبلغ تسویه (ریال)" },
+  { key: "settlementDate", title: "تاریخ تسویه" },
+  { key: "status", title: "وضعیت" },
+  { key: "actions", title: "عملیات" },
 ];
 
 const mockData: TableData[] = [
   {
     id: 1,
     row: 1,
-    storeName: "سامسرویس",
-    product: "تلویزیون، یخچال، ماشین...",
+    orderNumber: "46164646",
+    itemCount: 1,
     purchaseDate: "1402/09/15",
-    amount: "1,200,000,000",
-    paidAmount: "1,200,000,000",
-    totalInstallments: "12",
-    paidInstallments: "8",
+    basketAmount: "1,200,000,000",
+    settlementAmount: "1,210,000,000",
+    settlementDate: "1402/09/15",
+    status: <Badge type="warning">در انتظار بررسی</Badge>,
+    actions: <EyeIcon width={22} height={22} className="text-info-500" />,
   },
   {
     id: 2,
     row: 2,
-    storeName: "سامسرویس",
-    product: "تلویزیون، یخچال، ماشین...",
+    orderNumber: "46164646",
+    itemCount: 3,
     purchaseDate: "1402/09/15",
-    amount: "1,200,000,000",
-    paidAmount: "1,200,000,000",
-    totalInstallments: "12",
-    paidInstallments: "7",
-  },
-  {
-    id: 3,
-    row: 3,
-    storeName: "سامسرویس",
-    product: "تلویزیون، یخچال، ماشین...",
-    purchaseDate: "1402/09/15",
-    amount: "1,200,000,000",
-    paidAmount: "1,200,000,000",
-    totalInstallments: "12",
-    paidInstallments: "12",
-  },
-  {
-    id: 4,
-    row: 4,
-    storeName: "سامسرویس",
-    product: "تلویزیون، یخچال، ماشین...",
-    purchaseDate: "1402/09/15",
-    amount: "1,200,000,000",
-    paidAmount: "1,200,000,000",
-    totalInstallments: "12",
-    paidInstallments: "10",
+    basketAmount: "1,200,000,000",
+    settlementAmount: "1,210,000,000",
+    settlementDate: "1402/09/15",
+    status: <Badge type="info">ارسال شده</Badge>,
+    actions: <EyeIcon width={22} height={22} className="text-info-500" />,
   },
 ];
 
 const tabs = [
-  { id: "all", label: "همه", count: 15 },
-  { id: "new", label: "سفارشات موفق", count: 6 },
-  { id: "failed", label: "سفارشات ناموفق", count: 4 },
+  { id: "all", label: "همه" },
+  { id: "pending", label: "در انتظار بررسی" },
+  { id: "sent", label: "ارسال شده" },
+  { id: "delivered", label: "تحویل داده‌شده" },
+  { id: "returned", label: "مرجوع شده" },
+  { id: "canceled", label: "ابطال" },
+  { id: "settled", label: "تسویه شده" },
+  { id: "discrepancy", label: "مغایرت" },
 ];
 
 export function OrdersView() {
@@ -83,13 +70,6 @@ export function OrdersView() {
 
   return (
     <div className="h-[calc(100vh-7rem)] flex flex-col">
-      <div className="mb-10">
-        <TabFilter
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-        />
-      </div>
       <div className="flex-1 overflow-hidden">
         <Table
           columns={columns}
@@ -99,8 +79,9 @@ export function OrdersView() {
           onPageChange={setCurrentPage}
           onRowClick={handleRowClick}
           controls={{
-            rowsPerPage: 10,
-            onRowsPerPageChange: () => {},
+            tabs,
+            activeTab,
+            onTabChange: setActiveTab,
             searchQuery: "",
             onSearchChange: () => {},
             sortOrder,

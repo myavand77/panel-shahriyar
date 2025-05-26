@@ -13,8 +13,9 @@ export interface TableData {
 export type SortOrder = "newest" | "oldest" | "default";
 
 export interface TableControlsProps {
-  rowsPerPage: number;
-  onRowsPerPageChange: (value: number) => void;
+  tabs?: { id: string; label: string; count?: number }[];
+  activeTab?: string;
+  onTabChange?: (tabId: string) => void;
   searchQuery: string;
   onSearchChange: (value: string) => void;
   sortOrder: SortOrder;

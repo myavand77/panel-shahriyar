@@ -1,17 +1,17 @@
 import React from "react";
 import { TableControlsProps, SortOrder } from "./types";
-import Input from "../ui/Input";
+import { TabFilter } from "./TabFilter";
 
 export const TableControls: React.FC<TableControlsProps> = ({
-  rowsPerPage,
-  onRowsPerPageChange,
+  tabs,
+  activeTab,
+  onTabChange,
   searchQuery,
   onSearchChange,
   sortOrder,
   onSortOrderChange,
   onDownload,
 }) => {
-  const rowsPerPageOptions = [10, 25, 50, 100];
   const sortOptions: { value: SortOrder; label: string }[] = [
     { value: "default", label: "جدیدترین" },
     { value: "newest", label: "جدیدترین" },
@@ -21,22 +21,13 @@ export const TableControls: React.FC<TableControlsProps> = ({
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 p-4 border-b border-muted-100">
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-[#212121] font-normal">
-            تعداد نمایش در صفحه:
-          </span>
-          <select
-            value={rowsPerPage}
-            onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
-            className="w-32 h-10 px-3 text-sm border border-muted-100 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-success-50"
-          >
-            {rowsPerPageOptions.map((option) => (
-              <option key={option} value={option}>
-                {option} سطر
-              </option>
-            ))}
-          </select>
-        </div>
+        {tabs && tabs.length > 0 && (
+          <TabFilter
+            tabs={tabs}
+            activeTab={activeTab ?? ""}
+            onTabChange={onTabChange ?? (() => {})}
+          />
+        )}
       </div>
 
       <div className="flex items-center gap-4">
