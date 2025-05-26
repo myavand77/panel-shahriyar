@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { Table } from "@/components/Table/Table";
 import { Column, SortOrder, TableData } from "@/components/Table/types";
-import { useRouter } from "next/navigation";
 import Badge from "@/components/ui/Badge";
 import { EyeIcon } from "@/components/Icons";
-import { Modal } from "@/components/ui/Modal";
+import { OrderDetailsModal } from "./OrderDetailsModal";
 
 const columns: Column[] = [
   { key: "row", title: "ردیف", width: "60px" },
@@ -62,7 +61,6 @@ export function OrdersView() {
   const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
-  const router = useRouter();
   const totalPages = 8;
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -105,25 +103,12 @@ export function OrdersView() {
           }}
         />
       </div>
-      <Modal
+      <OrderDetailsModal
         open={modalOpen}
         onClose={handleModalClose}
         onChange={handleModalChange}
-        title={selectedRow ? `جزئیات سفارش شماره ${selectedRow.orderNumber}` : ""}
-        subtitle={selectedRow ? "لطفا اطلاعات وارد شده را بررسی نموده و وضعیت درخواست را مشخص کنید." : undefined}
-        badge={selectedRow ? selectedRow.status : undefined}
-      >
-        {selectedRow && (
-          <div className="space-y-2 text-sm text-gray-700">
-            <div className="flex justify-between"><span>شماره سفارش:</span><span>{selectedRow.orderNumber}</span></div>
-            <div className="flex justify-between"><span>تعداد کالا در سبد:</span><span>{selectedRow.itemCount}</span></div>
-            <div className="flex justify-between"><span>تاریخ خرید:</span><span>{selectedRow.purchaseDate}</span></div>
-            <div className="flex justify-between"><span>مبلغ سبد:</span><span>{selectedRow.basketAmount}</span></div>
-            <div className="flex justify-between"><span>مبلغ تسویه:</span><span>{selectedRow.settlementAmount}</span></div>
-            <div className="flex justify-between"><span>تاریخ تسویه:</span><span>{selectedRow.settlementDate}</span></div>
-          </div>
-        )}
-      </Modal>
+        selectedRow={selectedRow}
+      />
     </div>
   );
 }
