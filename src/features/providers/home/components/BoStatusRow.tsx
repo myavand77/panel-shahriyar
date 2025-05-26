@@ -1,6 +1,5 @@
 import { FC } from "react";
 import BoStatusBox from "./BoStatusBox";
-import { BadgeType } from "@/types/components";
 
 interface BoStatusRowBoxProps {
   type: "success" | "warning";

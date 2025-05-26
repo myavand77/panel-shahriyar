@@ -85,11 +85,13 @@ module.exports = {
           50: "#1B7C94",
           100: "#E8F5E9",
           200: "#9CAEB07",
+          300: "#F2FAF6",
           500: "#4CAF50",
           800: "#0B5B1E",
         },
         // Error Colors
         error: {
+          50: "#FFFAF5",
           100: "#FFEBEE",
           200: "#FFCDCC",
           500: "#F44336",
@@ -100,11 +102,13 @@ module.exports = {
           50: "#FF9800",
           100: "#FFF3E0",
           200: "#FFE1BF",
+          300: "#FFFCF2",
           500: "#FF9505",
           800: "#9A4A00",
         },
         // Info Colors
         info: {
+          50: "#EFF6FF",
           200: "#9CD5FC",
           500: "#2196F3",
           800: "#0C4691",
