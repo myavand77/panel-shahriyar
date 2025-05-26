@@ -69,7 +69,7 @@ export const Modal: React.FC<ModalProps> = ({
             </div>
           </div>
           {/* Body */}
-          <div className="px-6 py-6">{children}</div>
+          <div className="px-6 py-6 max-h-[70vh] overflow-y-auto">{children}</div>
           {/* Footer */}
           <div className="flex border-t border-muted-100 px-6 py-6 gap-2">
             <Button

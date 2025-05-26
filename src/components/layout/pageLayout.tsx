@@ -5,7 +5,7 @@ interface PageLayoutProps {
 
 export default function PageLayout({ title, children }: PageLayoutProps) {
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex-1 flex flex-col h-full ">
       {title && (
         <div className="text-lg text-text-500 font-bold mb-3">{title}</div>
       )}

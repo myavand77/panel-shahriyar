@@ -36,7 +36,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header title={getTitleByRole(userRole)} />
-        <div className="px-6">
+        <div className="px-6 h-full overflow-y-auto">
           {/* Content Area */}
           {children}
         </div>

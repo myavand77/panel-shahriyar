@@ -28,7 +28,7 @@ export function SettingsView() {
           onTabChange={setActiveTab}
         />
       </div>
-      <div>
+      <div className="">
         {activeTab === "identity" && <AuthInfoTab />}
         {activeTab === "documents" && <DocumentsInfoTab />}
         {activeTab === "technical" && <TechnicalInfoTab />}
