@@ -52,10 +52,9 @@ const DocumentsInfoEditModal = ({
           <Controller
             name="tasis"
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { onChange } }) => (
               <FileUpload
                 label="آگهی تاسیس"
-                value={value}
                 onChange={onChange}
               />
             )}
@@ -63,10 +62,9 @@ const DocumentsInfoEditModal = ({
           <Controller
             name="taghirat"
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { onChange } }) => (
               <FileUpload
                 label="آگهی آخرین تغییرات"
-                value={value}
                 onChange={onChange}
               />
             )}
@@ -74,10 +72,9 @@ const DocumentsInfoEditModal = ({
           <Controller
             name="sahamdar"
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { onChange } }) => (
               <FileUpload
                 label="آگهی سهامداران"
-                value={value}
                 onChange={onChange}
               />
             )}
@@ -85,10 +82,9 @@ const DocumentsInfoEditModal = ({
           <Controller
             name="emzadar"
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { onChange } }) => (
               <FileUpload
                 label="آگهی امضاداران"
-                value={value}
                 onChange={onChange}
               />
             )}
@@ -96,10 +92,9 @@ const DocumentsInfoEditModal = ({
           <Controller
             name="logo"
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { onChange } }) => (
               <FileUpload
                 label="بارگذاری لوگو"
-                value={value}
                 onChange={onChange}
               />
             )}

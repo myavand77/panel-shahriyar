@@ -7,6 +7,7 @@ import DocumentsInfoTab from "./components/documentsInfo";
 import TechnicalInfoTab from "./components/technicalInfo";
 import AgentInfoTab from "./components/agentInfo";
 import ContractInfoTab from "./components/contractInfo";
+import { VendorDataProvider } from "./components/VendorDataContext";
 
 const tabs = [
   { id: "identity", label: "مشخصات هویتی" },
@@ -17,6 +18,14 @@ const tabs = [
 ];
 
 export function SettingsView() {
+  return (
+    <VendorDataProvider>
+      <SettingsViewContent />
+    </VendorDataProvider>
+  );
+}
+
+function SettingsViewContent() {
   const [activeTab, setActiveTab] = useState("identity");
 
   return (

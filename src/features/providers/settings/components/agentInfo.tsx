@@ -1,23 +1,26 @@
 import InfoBox from "@/components/ui/InfoBox";
 import { useState } from "react";
 import AgentInfoEditModal from "./agentInfoEditModal";
+import { useVendorData } from "./VendorDataContext";
 
-const initialAgentInfo = {
-  "نام نماینده": "امید",
-  "نام خانوادگی نماینده": "معتمدی",
-  "کدملی نماینده": "۰۰۶۱۴۵۸۵۱۲۶۸",
-  "تلفن همراه نماینده": "۰۹۱۲۳۴۵۶۷۲۸۹",
-  "آی‌دی تلگرام": "۰۹۱۲۳۴۵۶۷۲۸۹",
-  "شماره واتساپ": "۰۹۱۲۳۴۵۶۷۲۸۹",
-  "ایمیل": "۰۹۱۲۳۴۵۶۷۲۸۹",
-  "تلفن ثابت": "۰۹۱۲۳۴۵۶۷۲۸۹",
-};
-
-type AgentInfoTabProps = {};
-
-const AgentInfoTab = ({}: AgentInfoTabProps) => {
+const AgentInfoTab = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [agentInfo, setAgentInfo] = useState(initialAgentInfo);
+  const { vendor, isLoading } = useVendorData();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (!vendor) return <div>No data</div>;
+
+  // Map vendor.agent fields to the InfoBox format
+  const agentInfo = {
+    "نام نماینده": vendor.agent?.first_name || "",
+    "نام خانوادگی نماینده": vendor.agent?.last_name || "",
+    "کدملی نماینده": vendor.agent?.national_id || "",
+    "تلفن همراه نماینده": vendor.agent?.mobile || "",
+    "آی‌دی تلگرام": vendor.agent?.telegram_id || "",
+    "شماره واتساپ": vendor.agent?.whatsapp_id || "",
+    "ایمیل": vendor.agent?.email || "",
+    "تلفن ثابت": vendor.agent?.phone || "",
+  };
 
   return (
     <>

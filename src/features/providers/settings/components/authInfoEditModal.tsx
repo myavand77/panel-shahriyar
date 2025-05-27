@@ -2,6 +2,7 @@ import { Modal } from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import { useForm, Controller } from "react-hook-form";
+import { useVendorData } from "./VendorDataContext";
 
 interface AuthInfoEditModalProps {
   open: boolean;
@@ -32,11 +33,33 @@ const AuthInfoEditModal = ({
   const { control, handleSubmit, reset } = useForm({
     defaultValues,
   });
+  const { updateVendor } = useVendorData();
 
-  const onSubmit = (data: any) => {
-    // TODO: handle update logic
+  const onSubmit = async (data: any) => {
+    // Map form data to TUpdateVendorRequest
+    const update = {
+      basic_info_individual: {
+        first_name: data["نام"],
+        last_name: data["نام خانوادگی"],
+        national_id: data["کد ملی"],
+        mobile: data["تلفن همراه"],
+        email: data["ایمیل"],
+      },
+      address: {
+        state: data["استان"],
+        city: data["شهر"],
+        postal_code: data["کدپستی"],
+        address: data["آدرس"],
+      },
+      brand: data["برند"],
+      category: data["دسته‌بندی"],
+      bank_account: {
+        account_number: data["شماره حساب"],
+        sheba_number: data["شماره شبا"],
+      },
+    };
+    await updateVendor(update);
     onClose();
-    // Optionally update info in parent state
   };
 
   return (

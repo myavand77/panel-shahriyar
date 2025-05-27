@@ -1,6 +1,7 @@
 import { Modal } from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
 import { useForm, Controller } from "react-hook-form";
+import { useVendorData } from "./VendorDataContext";
 
 interface AgentInfoEditModalProps {
   open: boolean;
@@ -16,11 +17,24 @@ const AgentInfoEditModal = ({
   const { control, handleSubmit, reset } = useForm({
     defaultValues,
   });
+  const { updateVendor } = useVendorData();
 
-  const onSubmit = (data: any) => {
-    // TODO: handle update logic
+  const onSubmit = async (data: any) => {
+    // Map form data to TUpdateVendorRequest.agent
+    const update = {
+      agent: {
+        first_name: data["نام نماینده"],
+        last_name: data["نام خانوادگی نماینده"],
+        national_id: data["کدملی نماینده"],
+        mobile: data["تلفن همراه نماینده"],
+        telegram_id: data["آی‌دی تلگرام"],
+        whatsapp_id: data["شماره واتساپ"],
+        email: data["ایمیل"],
+        phone: data["تلفن ثابت"],
+      },
+    };
+    await updateVendor(update);
     onClose();
-    // Optionally update info in parent state
   };
 
   return (
