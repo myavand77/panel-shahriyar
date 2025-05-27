@@ -1,26 +1,24 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import Tabs from "@/components/ui/Tabs";
 import FileUpload from "@/components/ui/FileUpload";
 import StepLayout from "@/features/auth/components/StepLayout";
 import { useStepsForm } from "./StepsFormContext";
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
+import provincesCitiesData from "@/constants/provinces_cities.json";
 
+// Get unique provinces
 const provinces = [
   { value: "", label: "استان را انتخاب کنید" },
-  { value: "tehran", label: "تهران" },
-  { value: "isfahan", label: "اصفهان" },
-  { value: "fars", label: "فارس" },
-  // ... add more provinces as needed
+  ...Array.from(
+    new Set(provincesCitiesData.map((item) => item.provinceName))
+  ).map((province) => ({
+    value: province,
+    label: province,
+  })),
 ];
-const cities = [
-  { value: "", label: "شهر را انتخاب کنید" },
-  { value: "tehran", label: "تهران" },
-  { value: "esfahan", label: "اصفهان" },
-  { value: "shiraz", label: "شیراز" },
-  // ... add more cities as needed
-];
+
 const categories = [
   { value: "", label: "دسته‌بندی را انتخاب کنید" },
   { value: "shop", label: "فروشگاه" },
@@ -41,7 +39,32 @@ const Step3 = ({
   onPrev: () => void;
   isCompany?: boolean;
 }) => {
-  const { control, handleSubmit, formState: { errors } } = useStepsForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useStepsForm();
+
+  // Watch the selected province to filter cities
+  const selectedProvince = useWatch({
+    control,
+    name: "province",
+  });
+
+  // Filter cities based on selected province
+  const cities = useMemo(() => {
+    const defaultOption = { value: "", label: "شهر را انتخاب کنید" };
+    if (!selectedProvince) {
+      return [defaultOption];
+    }
+    const filteredCities = provincesCitiesData
+      .filter((item) => item.provinceName === selectedProvince)
+      .map((item) => ({
+        value: item.cityName,
+        label: item.cityName,
+      }));
+    return [defaultOption, ...filteredCities];
+  }, [selectedProvince]);
 
   // Handler for form submit
   const onValid = () => {
@@ -54,6 +77,7 @@ const Step3 = ({
       onNext={handleSubmit(onValid)}
       onPrev={onPrev}
       isCompany={isCompany}
+      showPrev={false}
     >
       <Tabs
         tabs={[
@@ -66,7 +90,11 @@ const Step3 = ({
       />
 
       {tab === "personal" && (
-        <form className="w-full flex flex-col gap-4 mt-2" dir="rtl" onSubmit={handleSubmit(onValid)}>
+        <form
+          className="w-full flex flex-col gap-4 mt-2"
+          dir="rtl"
+          onSubmit={handleSubmit(onValid)}
+        >
           {/* Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Controller
@@ -155,7 +183,10 @@ const Step3 = ({
             <Controller
               name="province"
               control={control}
-              rules={{ required: "استان الزامی است.", validate: v => v !== "" || "استان الزامی است." }}
+              rules={{
+                required: "استان الزامی است.",
+                validate: (v) => v !== "" || "استان الزامی است.",
+              }}
               render={({ field }) => (
                 <Select
                   label="استان"
@@ -163,14 +194,18 @@ const Step3 = ({
                   {...field}
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.province?.message}
+                  subtitleType={errors.province ? "error" : "info"}
                 />
               )}
             />
-            {errors.province && <span className="text-error-500 text-xs mt-1">{errors.province.message}</span>}
             <Controller
               name="city"
               control={control}
-              rules={{ required: "شهر الزامی است.", validate: v => v !== "" || "شهر الزامی است." }}
+              rules={{
+                required: "شهر الزامی است.",
+                validate: (v) => v !== "" || "شهر الزامی است.",
+              }}
               render={({ field }) => (
                 <Select
                   label="شهر"
@@ -178,10 +213,11 @@ const Step3 = ({
                   {...field}
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.city?.message}
+                  subtitleType={errors.city ? "error" : "info"}
                 />
               )}
             />
-            {errors.city && <span className="text-error-500 text-xs mt-1">{errors.city.message}</span>}
             <Controller
               name="postalCode"
               control={control}
@@ -220,7 +256,10 @@ const Step3 = ({
             <Controller
               name="category"
               control={control}
-              rules={{ required: "دسته‌بندی الزامی است.", validate: v => v !== "" || "دسته‌بندی الزامی است." }}
+              rules={{
+                required: "دسته‌بندی الزامی است.",
+                validate: (v) => v !== "" || "دسته‌بندی الزامی است.",
+              }}
               render={({ field }) => (
                 <Select
                   label="دسته‌بندی"
@@ -228,10 +267,11 @@ const Step3 = ({
                   {...field}
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.category?.message}
+                  subtitleType={errors.category ? "error" : "info"}
                 />
               )}
             />
-            {errors.category && <span className="text-error-500 text-xs mt-1">{errors.category.message}</span>}
             <Controller
               name="accountNumber"
               control={control}
@@ -300,7 +340,11 @@ const Step3 = ({
                 />
               )}
             />
-            {errors.logo && <span className="text-error-500 text-xs mt-1">{errors.logo.message}</span>}
+            {errors.logo && (
+              <span className="text-error-500 text-xs mt-1">
+                {errors.logo.message}
+              </span>
+            )}
           </div>
         </form>
       )}

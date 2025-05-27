@@ -12,6 +12,7 @@ import { useOtpVerify } from "@/features/auth/login/hooks/useOtpVerify";
 import { useStepsForm } from "./StepsFormContext";
 import { Controller } from "react-hook-form";
 import { StepsFormData } from "./StepsFormContext";
+import { convertPersianToEnglishNumbers } from "@/lib/utils";
 
 const Step2 = ({
   onPrev,
@@ -31,7 +32,7 @@ const Step2 = ({
 
   const onSubmit = (data: StepsFormData) => {
     verifyOtpMutate(
-      { phone_number, otp_code: data.otp || "" },
+      { phone_number, otp_code: convertPersianToEnglishNumbers(data.otp || "") },
       {
         onSuccess: () => {
           showToast({ text: "ورود شما با موفقیت انجام شد.", type: "success" });

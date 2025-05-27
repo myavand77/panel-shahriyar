@@ -4,6 +4,8 @@ import Select from "@/components/ui/Select";
 import { useForm, Controller } from "react-hook-form";
 import { useVendorData } from "./VendorDataContext";
 import { AuthInfoFormValues, TUpdateVendorRequest } from "../types";
+import { useState, useEffect } from "react";
+import provincesCitiesData from "@/constants/provinces_cities.json";
 
 interface AuthInfoEditModalProps {
   open: boolean;
@@ -11,30 +13,47 @@ interface AuthInfoEditModalProps {
   defaultValues: AuthInfoFormValues;
 }
 
-const provinceOptions = [
-  { value: "تهران", label: "تهران" },
-  { value: "اصفهان", label: "اصفهان" },
-  { value: "مشهد", label: "مشهد" },
-];
-const cityOptions = [
-  { value: "تهران", label: "تهران" },
-  { value: "اصفهان", label: "اصفهان" },
-  { value: "مشهد", label: "مشهد" },
-];
 const categoryOptions = [
   { value: "فروشگاه", label: "فروشگاه" },
   { value: "کالای دیجیتال", label: "کالای دیجیتال" },
 ];
+
+// Get unique provinces from the data
+const provinceOptions = Array.from(
+  new Set(provincesCitiesData.map((item) => item.provinceName))
+).map((province) => ({
+  value: province,
+  label: province,
+}));
 
 const AuthInfoEditModal = ({
   open,
   onClose,
   defaultValues,
 }: AuthInfoEditModalProps) => {
-  const { control, handleSubmit, reset } = useForm<AuthInfoFormValues>({
+  const { control, handleSubmit, reset, watch } = useForm<AuthInfoFormValues>({
     defaultValues,
   });
   const { updateVendor } = useVendorData();
+  const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
+
+  // Watch for province changes
+  const selectedProvince = watch("استان");
+
+  // Update city options when province changes
+  useEffect(() => {
+    if (selectedProvince) {
+      const cities = provincesCitiesData
+        .filter((item) => item.provinceName === selectedProvince)
+        .map((item) => ({
+          value: item.cityName,
+          label: item.cityName,
+        }));
+      setCityOptions(cities);
+    } else {
+      setCityOptions([]);
+    }
+  }, [selectedProvince]);
 
   const onSubmit = async (data: AuthInfoFormValues) => {
     // Only include changed fields
@@ -131,7 +150,12 @@ const AuthInfoEditModal = ({
             name="شهر"
             control={control}
             render={({ field }) => (
-              <Select label="شهر" options={cityOptions} {...field} />
+              <Select 
+                label="شهر" 
+                options={cityOptions} 
+                {...field}
+                disabled={!selectedProvince}
+              />
             )}
           />
           <Controller

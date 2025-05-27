@@ -14,6 +14,7 @@ import { mapStepsFormDataToVendorPayload } from "@/features/auth/registration/he
 import { useRouter } from "next/navigation";
 import { handleApiError } from "@/lib/error";
 import { showToast } from "@/lib/toast";
+import { convertPersianToEnglishNumbers } from "@/lib/utils";
 
 interface Step7Props {
   onPrev: () => void;
@@ -54,7 +55,7 @@ const Step7: React.FC<Step7Props> = ({ onPrev, tab }) => {
         first_name: repName,
         last_name: repLastName,
         national_id: repNationalId,
-        otp_code: otp,
+        otp_code: convertPersianToEnglishNumbers(otp),
         phone_number: repPhone,
       },
       {

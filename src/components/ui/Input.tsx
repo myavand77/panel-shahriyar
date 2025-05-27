@@ -1,5 +1,6 @@
 import React from "react";
 import Label from "./Label";
+import { convertPersianToEnglishNumbers } from "@/lib/utils";
 
 interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -22,6 +23,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       subtitle,
       subtitleType = "info",
       size = "md",
+      onChange,
       ...props
     },
     ref
@@ -45,6 +47,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     };
     const sizeClasses = sizeClassesMap[size] || sizeClassesMap.md;
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (onChange) {
+        const convertedValue = convertPersianToEnglishNumbers(e.target.value);
+        e.target.value = convertedValue;
+        onChange(e);
+      }
+    };
+
     return (
       <div className={`flex flex-col gap-1 ${className}`}>
         {label && (
@@ -63,6 +73,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={`border border-neutral-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white w-full placeholder:text-xs ${
               startLogo ? "pl-10" : ""
             } ${endLogo ? "pr-10" : ""} ${sizeClasses}`}
+            onChange={handleChange}
             {...props}
           />
           {endLogo && (

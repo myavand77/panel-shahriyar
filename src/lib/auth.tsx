@@ -45,7 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const token = Cookies.get(STORAGE_KEYS.TOKEN);
     if (!token) {
-      if (pathname !== "/auth/login") {
+      if (!pathname.startsWith("/auth")) {
         router.replace("/auth/login");
       }
       setAccessToken(null);

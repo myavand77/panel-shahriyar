@@ -9,6 +9,8 @@ interface StepLayoutProps {
   children: React.ReactNode;
   isCompany?: boolean;
   loading?: boolean;
+  showNext?: boolean;
+  showPrev?: boolean;
 }
 
 const StepLayout: React.FC<StepLayoutProps> = ({
@@ -18,29 +20,35 @@ const StepLayout: React.FC<StepLayoutProps> = ({
   children,
   isCompany = false,
   loading = false,
+  showNext = true,
+  showPrev = true,
 }) => (
   <div className="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-8 m-3 flex flex-col gap-4 items-center border border-neutral-200">
     <AuthHeader currentStep={currentStep} isCompany={isCompany} />
     <div className="w-full flex flex-col gap-4">{children}</div>
     <div className="flex gap-4 mt-4 justify-center">
-      <Button
-        type="submit"
-        className="w-32 rounded-[6px] h-10 text-[15px] font-medium"
-        onClick={onNext}
-        disabled={loading}
-        loading={loading}
-      >
-        ادامه
-      </Button>
-      <Button
-        variant="outlined"
-        type="button"
-        className="w-32 rounded-[6px] h-10 text-[15px] font-medium bg-white text-primary-500 border border-primary-500"
-        onClick={onPrev}
-        disabled={loading}
-      >
-        بازگشت
-      </Button>
+      {showNext && (
+        <Button
+          type="submit"
+          className="w-32 rounded-[6px] h-10 text-[15px] font-medium"
+          onClick={onNext}
+          disabled={loading}
+          loading={loading}
+        >
+          ادامه
+        </Button>
+      )}
+      {showPrev && (
+        <Button
+          variant="outlined"
+          type="button"
+          className="w-32 rounded-[6px] h-10 text-[15px] font-medium bg-white text-primary-500 border border-primary-500"
+          onClick={onPrev}
+          disabled={loading}
+        >
+          بازگشت
+        </Button>
+      )}
     </div>
   </div>
 );

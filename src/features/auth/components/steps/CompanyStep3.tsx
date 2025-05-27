@@ -1,25 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import StepLayout from "@/features/auth/components/StepLayout";
 import Tabs from "@/components/ui/Tabs";
 import { useStepsForm } from "./StepsFormContext";
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
+import provincesData from "@/constants/provinces.json";
+import citiesData from "@/constants/provinces_cities.json";
 
-const provinces = [
-  { value: "", label: "استان را انتخاب کنید" },
-  { value: "tehran", label: "تهران" },
-  { value: "isfahan", label: "اصفهان" },
-  { value: "fars", label: "فارس" },
-  // ... add more provinces as needed
-];
-const cities = [
-  { value: "", label: "شهر را انتخاب کنید" },
-  { value: "tehran", label: "تهران" },
-  { value: "esfahan", label: "اصفهان" },
-  { value: "shiraz", label: "شیراز" },
-  // ... add more cities as needed
-];
 const categories = [
   { value: "", label: "دسته‌بندی را انتخاب کنید" },
   { value: "shop", label: "فروشگاه" },
@@ -40,11 +28,48 @@ const CompanyStep3 = ({
   onPrev: () => void;
   isCompany?: boolean;
 }) => {
-  const { control, handleSubmit, formState: { errors } } = useStepsForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useStepsForm();
+  const [cities, setCities] = useState<Array<{ value: string; label: string }>>(
+    []
+  );
+
+  const selectedProvince = useWatch({
+    control,
+    name: "province",
+  });
+
+  const provinces = [
+    { value: "", label: "استان را انتخاب کنید" },
+    ...provincesData.map((province) => ({
+      value: province.provinceId,
+      label: province.provinceName,
+    })),
+  ];
 
   const onValid = () => {
     onNext();
   };
+
+  useEffect(() => {
+    if (selectedProvince) {
+      const filteredCities = citiesData
+        .filter((city) => city.provinceId === selectedProvince)
+        .map((city) => ({
+          value: city.cityId,
+          label: city.cityName,
+        }));
+      setCities([
+        { value: "", label: "شهر را انتخاب کنید" },
+        ...filteredCities,
+      ]);
+    } else {
+      setCities([{ value: "", label: "شهر را انتخاب کنید" }]);
+    }
+  }, [selectedProvince]);
 
   return (
     <StepLayout
@@ -100,7 +125,10 @@ const CompanyStep3 = ({
           <Controller
             name="category"
             control={control}
-            rules={{ required: "دسته بندی الزامی است.", validate: v => v !== "" || "دسته بندی الزامی است." }}
+            rules={{
+              required: "دسته بندی الزامی است.",
+              validate: (v) => v !== "" || "دسته بندی الزامی است.",
+            }}
             render={({ field }) => (
               <Select
                 label="دسته بندی"
@@ -108,10 +136,11 @@ const CompanyStep3 = ({
                 options={categories}
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                subtitle={errors.category?.message}
+                subtitleType={errors.category ? "error" : "info"}
               />
             )}
           />
-          {errors.category && <span className="text-error-500 text-xs mt-1">{errors.category.message}</span>}
           <Controller
             name="nationalId"
             control={control}
@@ -207,7 +236,10 @@ const CompanyStep3 = ({
           <Controller
             name="province"
             control={control}
-            rules={{ required: "استان الزامی است.", validate: v => v !== "" || "استان الزامی است." }}
+            rules={{
+              required: "استان الزامی است.",
+              validate: (v) => v !== "" || "استان الزامی است.",
+            }}
             render={({ field }) => (
               <Select
                 label="استان"
@@ -215,14 +247,18 @@ const CompanyStep3 = ({
                 options={provinces}
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                subtitle={errors.province?.message}
+                subtitleType={errors.province ? "error" : "info"}
               />
             )}
           />
-          {errors.province && <span className="text-error-500 text-xs mt-1">{errors.province.message}</span>}
           <Controller
             name="city"
             control={control}
-            rules={{ required: "شهر الزامی است.", validate: v => v !== "" || "شهر الزامی است." }}
+            rules={{
+              required: "شهر الزامی است.",
+              validate: (v) => v !== "" || "شهر الزامی است.",
+            }}
             render={({ field }) => (
               <Select
                 label="شهر"
@@ -230,10 +266,12 @@ const CompanyStep3 = ({
                 options={cities}
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                disabled={!selectedProvince}
+                subtitle={errors.city?.message}
+                subtitleType={errors.city ? "error" : "info"}
               />
             )}
           />
-          {errors.city && <span className="text-error-500 text-xs mt-1">{errors.city.message}</span>}
         </div>
         {/* Row 4 */}
         <div className="w-full">
