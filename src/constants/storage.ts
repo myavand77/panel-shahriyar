@@ -5,4 +5,5 @@ export const STORAGE_KEYS = {
   REFRESH_TOKEN: `${STORAGE_PREFIX}:refresh-token`,
   SELECTED_STORE_ID: `${STORAGE_PREFIX}:selected-store-id`,
   SELECTED_ADDRESS_ID: `${STORAGE_PREFIX}:selected-address-id`,
+  USER_PROFILE: `${STORAGE_PREFIX}:user-profile`,
 } as const;

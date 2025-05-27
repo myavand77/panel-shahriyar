@@ -10,37 +10,15 @@ import { useRouter, usePathname } from "next/navigation";
 import Cookies from "js-cookie";
 import { logoutUser } from "./logout";
 import { STORAGE_KEYS } from "@/constants/storage";
-
-// Types
-export type UserRole = "Admin" | "Provider" | "User";
-
-export interface UserData {
-  id: string;
-  email: string;
-  role: UserRole;
-  name: string;
-}
-
-export interface AuthTokens {
-  access_token: string;
-  refresh_token?: string;
-  expires_in?: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
-
-interface AuthContextType {
-  access_token: string | null;
-  setAuthFromOtp: (tokens: AuthTokens) => void;
-  logout: () => void;
-  loading: boolean;
-}
+import { useProfile } from "@/hooks/useProfile";
+import { AuthContextType, AuthTokens } from "@/types";
 
 const defaultAuthContext: AuthContextType = {
   access_token: null,
   setAuthFromOtp: () => {},
   logout: () => {},
   loading: true,
+  user: null,
 };
 
 const AuthContext = createContext<AuthContextType>(defaultAuthContext);
@@ -61,6 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
+  const { profile: user, loading: profileLoading } = useProfile(access_token);
 
   // Check token on mount and on route change
   useEffect(() => {
@@ -101,7 +80,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     access_token,
     setAuthFromOtp,
     logout,
-    loading,
+    loading: loading || profileLoading,
+    user,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
