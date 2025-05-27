@@ -101,7 +101,7 @@ const Step1 = ({
       <div className="w-full flex flex-col gap-2 mt-2">
         <div className="flex flex-row-reverse justify-center items-center gap-3">
           <span
-            className="text-text-500 text-[14px]"
+            className="text-text-500 text-[14px] cursor-pointer"
             onClick={() => router.push("/auth/register")}
           >
             ثبت‌نام
