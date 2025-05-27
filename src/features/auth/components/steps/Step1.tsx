@@ -5,7 +5,13 @@ import { useOtpRequest } from "@/features/auth/login/hooks/useOtpRequest";
 import React from "react";
 import { handleApiError, isValidIranianPhoneNumber } from "@/lib/error";
 
-const Step1 = ({ onNext }: { onNext: () => void }) => {
+const Step1 = ({
+  onNext,
+  onSetPhoneNumber,
+}: {
+  onNext: () => void;
+  onSetPhoneNumber: (phone: string) => void;
+}) => {
   const {
     register,
     handleSubmit,
@@ -29,10 +35,13 @@ const Step1 = ({ onNext }: { onNext: () => void }) => {
       { phone_number: data.phone },
       {
         onSuccess: () => {
+          onSetPhoneNumber(data.phone);
           onNext();
         },
       }
     );
+    onSetPhoneNumber(data.phone);
+    onNext();
   };
 
   return (

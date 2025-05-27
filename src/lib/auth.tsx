@@ -65,6 +65,7 @@ const cookieOptions = {
   expires: 7, // Cookie expires in 7 days
   secure: process.env.NODE_ENV === "production",
   sameSite: "strict" as const,
+  path: '/', // Ensure cookie is available to server and all routes
 };
 
 export function AuthProvider({ children }: AuthProviderProps) {

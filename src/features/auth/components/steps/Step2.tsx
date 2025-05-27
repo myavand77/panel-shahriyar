@@ -7,16 +7,27 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { showToast } from "@/lib/toast";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useOtpVerify } from "@/features/auth/login/hooks/useOtpVerify";
 
 const Step2 = ({
   onNext,
   onPrev,
+  phone_number,
 }: {
   onNext: () => void;
   onPrev: () => void;
+  phone_number: string;
 }) => {
-  const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(120); // 2 minutes
+  const router = useRouter();
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<{ otp: string }>({
+    mode: "onChange",
+    defaultValues: { otp: "" },
+  });
+  const otp = watch("otp");
+  const { verifyOtpMutate, isPending, error } = useOtpVerify();
 
   React.useEffect(() => {
     if (timer > 0) {
@@ -25,17 +36,29 @@ const Step2 = ({
     }
   }, [timer]);
 
-  const handleChange = (value: string) => setOtp(value);
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("eee");
-    showToast({ text: "ورود شما با موفقیت انجام شد.", type: "success" });
-    // handle OTP submit
-    onNext();
+  React.useEffect(() => {
+    if (error) {
+      showToast({ text: "کد وارد شده صحیح نیست.", type: "error" });
+    }
+  }, [error]);
+
+  const onSubmit = (data: { otp: string }) => {
+    verifyOtpMutate(
+      { phone_number, otp_code: data.otp },
+      {
+        onSuccess: () => {
+          showToast({ text: "ورود شما با موفقیت انجام شد.", type: "success" });
+          router.push("/provider/home");
+        },
+      }
+    );
   };
+
+  const handleChange = (value: string) => setValue("otp", value, { shouldValidate: true });
   const handleResend = () => {
     if (timer === 0) {
       setTimer(120);
+      router.back();
       // trigger resend OTP
     }
   };
@@ -60,18 +83,18 @@ const Step2 = ({
       </div>
       {/* OTP Input */}
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="w-full flex flex-col items-center gap-6 mt-2"
       >
         <InputOTP
           value={otp}
           onChange={handleChange}
-          maxLength={4}
+          maxLength={5}
           containerClassName="justify-center"
           className="text-center text-lg font-bold tracking-widest ltr"
         >
           <InputOTPGroup style={{ direction: "ltr" }}>
-            {[0, 1, 2, 3].map((i) => (
+            {[0, 1, 2, 3, 4].map((i) => (
               <InputOTPSlot key={i} index={i} />
             ))}
           </InputOTPGroup>
@@ -95,10 +118,10 @@ const Step2 = ({
         {/* Submit Button */}
         <Button
           className="w-full mt-6 rounded-[6px] h-9 text-[14px] font-medium"
-          disabled={otp.length !== 4}
+          disabled={otp.length !== 5 || isPending}
           type="submit"
         >
-          تایید کد
+          {isPending ? "در حال تایید..." : "تایید کد"}
         </Button>
       </form>
       {/* Bottom Links */}
