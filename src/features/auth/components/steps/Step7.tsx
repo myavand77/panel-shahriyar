@@ -108,7 +108,7 @@ const Step7: React.FC<Step7Props> = ({ onNext, onPrev, tab }) => {
           تایید تلفن همراه نماینده
         </div>
         <div className="text-[16px] font-normal text-neutral-500 leading-[1.5] text-center w-full">
-          لطفا کد 4 رقمی ارسال‌شده به تلفن همراه نماینده‌ را وارد کنید.
+          لطفا کد ۵ رقمی ارسال‌شده به تلفن همراه نماینده‌ را وارد کنید.
         </div>
       </div>
       {/* OTP Input */}

@@ -64,10 +64,7 @@ const Step1 = ({
         </div>
       </div>
       {/* Input */}
-      <form
-        className="w-full flex flex-col gap-6 mt-2"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className="w-full flex flex-col gap-6 mt-2">
         <Controller
           name="phone"
           control={control}
@@ -94,9 +91,9 @@ const Step1 = ({
         {/* Main Button */}
         <Button
           className="w-full"
-          type="submit"
           variant="filled"
-          disabled={!isValid || isPending}
+          disabled={isPending}
+          onClick={handleSubmit(onSubmit)}
         >
           {isPending ? "در حال ارسال..." : "دریافت کد یکبارمصرف"}
         </Button>

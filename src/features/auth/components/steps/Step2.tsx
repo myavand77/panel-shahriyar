@@ -13,39 +13,20 @@ import { useStepsForm } from "./StepsFormContext";
 import { Controller } from "react-hook-form";
 
 const Step2 = ({
-  onNext,
   onPrev,
   phone_number,
 }: {
-  onNext: () => void;
   onPrev: () => void;
   phone_number: string;
 }) => {
   const [timer, setTimer] = useState(120); // 2 minutes
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-    control,
-  } = useStepsForm();
+  const { handleSubmit, watch, control, setValue } = useStepsForm();
   const otp = watch("otp") || "";
   const { verifyOtpMutate, isPending, error } = useOtpVerify();
 
-  React.useEffect(() => {
-    if (timer > 0) {
-      const interval = setInterval(() => setTimer((t) => t - 1), 1000);
-      return () => clearInterval(interval);
-    }
-  }, [timer]);
-
-  React.useEffect(() => {
-    if (error) {
-      showToast({ text: "کد وارد شده صحیح نیست.", type: "error" });
-    }
-  }, [error]);
+  const handleChange = (value: string) =>
+    setValue("otp", value, { shouldValidate: true });
 
   const onSubmit = (data: any) => {
     verifyOtpMutate(
@@ -59,7 +40,6 @@ const Step2 = ({
     );
   };
 
-  const handleChange = (value: string) => setValue("otp", value, { shouldValidate: true });
   const handleResend = () => {
     if (timer === 0) {
       setTimer(120);
@@ -70,6 +50,18 @@ const Step2 = ({
   const formatTime = (s: number) =>
     `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 
+  React.useEffect(() => {
+    if (timer > 0) {
+      const interval = setInterval(() => setTimer((t) => t - 1), 1000);
+      return () => clearInterval(interval);
+    }
+  }, [timer]);
+
+  React.useEffect(() => {
+    if (error) {
+      showToast({ text: "کد وارد شده صحیح نیست.", type: "error" });
+    }
+  }, [error]);
   return (
     <div
       className="w-[424px] bg-gradient-to-b from-white to-primary-50 rounded-2xl shadow-lg p-8 flex flex-col items-center gap-6 border border-neutral-200 font-sans"
@@ -96,14 +88,20 @@ const Step2 = ({
           control={control}
           render={({ field }) => (
             <InputOTP
-              maxLength={5}
               value={field.value}
-              onChange={field.onChange}
-              containerClassName="w-full flex justify-center"
+              onChange={(value) => {
+                field.onChange(value);
+                handleChange(value);
+              }}
+              maxLength={5}
+              containerClassName="justify-center"
+              className="text-center text-lg font-bold tracking-widest ltr"
             >
-              {[...Array(5)].map((_, i) => (
-                <InputOTPSlot key={i} index={i} />
-              ))}
+              <InputOTPGroup style={{ direction: "ltr" }}>
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <InputOTPSlot key={i} index={i} />
+                ))}
+              </InputOTPGroup>
             </InputOTP>
           )}
         />
