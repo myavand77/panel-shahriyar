@@ -12,14 +12,14 @@ interface DashboardLayoutProps {
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { user, access_token, loading } = useAuth();
-  const userRole = user?.role || "User";
+  const { access_token, loading } = useAuth();
+  const userRole = "Provider";
   const router = useRouter();
 
   React.useEffect(() => {
     if (!loading && !access_token) {
       router.replace("/auth/login");
-    }
+    } else console.log("access_token", access_token);
   }, [loading, access_token, router]);
 
   const getTitleByRole = (role: UserRole): string => {

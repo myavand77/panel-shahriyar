@@ -11,6 +11,8 @@ import {
   StepsFormProvider,
   useStepsForm,
 } from "../components/steps/StepsFormContext";
+import { useAuth } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 const RegistrationInner = () => {
   const { reset } = useStepsForm();
@@ -120,10 +122,21 @@ const RegistrationInner = () => {
   );
 };
 
-const Registration = () => (
-  <StepsFormProvider>
-    <RegistrationInner />
-  </StepsFormProvider>
-);
+const Registration = () => {
+  const { access_token } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (access_token) {
+      router.replace("/provider/home");
+    }
+  }, [access_token, router]);
+
+  return (
+    <StepsFormProvider>
+      <RegistrationInner />
+    </StepsFormProvider>
+  );
+};
 
 export default Registration;

@@ -17,24 +17,16 @@ export default function RootLayout({
 
   const [queryClient] = React.useState(() => new QueryClient());
 
-  if (isAuthRoute) {
-    return (
-      <html lang="fa">
-        <body>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </body>
-      </html>
-    );
-  }
-
   return (
     <html lang="fa">
       <body>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <DashboardLayout>{children}</DashboardLayout>
+            {isAuthRoute ? (
+              children
+            ) : (
+              <DashboardLayout>{children}</DashboardLayout>
+            )}
           </AuthProvider>
         </QueryClientProvider>
       </body>

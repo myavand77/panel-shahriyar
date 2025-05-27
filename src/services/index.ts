@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import axiosInstance from './config';
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import axiosInstance from "./config";
 
-export const sessionKey = 'token';
+export const sessionKey = "access_token";
 
 const onSuccess = (response: AxiosResponse<any, any>) => {
   return response.data;
@@ -12,7 +12,10 @@ const onError = (error: any) => {
   return Promise.reject(error.response);
 };
 
-export async function getService(path: string, config?: AxiosRequestConfig<any>) {
+export async function getService(
+  path: string,
+  config?: AxiosRequestConfig<any>
+) {
   try {
     const response = await axiosInstance.get(path, config);
     return onSuccess(response);
@@ -20,7 +23,11 @@ export async function getService(path: string, config?: AxiosRequestConfig<any>)
     return onError(error);
   }
 }
-export async function postService(path: string, data?: unknown, config?: AxiosRequestConfig<any>) {
+export async function postService(
+  path: string,
+  data?: unknown,
+  config?: AxiosRequestConfig<any>
+) {
   try {
     const response = await axiosInstance.post(path, data, config);
     return onSuccess(response);
@@ -29,7 +36,11 @@ export async function postService(path: string, data?: unknown, config?: AxiosRe
   }
 }
 
-export async function putService(path: string, data?: unknown, config?: AxiosRequestConfig<any>) {
+export async function putService(
+  path: string,
+  data?: unknown,
+  config?: AxiosRequestConfig<any>
+) {
   try {
     const response = await axiosInstance.put(path, data, config);
     return onSuccess(response);

@@ -6,13 +6,11 @@ import { Can } from "@casl/react";
 import { defineAbilityFor } from "@/lib/ability";
 import { cn } from "@/lib/utils";
 import { getNavigationItems } from "@/config/navigation";
-import { useAuth } from "@/lib/auth";
 
 export default function Sidebar() {
-  const { user } = useAuth();
-  const ability = defineAbilityFor(user?.role || "User");
+  const ability = defineAbilityFor("Provider");
   const pathname = usePathname();
-  const navItems = getNavigationItems(user?.role || "User");
+  const navItems = getNavigationItems("Provider");
 
   return (
     <div className="h-full p-4 flex flex-col border-l border-gray-100">
