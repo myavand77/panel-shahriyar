@@ -103,7 +103,7 @@ const RegistrationInner = () => {
         ))}
       {state.step === 5 &&
         (state.tab === "personal" ? (
-          <Step7 onNext={handleNext} onPrev={handlePrev} />
+          <Step7 onNext={handleNext} onPrev={handlePrev} tab={state.tab} />
         ) : (
           <Step6
             onNext={handleNext}
@@ -112,7 +112,7 @@ const RegistrationInner = () => {
             goToStep={handleGoToStep}
           />
         ))}
-      {state.step === 6 && <Step7 onPrev={handlePrev} onNext={handleNext} />}
+      {state.step === 6 && <Step7 onPrev={handlePrev} onNext={handleNext} tab={state.tab} />}
     </div>
   );
 };

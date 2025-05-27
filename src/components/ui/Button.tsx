@@ -4,6 +4,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   variant?: "filled" | "outlined" | "info" | "warning" | "success" | "error";
   size?: "sm" | "md" | "lg" | "xl";
+  loading?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -11,6 +12,7 @@ const Button: React.FC<ButtonProps> = ({
   className = "",
   variant = "filled",
   size = "md",
+  loading = false,
   ...props
 }) => {
   const baseClasses =
@@ -43,9 +45,14 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={`${baseClasses} ${sizeClasses} ${variantClasses} ${className}`}
+      disabled={props.disabled || loading}
       {...props}
     >
-      {children}
+      {loading ? (
+        <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+      ) : (
+        children
+      )}
     </button>
   );
 };

@@ -8,16 +8,27 @@ import {
 } from "@/components/ui/input-otp";
 import { useStepsForm } from "./StepsFormContext";
 import { Controller } from "react-hook-form";
+import { useOtpVerify } from "@/features/auth/login/hooks/useOtpVerify";
+import { useCreateVendor } from "@/features/auth/registration/hooks/useCreateVendor";
+import { mapStepsFormDataToVendorPayload } from "@/features/auth/registration/helpers/mapStepsFormDataToVendorPayload";
+import { useRouter } from "next/navigation";
+import { handleApiError } from "@/lib/error";
+import { showToast } from "@/lib/toast";
 
 interface Step7Props {
   onNext: () => void;
   onPrev: () => void;
+  tab: "personal" | "company";
 }
 
-const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
+const Step7: React.FC<Step7Props> = ({ onNext, onPrev, tab }) => {
   const { setValue, watch, control, getValues } = useStepsForm();
   const [timer, setTimer] = useState(120); // 2 minutes
   const otp = watch("otp") || "";
+  const router = useRouter();
+  // Add hooks for OTP verify
+  const { verifyOtpMutate } = useOtpVerify();
+  const { createVendorMutate } = useCreateVendor();
 
   React.useEffect(() => {
     if (timer > 0) {
@@ -32,12 +43,52 @@ const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const allData = getValues();
-    console.log("allData", allData); // handle OTP submit
-    onNext();
+    const repName = allData.repName || "";
+    const repLastName = allData.repLastName || "";
+    const repNationalId = allData.repNationalId || "";
+    const repPhone = allData.repPhone || "";
+    const otp = allData.otp || "";
+
+    // Only verify OTP and proceed
+    verifyOtpMutate(
+      {
+        first_name: repName,
+        last_name: repLastName,
+        national_id: repNationalId,
+        otp_code: otp,
+        phone_number: repPhone,
+      },
+      {
+        onSuccess: () => {
+          // 3. Map form data and call createVendor
+          const vendorType = tab === "company" ? "company" : "individual";
+          const payload = mapStepsFormDataToVendorPayload(allData, vendorType);
+          createVendorMutate(payload, {
+            onSuccess: () => {
+              showToast({
+                text: "ثبت نام با موفقیت انجام شد",
+                type: "success",
+              });
+              router.push("/provider/home");
+            },
+            onError: (error) => {
+              handleApiError(error, "خطا در ثبت‌نام. لطفا دوباره تلاش کنید.");
+            },
+          });
+        },
+        onError: (error) => {
+          handleApiError(
+            error,
+            "کد تایید اشتباه است یا منقضی شده. لطفا دوباره تلاش کنید."
+          );
+        },
+      }
+    );
   };
   const handleResend = () => {
     if (timer === 0) {
       setTimer(120);
+      router.back();
       // trigger resend OTP
     }
   };

@@ -40,7 +40,17 @@ export type TVendorBasicInfoIndividual = {
 
 export type TVendorInstallment = {
   installments: number;
-  status: 'ACTIVE_INSTALLMENT' | 'INACTIVE_INSTALLMENT';
+  status:
+    | "ACTIVE_INSTALLMENT"
+    | "ACTIVE_CASH"
+    | "DISABLE"
+    | "SUSPEND"
+    | "DELETED"
+    | "ACTIVE_INSTALLMENT"
+    | "ACTIVE_CASH"
+    | "DISABLE"
+    | "SUSPEND"
+    | "DELETED";
   subscription: number;
 };
 
@@ -71,7 +81,7 @@ export type TVendorCreationPayload = {
   installment: TVendorInstallment;
   logo: string;
   technical_info: TVendorTechnicalInfo;
-  vendor_type: 'individual' | 'company';
+  vendor_type: "individual" | "company";
 };
 
 export type TVendorCreationResponse = {
@@ -95,5 +105,5 @@ export type TVendorCreationResponse = {
   status: string;
   technical_info: TVendorTechnicalInfo;
   updated_at: string;
-  vendor_type: 'individual' | 'company';
+  vendor_type: "individual" | "company";
 };

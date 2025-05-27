@@ -4,6 +4,8 @@ import { Edit } from "lucide-react";
 import IconButton from "@/components/ui/IconButton";
 import { useStepsForm } from "./StepsFormContext";
 import { Controller } from "react-hook-form";
+import { useOtpRequest } from "@/features/auth/login/hooks/useOtpRequest";
+import { handleApiError } from "@/lib/error";
 
 interface Step6Props {
   onPrev: () => void;
@@ -20,6 +22,7 @@ const Step6: React.FC<Step6Props> = ({
   isCompany,
 }) => {
   const { watch, control } = useStepsForm();
+  const { requestOtpMutate, isPending } = useOtpRequest();
   // Step 5 (نماینده)
   const repName = watch("repName") || "";
   const repLastName = watch("repLastName") || "";
@@ -52,12 +55,32 @@ const Step6: React.FC<Step6Props> = ({
   const address = watch("address") || "";
   const logo = watch("logo") || "";
 
+  // Handler for OTP request
+  const handleRequestOtp = () => {
+    if (!repPhone) return;
+    requestOtpMutate(
+      { phone_number: repPhone },
+      {
+        onSuccess: () => {
+          onNext();
+        },
+        onError: (error) => {
+          handleApiError(
+            error,
+            "خطا در ارسال درخواست کد تایید. لطفا دوباره تلاش کنید."
+          );
+        },
+      }
+    );
+  };
+
   return (
     <StepLayout
       currentStep={isCompany ? 5 : 4}
-      onNext={onNext}
+      onNext={handleRequestOtp}
       onPrev={onPrev}
       isCompany={isCompany}
+      loading={!repPhone || isPending}
     >
       {/* First row: Step 5 info, full width */}
       <div className="w-full mb-6">
