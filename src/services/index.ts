@@ -2,8 +2,6 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import axiosInstance from "./config";
 
-export const sessionKey = "access_token";
-
 const onSuccess = (response: AxiosResponse<any, any>) => {
   return response.data;
 };
@@ -57,3 +55,5 @@ export async function delete_(path: string, config?: AxiosRequestConfig<any>) {
     return onError(error);
   }
 }
+
+export * from "./refreshToken";

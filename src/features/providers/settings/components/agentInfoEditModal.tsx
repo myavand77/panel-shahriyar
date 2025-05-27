@@ -21,20 +21,25 @@ const AgentInfoEditModal = ({
   const { updateVendor } = useVendorData();
 
   const onSubmit = async (data: AgentInfoFormValues) => {
-    // Map form data to TUpdateVendorRequest.agent
-    const update: TUpdateVendorRequest = {
-      agent: {
-        first_name: data["نام نماینده"],
-        last_name: data["نام خانوادگی نماینده"],
-        national_id: data["کدملی نماینده"],
-        mobile: data["تلفن همراه نماینده"],
-        telegram_id: data["آی‌دی تلگرام"],
-        whatsapp_id: data["شماره واتساپ"],
-        email: data["ایمیل"],
-        phone: data["تلفن ثابت"],
-      },
-    };
-    await updateVendor(update);
+    // Only include changed fields
+    const agentUpdate: TUpdateVendorRequest["agent"] = {};
+    // Helper to check if a field changed
+    const isChanged = (key: keyof AgentInfoFormValues) => data[key] !== defaultValues[key];
+
+    if (isChanged("نام نماینده")) agentUpdate.first_name = data["نام نماینده"];
+    if (isChanged("نام خانوادگی نماینده")) agentUpdate.last_name = data["نام خانوادگی نماینده"];
+    if (isChanged("کدملی نماینده")) agentUpdate.national_id = data["کدملی نماینده"];
+    if (isChanged("تلفن همراه نماینده")) agentUpdate.mobile = data["تلفن همراه نماینده"];
+    if (isChanged("آی‌دی تلگرام")) agentUpdate.telegram_id = data["آی‌دی تلگرام"];
+    if (isChanged("شماره واتساپ")) agentUpdate.whatsapp_id = data["شماره واتساپ"];
+    if (isChanged("ایمیل")) agentUpdate.email = data["ایمیل"];
+    if (isChanged("تلفن ثابت")) agentUpdate.phone = data["تلفن ثابت"];
+
+    const update: TUpdateVendorRequest = {};
+    if (Object.keys(agentUpdate).length > 0) {
+      update.agent = agentUpdate;
+      await updateVendor(update);
+    }
     onClose();
   };
 

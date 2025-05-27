@@ -8,7 +8,8 @@ import React, {
 } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Cookies from "js-cookie";
-import { sessionKey } from "@/services";
+import { logoutUser } from "./logout";
+import { STORAGE_KEYS } from "@/constants/storage";
 
 // Types
 export type UserRole = "Admin" | "Provider" | "User";
@@ -63,7 +64,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Check token on mount and on route change
   useEffect(() => {
-    const token = Cookies.get(sessionKey);
+    const token = Cookies.get(STORAGE_KEYS.TOKEN);
     if (!token) {
       if (pathname !== "/auth/login") {
         router.replace("/auth/login");
@@ -79,16 +80,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Set token from OTP response
   const setAuthFromOtp = (tokens: AuthTokens) => {
     if (tokens.access_token) {
-      Cookies.set(sessionKey, tokens.access_token, cookieOptions);
+      Cookies.set(STORAGE_KEYS.TOKEN, tokens.access_token, cookieOptions);
+      if (tokens.refresh_token) {
+        Cookies.set(
+          STORAGE_KEYS.REFRESH_TOKEN,
+          tokens.refresh_token,
+          cookieOptions
+        );
+      }
       setAccessToken(tokens.access_token);
     }
   };
 
   // Logout clears token and redirects
   const logout = () => {
-    Cookies.remove(sessionKey);
-    setAccessToken(null);
-    router.replace("/auth/login");
+    logoutUser();
   };
 
   const value = {

@@ -2,12 +2,13 @@ import InfoBox from "@/components/ui/InfoBox";
 import { useState } from "react";
 import AgentInfoEditModal from "./agentInfoEditModal";
 import { useVendorData } from "./VendorDataContext";
+import Skeleton from "react-loading-skeleton";
 
 const AgentInfoTab = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const { vendor, isLoading } = useVendorData();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Skeleton height={32} />;
   if (!vendor) return <div>No data</div>;
 
   // Map vendor.agent fields to the InfoBox format
@@ -18,7 +19,7 @@ const AgentInfoTab = () => {
     "تلفن همراه نماینده": vendor.agent?.mobile || "",
     "آی‌دی تلگرام": vendor.agent?.telegram_id || "",
     "شماره واتساپ": vendor.agent?.whatsapp_id || "",
-    "ایمیل": vendor.agent?.email || "",
+    ایمیل: vendor.agent?.email || "",
     "تلفن ثابت": vendor.agent?.phone || "",
   };
 
@@ -38,4 +39,4 @@ const AgentInfoTab = () => {
   );
 };
 
-export default AgentInfoTab; 
+export default AgentInfoTab;

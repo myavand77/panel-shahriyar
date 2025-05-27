@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {cookies} from 'next/headers';
-import {AxiosRequestConfig, AxiosResponse} from 'axios';
-import axiosInstance from './config';
-import {sessionKey} from '.';
+import { cookies } from "next/headers";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import axiosInstance from "./config";
+import { STORAGE_KEYS } from "@/constants/storage";
 
 const getServerCookieByName = async (name: string) => {
   const cookieStore = await cookies();
@@ -19,7 +19,7 @@ const onError = (error: any) => {
 
 export async function get(path: string, config?: AxiosRequestConfig<any>) {
   try {
-    const token = getServerCookieByName(sessionKey);
+    const token = getServerCookieByName(STORAGE_KEYS.TOKEN);
     let temp = { ...config };
     if (token) {
       temp = { ...config, headers: { Authorization: `Bearer ${token}` } };

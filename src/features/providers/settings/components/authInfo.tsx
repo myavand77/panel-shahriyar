@@ -2,12 +2,13 @@ import InfoBox from "@/components/ui/InfoBox";
 import { useState } from "react";
 import AuthInfoEditModal from "./authInfoEditModal";
 import { useVendorData } from "./VendorDataContext";
+import Skeleton from "react-loading-skeleton";
 
 const AuthInfoTab = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const { vendor, isLoading } = useVendorData();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Skeleton height={32} />;
   if (!vendor) return <div>No data</div>;
 
   // Map vendor fields to the InfoBox format
@@ -21,7 +22,7 @@ const AuthInfoTab = () => {
     شهر: vendor.address?.city || "",
     کدپستی: vendor.address?.postal_code || "",
     برند: vendor.brand || "",
-    "دسته‌بندی": vendor.category || "",
+    دسته‌بندی: vendor.category || "",
     "شماره حساب": vendor.bank_account?.account_number || "",
     "شماره شبا": vendor.bank_account?.sheba_number || "",
     آدرس: vendor.address?.address || "",

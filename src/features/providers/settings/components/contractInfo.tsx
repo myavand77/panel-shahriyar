@@ -1,5 +1,7 @@
 import InfoBanner from "@/components/ui/InfoBanner";
 import InfoBox from "@/components/ui/InfoBox";
+import moment from "moment-jalaali";
+import { useVendorData } from "./VendorDataContext";
 
 const contractCommissionInfo = {
   "کمیسیون درگاه بهنگام:": "%۲",
@@ -9,35 +11,38 @@ const contractCommissionInfo = {
   "درصد کارمزد کاربر:": "%۱.۵",
 };
 
-const contractDateInfo = {
-  "تاریخ شروع قرارداد:": "۱۴۰۴/۰۵/۰۵",
-  "تاریخ پایان قرارداد:": "۱۴۰۴/۰۶/۰۵",
-};
-
 const contractSettlementInfo = {
   "دوره تسویه:": "۴۵ روزه",
 };
 
 const ContractInfoTab = () => {
+  const { vendor } = useVendorData();
+
+  // Helper to convert to Jalali and Persian digits
+  const toJalaliPersian = (dateStr: string) => {
+    if (!dateStr) return "-";
+    return moment(dateStr)
+      .format("jYYYY/jMM/jDD")
+      .replace(/\d/g, (d: string) => "۰۱۲۳۴۵۶۷۸۹"[+d]);
+  };
+
+  // Calculate contract dates
+  const startDate = vendor?.created_at || "";
+  const endDate = startDate
+    ? moment(startDate).add(1, "year").toISOString()
+    : "";
+
+  const contractDateInfo = {
+    "تاریخ شروع قرارداد:": toJalaliPersian(startDate),
+    "تاریخ پایان قرارداد:": toJalaliPersian(endDate),
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <InfoBanner
         variant="success"
-        buttonTitle="تایید"
-        onButtonClick={() => {}}
-      >
-        قرارداد شما فعال می‌باشد.
-      </InfoBanner>
-      <InfoBanner variant="info" buttonTitle="تایید" onButtonClick={() => {}}>
-        قرارداد شما فعال می‌باشد.
-      </InfoBanner>
-      <InfoBanner variant="error" buttonTitle="تایید" onButtonClick={() => {}}>
-        قرارداد شما فعال می‌باشد.
-      </InfoBanner>
-      <InfoBanner
-        variant="warning"
-        buttonTitle="تایید"
-        onButtonClick={() => {}}
+        // buttonTitle="تایید"
+        // onButtonClick={() => {}}
       >
         قرارداد شما فعال می‌باشد.
       </InfoBanner>

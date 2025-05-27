@@ -1,5 +1,6 @@
 "use client";
 import "../styles/globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import React from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { usePathname } from "next/navigation";

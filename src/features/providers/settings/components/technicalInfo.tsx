@@ -3,12 +3,13 @@ import { useState } from "react";
 import TechnicalInfoEditModal from "./technicalInfoEditModal";
 import { useVendorData } from "./VendorDataContext";
 import { TechnicalInfoFormValues } from "../types";
+import Skeleton from "react-loading-skeleton";
 
 export default function TechnicalInfoTab() {
   const [modalOpen, setModalOpen] = useState(false);
   const { vendor, isLoading, updateVendor } = useVendorData();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Skeleton height={32} />;
   if (!vendor) return <div>No data</div>;
 
   const technicalInfo = vendor.technical_info || {};
@@ -40,16 +41,29 @@ export default function TechnicalInfoTab() {
   };
 
   const handleSave = async (values: TechnicalInfoFormValues) => {
-    await updateVendor({
-      technical_info: {
-        url: values.website || "",
-        web_service_url: values.webservice || "",
-        api_key: values.apiKey || "",
-        callback_url: values.callback || "",
-        email: values.email || "",
-        allowed_ips: values.ips || [],
-      },
-    });
+    // Helper to check if a field changed
+    const isChanged = (key: keyof TechnicalInfoFormValues) => {
+      if (key === "ips") {
+        const a = values.ips || [];
+        const b = defaultValues.ips || [];
+        return a.length !== b.length || a.some((ip, i) => ip !== b[i]);
+      }
+      return values[key] !== defaultValues[key];
+    };
+
+    const changedFields: NonNullable<import("../types").TUpdateVendorRequest["technical_info"]> = {};
+    if (isChanged("website")) changedFields.url = values.website || "";
+    if (isChanged("webservice")) changedFields.web_service_url = values.webservice || "";
+    if (isChanged("apiKey")) changedFields.api_key = values.apiKey || "";
+    if (isChanged("callback")) changedFields.callback_url = values.callback || "";
+    if (isChanged("email")) changedFields.email = values.email || "";
+    if (isChanged("ips")) changedFields.allowed_ips = values.ips || [];
+
+    if (Object.keys(changedFields).length > 0) {
+      await updateVendor({
+        technical_info: changedFields,
+      });
+    }
     setModalOpen(false);
   };
 
