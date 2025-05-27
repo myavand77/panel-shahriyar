@@ -5,6 +5,7 @@ export type TOtpRequestPayload = {
 
 export type TOtpRequestResponse = {
   // Define expected response fields here, for now using generic any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 

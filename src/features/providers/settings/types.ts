@@ -122,3 +122,47 @@ export type TUpdateVendorRequest = {
     web_service_url?: string;
   };
 };
+
+export type AgentInfoFormValues = {
+  "نام نماینده": string;
+  "نام خانوادگی نماینده": string;
+  "کدملی نماینده": string;
+  "تلفن همراه نماینده": string;
+  "آی‌دی تلگرام": string;
+  "شماره واتساپ": string;
+  ایمیل: string;
+  "تلفن ثابت": string;
+};
+
+export type AuthInfoFormValues = {
+  نام: string;
+  "نام خانوادگی": string;
+  "کد ملی": string;
+  "تلفن همراه": string;
+  ایمیل: string;
+  استان: string;
+  شهر: string;
+  کدپستی: string;
+  برند: string;
+  دسته‌بندی: string;
+  "شماره حساب": string;
+  "شماره شبا": string;
+  آدرس: string;
+};
+
+export type DocumentsFormValues = {
+  tasis?: File | string | null;
+  taghirat?: File | string | null;
+  sahamdar?: File | string | null;
+  emzadar?: File | string | null;
+  logo?: File | string | null;
+}
+
+export type TechnicalInfoFormValues = {
+  website?: string;
+  webservice?: string;
+  apiKey?: string;
+  callback?: string;
+  email?: string;
+  ips?: string[];
+};

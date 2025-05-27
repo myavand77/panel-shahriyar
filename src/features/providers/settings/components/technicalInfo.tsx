@@ -2,6 +2,7 @@ import InfoBox from "@/components/ui/InfoBox";
 import { useState } from "react";
 import TechnicalInfoEditModal from "./technicalInfoEditModal";
 import { useVendorData } from "./VendorDataContext";
+import { TechnicalInfoFormValues } from "../types";
 
 export default function TechnicalInfoTab() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,7 +39,7 @@ export default function TechnicalInfoTab() {
     ips: technicalInfo.allowed_ips || [],
   };
 
-  const handleSave = async (values: any) => {
+  const handleSave = async (values: TechnicalInfoFormValues) => {
     await updateVendor({
       technical_info: {
         url: values.website || "",

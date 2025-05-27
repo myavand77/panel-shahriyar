@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useOtpVerify } from "@/features/auth/login/hooks/useOtpVerify";
 import { useStepsForm } from "./StepsFormContext";
 import { Controller } from "react-hook-form";
+import { StepsFormData } from "./StepsFormContext";
 
 const Step2 = ({
   onPrev,
@@ -28,7 +29,7 @@ const Step2 = ({
   const handleChange = (value: string) =>
     setValue("otp", value, { shouldValidate: true });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: StepsFormData) => {
     verifyOtpMutate(
       { phone_number, otp_code: data.otp || "" },
       {

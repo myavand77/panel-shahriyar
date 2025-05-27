@@ -2,11 +2,12 @@ import { Modal } from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
 import { useForm, Controller } from "react-hook-form";
 import { useVendorData } from "./VendorDataContext";
+import { AgentInfoFormValues, TUpdateVendorRequest } from "../types";
 
 interface AgentInfoEditModalProps {
   open: boolean;
   onClose: () => void;
-  defaultValues: any;
+  defaultValues: AgentInfoFormValues;
 }
 
 const AgentInfoEditModal = ({
@@ -14,14 +15,14 @@ const AgentInfoEditModal = ({
   onClose,
   defaultValues,
 }: AgentInfoEditModalProps) => {
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset } = useForm<AgentInfoFormValues>({
     defaultValues,
   });
   const { updateVendor } = useVendorData();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: AgentInfoFormValues) => {
     // Map form data to TUpdateVendorRequest.agent
-    const update = {
+    const update: TUpdateVendorRequest = {
       agent: {
         first_name: data["نام نماینده"],
         last_name: data["نام خانوادگی نماینده"],
@@ -62,7 +63,9 @@ const AgentInfoEditModal = ({
           <Controller
             name="نام خانوادگی نماینده"
             control={control}
-            render={({ field }) => <Input label="نام خانوادگی نماینده" {...field} />}
+            render={({ field }) => (
+              <Input label="نام خانوادگی نماینده" {...field} />
+            )}
           />
           <Controller
             name="کدملی نماینده"
@@ -72,7 +75,9 @@ const AgentInfoEditModal = ({
           <Controller
             name="تلفن همراه نماینده"
             control={control}
-            render={({ field }) => <Input label="تلفن همراه نماینده" {...field} />}
+            render={({ field }) => (
+              <Input label="تلفن همراه نماینده" {...field} />
+            )}
           />
           <Controller
             name="آی‌دی تلگرام"
@@ -87,7 +92,9 @@ const AgentInfoEditModal = ({
           <Controller
             name="ایمیل"
             control={control}
-            render={({ field }) => <Input label="ایمیل" type="email" {...field} />}
+            render={({ field }) => (
+              <Input label="ایمیل" type="email" {...field} />
+            )}
           />
           <Controller
             name="تلفن ثابت"
@@ -100,4 +107,4 @@ const AgentInfoEditModal = ({
   );
 };
 
-export default AgentInfoEditModal; 
+export default AgentInfoEditModal;

@@ -31,18 +31,21 @@ const TechnicalInfoEditModal = ({
   defaultValues,
   onSave,
 }: TechnicalInfoEditModalProps) => {
-  const { control, handleSubmit, reset, setValue, watch } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues,
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: {
+    website?: string;
+    webservice?: string;
+    apiKey?: string;
+    callback?: string;
+    email?: string;
+    ips?: string[];
+  }) => {
     onSave(data);
     onClose();
   };
-
-  // For IPInput, sync with form state
-  const ips = watch("ips") || [];
-
   return (
     <Modal
       open={open}
@@ -54,7 +57,11 @@ const TechnicalInfoEditModal = ({
       title="ویرایش اطلاعات فنی"
       subtitle="لطفا اطلاعات مورد نظر را بررسی و در صورت نیاز، تغییرات لازم را اعمال کنید."
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6" dir="rtl">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-6"
+        dir="rtl"
+      >
         <div className="flex flex-col gap-4">
           <Controller
             name="website"
@@ -132,4 +139,4 @@ const TechnicalInfoEditModal = ({
   );
 };
 
-export default TechnicalInfoEditModal; 
+export default TechnicalInfoEditModal;

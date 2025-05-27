@@ -26,6 +26,7 @@ export interface AuthTokens {
   access_token: string;
   refresh_token?: string;
   expires_in?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
@@ -65,7 +66,7 @@ const cookieOptions = {
   expires: 7, // Cookie expires in 7 days
   secure: process.env.NODE_ENV === "production",
   sameSite: "strict" as const,
-  path: '/', // Ensure cookie is available to server and all routes
+  path: "/", // Ensure cookie is available to server and all routes
 };
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -83,7 +84,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
           const userData = JSON.parse(storedUser);
           setUser(userData);
         } catch (error) {
-          showToast({ text: "خطا در خواندن اطلاعات کاربر. لطفا دوباره وارد شوید.", type: "error" });
+          console.error("Error parsing user data:", error);
+          showToast({
+            text: "خطا در خواندن اطلاعات کاربر. لطفا دوباره وارد شوید.",
+            type: "error",
+          });
           localStorage.removeItem("userData");
         }
       }

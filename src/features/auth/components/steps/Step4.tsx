@@ -14,13 +14,11 @@ interface Step4Props {
 }
 
 const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
-  const { register, setValue, watch, control, handleSubmit, formState: { errors } } = useStepsForm();
-  const website = watch("website") || "";
-  const webservice = watch("webservice") || "";
-  const apiKey = watch("apiKey") || "";
-  const email = watch("email") || "";
-  const callback = watch("callback") || "";
-  const ips = watch("ips") || [];
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useStepsForm();
 
   return (
     <StepLayout
@@ -143,7 +141,11 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="ips"
             control={control}
-            rules={{ required: "وارد کردن حداقل یک IP الزامی است.", validate: v => v && v.length > 0 || "وارد کردن حداقل یک IP الزامی است." }}
+            rules={{
+              required: "وارد کردن حداقل یک IP الزامی است.",
+              validate: (v) =>
+                (v && v.length > 0) || "وارد کردن حداقل یک IP الزامی است.",
+            }}
             render={({ field }) => (
               <IPInput
                 label="IP فروشگاه"
@@ -153,7 +155,9 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
             )}
           />
           {errors.ips && (
-            <span className="text-error-500 text-xs mt-1">{errors.ips.message}</span>
+            <span className="text-error-500 text-xs mt-1">
+              {errors.ips.message}
+            </span>
           )}
         </div>
         {/* InfoBanner (left) */}

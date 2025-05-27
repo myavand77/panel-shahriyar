@@ -3,7 +3,6 @@ import StepLayout from "@/features/auth/components/StepLayout";
 import { Edit } from "lucide-react";
 import IconButton from "@/components/ui/IconButton";
 import { useStepsForm } from "./StepsFormContext";
-import { Controller } from "react-hook-form";
 import { useOtpRequest } from "@/features/auth/login/hooks/useOtpRequest";
 import { handleApiError } from "@/lib/error";
 
@@ -21,7 +20,7 @@ const Step6: React.FC<Step6Props> = ({
   goToStep,
   isCompany,
 }) => {
-  const { watch, control } = useStepsForm();
+  const { watch } = useStepsForm();
   const { requestOtpMutate, isPending } = useOtpRequest();
   // Step 5 (نماینده)
   const repName = watch("repName") || "";

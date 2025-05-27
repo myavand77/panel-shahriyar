@@ -16,12 +16,11 @@ import { handleApiError } from "@/lib/error";
 import { showToast } from "@/lib/toast";
 
 interface Step7Props {
-  onNext: () => void;
   onPrev: () => void;
   tab: "personal" | "company";
 }
 
-const Step7: React.FC<Step7Props> = ({ onNext, onPrev, tab }) => {
+const Step7: React.FC<Step7Props> = ({ onPrev, tab }) => {
   const { setValue, watch, control, getValues } = useStepsForm();
   const [timer, setTimer] = useState(120); // 2 minutes
   const otp = watch("otp") || "";

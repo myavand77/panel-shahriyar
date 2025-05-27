@@ -3,11 +3,12 @@ import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import { useForm, Controller } from "react-hook-form";
 import { useVendorData } from "./VendorDataContext";
+import { AuthInfoFormValues } from "../types";
 
 interface AuthInfoEditModalProps {
   open: boolean;
   onClose: () => void;
-  defaultValues: any;
+  defaultValues: AuthInfoFormValues;
 }
 
 const provinceOptions = [
@@ -30,12 +31,12 @@ const AuthInfoEditModal = ({
   onClose,
   defaultValues,
 }: AuthInfoEditModalProps) => {
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset } = useForm<AuthInfoFormValues>({
     defaultValues,
   });
   const { updateVendor } = useVendorData();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: AuthInfoFormValues) => {
     // Map form data to TUpdateVendorRequest
     const update = {
       basic_info_individual: {

@@ -7,7 +7,10 @@ import Step6 from "../components/steps/Step6";
 import Step7 from "../components/steps/Step7";
 import CompanyStep3 from "../components/steps/CompanyStep3";
 import CompanyStep4 from "../components/steps/CompanyStep4";
-import { StepsFormProvider, useStepsForm } from "../components/steps/StepsFormContext";
+import {
+  StepsFormProvider,
+  useStepsForm,
+} from "../components/steps/StepsFormContext";
 
 const RegistrationInner = () => {
   const { reset } = useStepsForm();
@@ -103,7 +106,7 @@ const RegistrationInner = () => {
         ))}
       {state.step === 5 &&
         (state.tab === "personal" ? (
-          <Step7 onNext={handleNext} onPrev={handlePrev} tab={state.tab} />
+          <Step7 onPrev={handlePrev} tab={state.tab} />
         ) : (
           <Step6
             onNext={handleNext}
@@ -112,7 +115,7 @@ const RegistrationInner = () => {
             goToStep={handleGoToStep}
           />
         ))}
-      {state.step === 6 && <Step7 onPrev={handlePrev} onNext={handleNext} tab={state.tab} />}
+      {state.step === 6 && <Step7 onPrev={handlePrev} tab={state.tab} />}
     </div>
   );
 };

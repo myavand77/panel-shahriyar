@@ -14,10 +14,8 @@ const Step1 = ({
   onSetPhoneNumber: (phone: string) => void;
 }) => {
   const {
-    register,
     handleSubmit,
-    formState: { errors, isValid },
-    getValues,
+    formState: { errors },
     control,
   } = useStepsForm();
   const { requestOtpMutate, isPending, error } = useOtpRequest();
