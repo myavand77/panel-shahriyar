@@ -6,6 +6,8 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useStepsForm } from "./StepsFormContext";
+import { Controller } from "react-hook-form";
 
 interface Step7Props {
   onNext: () => void;
@@ -13,8 +15,9 @@ interface Step7Props {
 }
 
 const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
-  const [otp, setOtp] = useState("");
+  const { setValue, watch, control } = useStepsForm();
   const [timer, setTimer] = useState(120); // 2 minutes
+  const otp = watch("otp") || "";
 
   React.useEffect(() => {
     if (timer > 0) {
@@ -23,7 +26,7 @@ const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
     }
   }, [timer]);
 
-  const handleChange = (value: string) => setOtp(value);
+  const handleChange = (value: string) => setValue("otp", value, { shouldValidate: true });
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // handle OTP submit
@@ -59,19 +62,28 @@ const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
         onSubmit={handleSubmit}
         className="w-full flex flex-col items-center gap-6 mt-2"
       >
-        <InputOTP
-          value={otp}
-          onChange={handleChange}
-          maxLength={4}
-          containerClassName="justify-center"
-          className="text-center text-lg font-bold tracking-widest ltr"
-        >
-          <InputOTPGroup style={{ direction: "ltr" }}>
-            {[0, 1, 2, 3].map((i) => (
-              <InputOTPSlot key={i} index={i} />
-            ))}
-          </InputOTPGroup>
-        </InputOTP>
+        <Controller
+          control={control}
+          name="otp"
+          render={({ field }) => (
+            <InputOTP
+              value={field.value}
+              onChange={(value) => {
+                field.onChange(value);
+                handleChange(value);
+              }}
+              maxLength={4}
+              containerClassName="justify-center"
+              className="text-center text-lg font-bold tracking-widest ltr"
+            >
+              <InputOTPGroup style={{ direction: "ltr" }}>
+                {[0, 1, 2, 3].map((i) => (
+                  <InputOTPSlot key={i} index={i} />
+                ))}
+              </InputOTPGroup>
+            </InputOTP>
+          )}
+        />
         {/* Timer and Resend */}
         <div className="w-full flex flex-row-reverse justify-between items-center mt-2">
           <button

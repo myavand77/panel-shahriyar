@@ -2,6 +2,8 @@ import React from "react";
 import StepLayout from "@/features/auth/components/StepLayout";
 import { Edit } from "lucide-react";
 import IconButton from "@/components/ui/IconButton";
+import { useStepsForm } from "./StepsFormContext";
+import { Controller } from "react-hook-form";
 
 interface Step6Props {
   onPrev: () => void;
@@ -17,41 +19,38 @@ const Step6: React.FC<Step6Props> = ({
   goToStep,
   isCompany,
 }) => {
-  // Placeholder data, replace with real data from context/store
-  const step5Data = {
-    name: "امید",
-    lastName: "معتمدی",
-    nationalId: "006145851268",
-    phone: "09123456789",
-    telegram: "09123456789",
-    whatsapp: "09123456789",
-    email: "09123456789",
-    landline: "09123456789",
-  };
-  const step4Data = {
-    website: "www.samplewebsite.com",
-    webservice: "wsaexample",
-    apiKey: "656161612315619",
-    callback: "https://sampleurl.ir",
-    email: "omid.rezaei@gmail.com",
-    ips: ["192.255.255.132", "192.168.255.132", "192.168.255.132"],
-  };
-  const step3Data = {
-    name: "امید",
-    lastName: "امید",
-    nationalId: "Omigital",
-    phone: "00154865219",
-    email: "رضایی",
-    province: "تهران",
-    city: "تهران",
-    postalCode: "1516478521",
-    brand: "1516478521",
-    category: "1516478521",
-    accountNumber: "09123456789",
-    shaba: "omid.rezaei@gmail.com",
-    address: "تهران، خیابان گاندی جنوبی، کوچه پالیزوانی، پلاک 27، واحد 15",
-    logo: "omigital logo.jpg",
-  };
+  const { watch, control } = useStepsForm();
+  // Step 5 (نماینده)
+  const repName = watch("repName") || "";
+  const repLastName = watch("repLastName") || "";
+  const repNationalId = watch("repNationalId") || "";
+  const repPhone = watch("repPhone") || "";
+  const repLandline = watch("repLandline") || "";
+  const repEmail = watch("repEmail") || "";
+  const repWhatsapp = watch("repWhatsapp") || "";
+  const repTelegram = watch("repTelegram") || "";
+  // Step 4 (فنی)
+  const website = watch("website") || "";
+  const webservice = watch("webservice") || "";
+  const apiKey = watch("apiKey") || "";
+  const callback = watch("callback") || "";
+  const email = watch("email") || "";
+  const ips = watch("ips") || [];
+  // Step 3 (هویتی)
+  const name = watch("name") || "";
+  const lastName = watch("lastName") || "";
+  const nationalId = watch("nationalId") || "";
+  const phone = watch("phone") || "";
+  const email3 = watch("email") || "";
+  const province = watch("province") || "";
+  const city = watch("city") || "";
+  const postalCode = watch("postalCode") || "";
+  const brand = watch("brand") || "";
+  const category = watch("category") || "";
+  const accountNumber = watch("accountNumber") || "";
+  const shaba = watch("shaba") || "";
+  const address = watch("address") || "";
+  const logo = watch("logo") || "";
 
   return (
     <StepLayout
@@ -76,37 +75,35 @@ const Step6: React.FC<Step6Props> = ({
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-right">
             <div>
               <div className="text-text-500 text-sm">نام نماینده:</div>
-              <div className="text-sm text-text-400">{step5Data.name}</div>
+              <div className="text-sm text-text-400">{repName}</div>
             </div>
             <div>
               <div className="text-text-500 text-sm">نام خانوادگی نماینده:</div>
-              <div className="text-sm text-text-400">{step5Data.lastName}</div>
+              <div className="text-sm text-text-400">{repLastName}</div>
             </div>
             <div>
               <div className="text-text-500 text-sm">کدملی نماینده:</div>
-              <div className="text-sm text-text-400">
-                {step5Data.nationalId}
-              </div>
+              <div className="text-sm text-text-400">{repNationalId}</div>
             </div>
             <div>
               <div className="text-text-500 text-sm">تلفن همراه نماینده:</div>
-              <div className="text-sm text-text-400">{step5Data.phone}</div>
+              <div className="text-sm text-text-400">{repPhone}</div>
             </div>
             <div>
               <div className="text-text-500 text-sm">آی‌دی تلگرام:</div>
-              <div className="text-sm text-text-400">{step5Data.telegram}</div>
+              <div className="text-sm text-text-400">{repTelegram}</div>
             </div>
             <div>
               <div className="text-text-500 text-sm">شماره واتساپ:</div>
-              <div className="text-sm text-text-400">{step5Data.whatsapp}</div>
+              <div className="text-sm text-text-400">{repWhatsapp}</div>
             </div>
             <div>
               <div className="text-text-500 text-sm">ایمیل:</div>
-              <div className="text-sm text-text-400">{step5Data.email}</div>
+              <div className="text-sm text-text-400">{repEmail}</div>
             </div>
             <div>
               <div className="text-text-500 text-sm">تلفن ثابت:</div>
-              <div className="text-sm text-text-400">{step5Data.landline}</div>
+              <div className="text-sm text-text-400">{repLandline}</div>
             </div>
           </div>
         </div>
@@ -128,37 +125,31 @@ const Step6: React.FC<Step6Props> = ({
           <div className="space-y-2 text-right">
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">وبسایت:</span>
-              <span className="text-sm text-text-400">{step4Data.website}</span>
+              <span className="text-sm text-text-400">{website}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">
                 آدرس وب‌سرویس کالا یا خدمات:
               </span>
-              <span className="text-sm text-text-400">
-                {step4Data.webservice}
-              </span>
+              <span className="text-sm text-text-400">{webservice}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">
                 کلید سرویس (API Key):
               </span>
-              <span className="text-sm text-text-400">{step4Data.apiKey}</span>
+              <span className="text-sm text-text-400">{apiKey}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">آدرس Callback:</span>
-              <span className="text-sm text-text-400">
-                {step4Data.callback}
-              </span>
+              <span className="text-sm text-text-400">{callback}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">ایمیل:</span>
-              <span className="text-sm text-text-400">{step4Data.email}</span>
+              <span className="text-sm text-text-400">{email}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">IP فروشگاه:</span>
-              <span className="text-sm text-text-400">
-                {step4Data.ips.join(", ")}
-              </span>
+              <span className="text-sm text-text-400">{ips.join(", ")}</span>
             </div>
           </div>
         </div>
@@ -177,71 +168,59 @@ const Step6: React.FC<Step6Props> = ({
           <div className="space-y-2 text-right">
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">نام:</span>
-              <span className="text-sm text-text-400">{step3Data.name}</span>
+              <span className="text-sm text-text-400">{name}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">نام خانوادگی:</span>
-              <span className="text-sm text-text-400">
-                {step3Data.lastName}
-              </span>
+              <span className="text-sm text-text-400">{lastName}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">کد ملی:</span>
-              <span className="text-sm text-text-400">
-                {step3Data.nationalId}
-              </span>
+              <span className="text-sm text-text-400">{nationalId}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">تلفن همراه:</span>
-              <span className="text-sm text-text-400">{step3Data.phone}</span>
+              <span className="text-sm text-text-400">{phone}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">ایمیل:</span>
-              <span className="text-sm text-text-400">{step3Data.email}</span>
+              <span className="text-sm text-text-400">{email3}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">استان:</span>
-              <span className="text-sm text-text-400">
-                {step3Data.province}
-              </span>
+              <span className="text-sm text-text-400">{province}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">شهر:</span>
-              <span className="text-sm text-text-400">{step3Data.city}</span>
+              <span className="text-sm text-text-400">{city}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">کدپستی:</span>
-              <span className="text-sm text-text-400">
-                {step3Data.postalCode}
-              </span>
+              <span className="text-sm text-text-400">{postalCode}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">برند:</span>
-              <span className="text-sm text-text-400">{step3Data.brand}</span>
+              <span className="text-sm text-text-400">{brand}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">دسته‌بندی:</span>
-              <span className="text-sm text-text-400">
-                {step3Data.category}
-              </span>
+              <span className="text-sm text-text-400">{category}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">شماره حساب:</span>
-              <span className="text-sm text-text-400">
-                {step3Data.accountNumber}
-              </span>
+              <span className="text-sm text-text-400">{accountNumber}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">شماره شبا:</span>
-              <span className="text-sm text-text-400">{step3Data.shaba}</span>
+              <span className="text-sm text-text-400">{shaba}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">آدرس:</span>
-              <span className="text-sm text-text-400">{step3Data.address}</span>
+              <span className="text-sm text-text-400">{address}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-text-500 text-sm">تصویر لوگو:</span>
-              <span className="text-sm text-text-400">{step3Data.logo}</span>
+              <span className="text-sm text-text-400">{logo && (typeof logo === "string" ? logo : logo?.name)}</span>
             </div>
           </div>
         </div>

@@ -1,9 +1,10 @@
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import { useForm } from "react-hook-form";
 import { useOtpRequest } from "@/features/auth/login/hooks/useOtpRequest";
 import React from "react";
 import { handleApiError, isValidIranianPhoneNumber } from "@/lib/error";
+import { useStepsForm, StepsFormData } from "./StepsFormContext";
+import { Controller } from "react-hook-form";
 
 const Step1 = ({
   onNext,
@@ -16,12 +17,9 @@ const Step1 = ({
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<{
-    phone: string;
-  }>({
-    mode: "onChange",
-    defaultValues: { phone: "" },
-  });
+    getValues,
+    control,
+  } = useStepsForm();
   const { requestOtpMutate, isPending, error } = useOtpRequest();
 
   // Show toast on error
@@ -30,17 +28,18 @@ const Step1 = ({
     handleApiError(error, "خطا در ارسال درخواست. لطفا دوباره تلاش کنید.");
   }, [error]);
 
-  const onSubmit = (data: { phone: string }) => {
+  const onSubmit = (data: StepsFormData) => {
+    const phone = data.phone || "";
     requestOtpMutate(
-      { phone_number: data.phone },
+      { phone_number: phone },
       {
         onSuccess: () => {
-          onSetPhoneNumber(data.phone);
+          onSetPhoneNumber(phone);
           onNext();
         },
       }
     );
-    onSetPhoneNumber(data.phone);
+    onSetPhoneNumber(phone);
     onNext();
   };
 
@@ -69,19 +68,28 @@ const Step1 = ({
         className="w-full flex flex-col gap-6 mt-2"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Input
-          label="تلفن همراه"
-          type="tel"
-          placeholder="09123456789"
-          className="text-right"
-          dir="rtl"
-          {...register("phone", {
+        <Controller
+          name="phone"
+          control={control}
+          rules={{
             required: "شماره تلفن الزامی است.",
             validate: (value) =>
-              isValidIranianPhoneNumber(value) || "شماره تلفن معتبر نیست.",
-          })}
-          subtitle={errors.phone?.message}
-          subtitleType={errors.phone ? "error" : "info"}
+              typeof value === "string"
+                ? isValidIranianPhoneNumber(value) || "شماره تلفن معتبر نیست."
+                : "شماره تلفن معتبر نیست.",
+          }}
+          render={({ field }) => (
+            <Input
+              label="تلفن همراه"
+              type="tel"
+              placeholder="09123456789"
+              className="text-right"
+              dir="rtl"
+              {...field}
+              subtitle={errors.phone?.message}
+              subtitleType={errors.phone ? "error" : "info"}
+            />
+          )}
         />
         {/* Main Button */}
         <Button

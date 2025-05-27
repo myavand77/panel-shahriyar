@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import Tabs from "@/components/ui/Tabs";
 import FileUpload from "@/components/ui/FileUpload";
 import StepLayout from "@/features/auth/components/StepLayout";
+import { useStepsForm } from "./StepsFormContext";
+import { Controller } from "react-hook-form";
 
 const provinces = [
   { value: "", label: "استان را انتخاب کنید" },
@@ -39,34 +41,29 @@ const Step3 = ({
   onPrev: () => void;
   isCompany?: boolean;
 }) => {
-  const [form, setForm] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    brand: "",
-    nationalId: "",
-    phone: "",
-    province: "",
-    city: "",
-    category: "",
-    address: "",
-    postalCode: "",
-    accountNumber: "",
-    shaba: "",
-    logo: null as File | null,
-  });
+  const {
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+    control,
+  } = useStepsForm();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-  };
-  const handleSelect = (name: string, value: string) => {
-    setForm((f) => ({ ...f, [name]: value }));
-  };
-  const handleLogo = (file: File | null) => {
-    setForm((f) => ({ ...f, logo: file }));
-  };
+  // Watch all fields for controlled components
+  const name = watch("name");
+  const lastName = watch("lastName");
+  const email = watch("email");
+  const brand = watch("brand");
+  const nationalId = watch("nationalId");
+  const phone = watch("phone");
+  const province = watch("province");
+  const city = watch("city");
+  const category = watch("category");
+  const address = watch("address");
+  const postalCode = watch("postalCode");
+  const accountNumber = watch("accountNumber");
+  const shaba = watch("shaba");
+  const logo = watch("logo");
 
   return (
     <StepLayout
@@ -89,140 +86,198 @@ const Step3 = ({
         <form className="w-full flex flex-col gap-4 mt-2" dir="rtl">
           {/* Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Input
-              label="نام"
+            <Controller
               name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="نام را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="نام"
+                  {...field}
+                  placeholder="نام را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <Input
-              label="نام خانوادگی"
+            <Controller
               name="lastName"
-              value={form.lastName}
-              onChange={handleChange}
-              placeholder="نام خانوادگی را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="نام خانوادگی"
+                  {...field}
+                  placeholder="نام خانوادگی را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <Input
-              label="کدملی"
+            <Controller
               name="nationalId"
-              value={form.nationalId}
-              onChange={handleChange}
-              placeholder="کدملی را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="کدملی"
+                  {...field}
+                  placeholder="کدملی را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <Input
-              label="تلفن همراه"
+            <Controller
               name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              placeholder="تلفن همراه را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="تلفن همراه"
+                  {...field}
+                  placeholder="تلفن همراه را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
           </div>
           {/* Row 2 */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Input
-              label="ایمیل"
+            <Controller
               name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="ایمیل را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="ایمیل"
+                  {...field}
+                  placeholder="ایمیل را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <Select
-              label="استان"
+            <Controller
               name="province"
-              value={form.province}
-              onChange={(e) => handleSelect("province", e.target.value)}
-              options={provinces}
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="استان"
+                  options={provinces}
+                  {...field}
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <Select
-              label="شهر"
+            <Controller
               name="city"
-              value={form.city}
-              onChange={(e) => handleSelect("city", e.target.value)}
-              options={cities}
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="شهر"
+                  options={cities}
+                  {...field}
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <Input
-              label="کد پستی"
+            <Controller
               name="postalCode"
-              value={form.postalCode}
-              onChange={handleChange}
-              placeholder="کد پستی را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="کد پستی"
+                  {...field}
+                  placeholder="کد پستی را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
           </div>
           {/* Row 3 */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Input
-              label="برند"
+            <Controller
               name="brand"
-              value={form.brand}
-              onChange={handleChange}
-              placeholder="برند را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="برند"
+                  {...field}
+                  placeholder="برند را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <Select
-              label="دسته‌بندی"
+            <Controller
               name="category"
-              value={form.category}
-              onChange={(e) => handleSelect("category", e.target.value)}
-              options={categories}
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="دسته‌بندی"
+                  options={categories}
+                  {...field}
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <Input
-              label="شماره حساب"
+            <Controller
               name="accountNumber"
-              value={form.accountNumber}
-              onChange={handleChange}
-              placeholder="شماره حساب را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="ltr"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="شماره حساب"
+                  {...field}
+                  placeholder="شماره حساب را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="ltr"
+                />
+              )}
             />
-            <Input
-              label="شماره شبا"
+            <Controller
               name="shaba"
-              value={form.shaba}
-              onChange={handleChange}
-              placeholder="شماره شبا را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="ltr"
-              autoComplete="off"
-              startLogo={
-                <span className="text-neutral-500 text-sm select-none">IR</span>
-              }
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="شماره شبا"
+                  {...field}
+                  placeholder="شماره شبا را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="ltr"
+                  autoComplete="off"
+                  startLogo={
+                    <span className="text-neutral-500 text-sm select-none">IR</span>
+                  }
+                />
+              )}
             />
           </div>
           {/* Row 4 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              label="آدرس"
+            <Controller
               name="address"
-              value={form.address}
-              onChange={handleChange}
-              placeholder="آدرس را وارد کنید"
-              className="text-right placeholder:text-xs"
-              dir="rtl"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="آدرس"
+                  {...field}
+                  placeholder="آدرس را وارد کنید"
+                  className="text-right placeholder:text-xs"
+                  dir="rtl"
+                />
+              )}
             />
-            <FileUpload
-              label="بارگذاری لوگو"
-              value={form.logo}
-              onChange={handleLogo}
+            <Controller
+              name="logo"
+              control={control}
+              render={({ field }) => (
+                <FileUpload
+                  label="بارگذاری لوگو"
+                  value={field.value || null}
+                  onChange={file => field.onChange(file)}
+                />
+              )}
             />
           </div>
         </form>

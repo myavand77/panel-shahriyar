@@ -7,6 +7,7 @@ import Step6 from "../components/steps/Step6";
 import Step7 from "../components/steps/Step7";
 import CompanyStep3 from "../components/steps/CompanyStep3";
 import CompanyStep4 from "../components/steps/CompanyStep4";
+import { StepsFormProvider } from "../components/steps/StepsFormContext";
 
 const Registration = () => {
   const [state, setState] = useState<{
@@ -30,82 +31,84 @@ const Registration = () => {
       : undefined;
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-primary-50">
-      {state.step === 1 &&
-        state.tab &&
-        (state.tab === "personal" ? (
-          <Step3
-            tab={state.tab}
-            setTab={setTab}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ) : (
-          <CompanyStep3
-            tab={state.tab}
-            setTab={setTab}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ))}
-      {state.step === 2 &&
-        (state.tab === "personal" ? (
-          <Step4
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ) : (
-          <CompanyStep4
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ))}
+    <StepsFormProvider>
+      <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-primary-50">
+        {state.step === 1 &&
+          state.tab &&
+          (state.tab === "personal" ? (
+            <Step3
+              tab={state.tab}
+              setTab={setTab}
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ) : (
+            <CompanyStep3
+              tab={state.tab}
+              setTab={setTab}
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ))}
+        {state.step === 2 &&
+          (state.tab === "personal" ? (
+            <Step4
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ) : (
+            <CompanyStep4
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ))}
 
-      {state.step === 3 &&
-        (state.tab === "personal" ? (
-          <Step5
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ) : (
-          <Step4
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ))}
+        {state.step === 3 &&
+          (state.tab === "personal" ? (
+            <Step5
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ) : (
+            <Step4
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ))}
 
-      {state.step === 4 &&
-        (state.tab === "personal" ? (
-          <Step6
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ) : (
-          <Step5
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ))}
-      {state.step === 5 &&
-        (state.tab === "personal" ? (
-          <Step7 onNext={handleNext} onPrev={handlePrev} />
-        ) : (
-          <Step6
-            onNext={handleNext}
-            onPrev={handlePrev}
-            isCompany={isCompany}
-          />
-        ))}
-      {state.step === 6 && <Step7 onPrev={handlePrev} onNext={() => {}} />}
-    </div>
+        {state.step === 4 &&
+          (state.tab === "personal" ? (
+            <Step6
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ) : (
+            <Step5
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ))}
+        {state.step === 5 &&
+          (state.tab === "personal" ? (
+            <Step7 onNext={handleNext} onPrev={handlePrev} />
+          ) : (
+            <Step6
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isCompany={isCompany}
+            />
+          ))}
+        {state.step === 6 && <Step7 onPrev={handlePrev} onNext={() => {}} />}
+      </div>
+    </StepsFormProvider>
   );
 };
 

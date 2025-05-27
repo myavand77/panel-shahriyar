@@ -8,8 +8,9 @@ import {
 } from "@/components/ui/input-otp";
 import { showToast } from "@/lib/toast";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import { useOtpVerify } from "@/features/auth/login/hooks/useOtpVerify";
+import { useStepsForm } from "./StepsFormContext";
+import { Controller } from "react-hook-form";
 
 const Step2 = ({
   onNext,
@@ -22,11 +23,15 @@ const Step2 = ({
 }) => {
   const [timer, setTimer] = useState(120); // 2 minutes
   const router = useRouter();
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<{ otp: string }>({
-    mode: "onChange",
-    defaultValues: { otp: "" },
-  });
-  const otp = watch("otp");
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    control,
+  } = useStepsForm();
+  const otp = watch("otp") || "";
   const { verifyOtpMutate, isPending, error } = useOtpVerify();
 
   React.useEffect(() => {
@@ -42,9 +47,9 @@ const Step2 = ({
     }
   }, [error]);
 
-  const onSubmit = (data: { otp: string }) => {
+  const onSubmit = (data: any) => {
     verifyOtpMutate(
-      { phone_number, otp_code: data.otp },
+      { phone_number, otp_code: data.otp || "" },
       {
         onSuccess: () => {
           showToast({ text: "ورود شما با موفقیت انجام شد.", type: "success" });
@@ -83,22 +88,25 @@ const Step2 = ({
       </div>
       {/* OTP Input */}
       <form
+        className="w-full flex flex-col gap-6 mt-2"
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full flex flex-col items-center gap-6 mt-2"
       >
-        <InputOTP
-          value={otp}
-          onChange={handleChange}
-          maxLength={5}
-          containerClassName="justify-center"
-          className="text-center text-lg font-bold tracking-widest ltr"
-        >
-          <InputOTPGroup style={{ direction: "ltr" }}>
-            {[0, 1, 2, 3, 4].map((i) => (
-              <InputOTPSlot key={i} index={i} />
-            ))}
-          </InputOTPGroup>
-        </InputOTP>
+        <Controller
+          name="otp"
+          control={control}
+          render={({ field }) => (
+            <InputOTP
+              maxLength={5}
+              value={field.value}
+              onChange={field.onChange}
+              containerClassName="w-full flex justify-center"
+            >
+              {[...Array(5)].map((_, i) => (
+                <InputOTPSlot key={i} index={i} />
+              ))}
+            </InputOTP>
+          )}
+        />
         {/* Timer and Resend */}
         <div className="w-full flex flex-row-reverse justify-between items-center mt-2">
           <button

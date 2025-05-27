@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import StepLayout from "@/features/auth/components/StepLayout";
 import Tabs from "@/components/ui/Tabs";
+import { useStepsForm } from "./StepsFormContext";
+import { Controller } from "react-hook-form";
 
 const provinces = [
   { value: "", label: "استان را انتخاب کنید" },
@@ -38,28 +40,18 @@ const CompanyStep3 = ({
   onPrev: () => void;
   isCompany?: boolean;
 }) => {
-  const [form, setForm] = useState({
-    companyName: "",
-    brandName: "",
-    category: "",
-    nationalId: "",
-    economicCode: "",
-    accountNumber: "",
-    shaba: "",
-    postalCode: "",
-    province: "",
-    city: "",
-    address: "",
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-  };
-  const handleSelect = (name: string, value: string) => {
-    setForm((f) => ({ ...f, [name]: value }));
-  };
+  const { register, setValue, watch, control } = useStepsForm();
+  const companyName = watch("companyName") || "";
+  const brandName = watch("brandName") || "";
+  const category = watch("category") || "";
+  const nationalId = watch("nationalId") || "";
+  const economicCode = watch("economicCode") || "";
+  const accountNumber = watch("accountNumber") || "";
+  const shaba = watch("shaba") || "";
+  const postalCode = watch("postalCode") || "";
+  const province = watch("province") || "";
+  const city = watch("city") || "";
+  const address = watch("address") || "";
 
   return (
     <StepLayout
@@ -80,117 +72,183 @@ const CompanyStep3 = ({
       <form className="w-full flex flex-col gap-4 mt-2" dir="rtl">
         {/* Row 1 */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Input
-            label="نام شرکت"
+          <Controller
             name="companyName"
-            value={form.companyName}
-            onChange={handleChange}
-            placeholder="نام شرکت را وارد کنید"
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="نام شرکت"
+                {...field}
+                value={companyName}
+                onChange={e => setValue("companyName", e.target.value, { shouldValidate: true })}
+                placeholder="نام شرکت را وارد کنید"
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
-          <Input
-            label="نام برند"
+          <Controller
             name="brandName"
-            value={form.brandName}
-            onChange={handleChange}
-            placeholder="نام برند را وارد کنید"
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="نام برند"
+                {...field}
+                value={brandName}
+                onChange={e => setValue("brandName", e.target.value, { shouldValidate: true })}
+                placeholder="نام برند را وارد کنید"
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
-          <Select
-            label="دسته بندی"
+          <Controller
             name="category"
-            value={form.category}
-            onChange={(e) => handleSelect("category", e.target.value)}
-            options={categories}
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label="دسته بندی"
+                {...field}
+                value={category}
+                onChange={e => setValue("category", e.target.value, { shouldValidate: true })}
+                options={categories}
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
-          <Input
-            label="شناسه ملی"
+          <Controller
             name="nationalId"
-            value={form.nationalId}
-            onChange={handleChange}
-            placeholder="شناسه ملی را وارد کنید"
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="شناسه ملی"
+                {...field}
+                value={nationalId}
+                onChange={e => setValue("nationalId", e.target.value, { shouldValidate: true })}
+                placeholder="شناسه ملی را وارد کنید"
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
         </div>
         {/* Row 2 */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Input
-            label="شماره اقتصادی"
+          <Controller
             name="economicCode"
-            value={form.economicCode}
-            onChange={handleChange}
-            placeholder="شماره اقتصادی را وارد کنید"
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="شماره اقتصادی"
+                {...field}
+                value={economicCode}
+                onChange={e => setValue("economicCode", e.target.value, { shouldValidate: true })}
+                placeholder="شماره اقتصادی را وارد کنید"
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
-          <Input
-            label="شماره حساب"
+          <Controller
             name="accountNumber"
-            value={form.accountNumber}
-            onChange={handleChange}
-            placeholder="شماره حساب را وارد کنید"
-            className="text-right placeholder:text-xs"
-            dir="ltr"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="شماره حساب"
+                {...field}
+                value={accountNumber}
+                onChange={e => setValue("accountNumber", e.target.value, { shouldValidate: true })}
+                placeholder="شماره حساب را وارد کنید"
+                className="text-right placeholder:text-xs"
+                dir="ltr"
+              />
+            )}
           />
-          <Input
-            label="شماره شبا"
+          <Controller
             name="shaba"
-            value={form.shaba}
-            onChange={handleChange}
-            placeholder="شماره شبا را وارد کنید"
-            className="text-right placeholder:text-xs"
-            dir="ltr"
-            autoComplete="off"
-            startLogo={
-              <span className="text-neutral-500 text-sm select-none">IR</span>
-            }
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="شماره شبا"
+                {...field}
+                value={shaba}
+                onChange={e => setValue("shaba", e.target.value, { shouldValidate: true })}
+                placeholder="شماره شبا را وارد کنید"
+                className="text-right placeholder:text-xs"
+                dir="ltr"
+                autoComplete="off"
+                startLogo={
+                  <span className="text-neutral-500 text-sm select-none">IR</span>
+                }
+              />
+            )}
           />
-          <Input
-            label="کدپستی"
+          <Controller
             name="postalCode"
-            value={form.postalCode}
-            onChange={handleChange}
-            placeholder="کدپستی را وارد کنید"
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="کدپستی"
+                {...field}
+                value={postalCode}
+                onChange={e => setValue("postalCode", e.target.value, { shouldValidate: true })}
+                placeholder="کدپستی را وارد کنید"
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
         </div>
         {/* Row 3 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Select
-            label="استان"
+          <Controller
             name="province"
-            value={form.province}
-            onChange={(e) => handleSelect("province", e.target.value)}
-            options={provinces}
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label="استان"
+                {...field}
+                value={province}
+                onChange={e => setValue("province", e.target.value, { shouldValidate: true })}
+                options={provinces}
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
-          <Select
-            label="شهر"
+          <Controller
             name="city"
-            value={form.city}
-            onChange={(e) => handleSelect("city", e.target.value)}
-            options={cities}
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label="شهر"
+                {...field}
+                value={city}
+                onChange={e => setValue("city", e.target.value, { shouldValidate: true })}
+                options={cities}
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
         </div>
         {/* Row 4 */}
         <div className="w-full">
-          <Input
-            label="آدرس"
+          <Controller
             name="address"
-            value={form.address}
-            onChange={handleChange}
-            placeholder="آدرس را وارد کنید"
-            className="text-right placeholder:text-xs"
-            dir="rtl"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="آدرس"
+                {...field}
+                value={address}
+                onChange={e => setValue("address", e.target.value, { shouldValidate: true })}
+                placeholder="آدرس را وارد کنید"
+                className="text-right placeholder:text-xs"
+                dir="rtl"
+              />
+            )}
           />
         </div>
       </form>
