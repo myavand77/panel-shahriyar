@@ -77,6 +77,7 @@ const CompanyStep3 = ({
       onNext={handleSubmit(onValid)}
       onPrev={onPrev}
       isCompany={isCompany}
+      showPrev={false}
     >
       <Tabs
         tabs={[

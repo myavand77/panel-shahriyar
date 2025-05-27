@@ -1,3 +1,4 @@
+import MainView from "@/features/main";
 export default function Home() {
-  return <div>Hi Vibe</div>;
+  return <MainView />;
 }
