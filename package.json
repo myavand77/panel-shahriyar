@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@casl/react": "^5.0.0",
+    "@tanstack/react-query": "^5.77.2",
     "@types/toastify-js": "^1.12.4",
+    "axios": "^1.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",

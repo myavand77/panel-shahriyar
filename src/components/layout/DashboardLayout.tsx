@@ -4,14 +4,23 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { type UserRole } from "@/lib/ability";
 import { useAuth } from "@/lib/auth";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { user } = useAuth();
+  const { user, access_token, loading } = useAuth();
   const userRole = user?.role || "User";
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!loading && !access_token) {
+      router.replace("/auth/login");
+    }
+  }, [loading, access_token, router]);
 
   const getTitleByRole = (role: UserRole): string => {
     switch (role) {
