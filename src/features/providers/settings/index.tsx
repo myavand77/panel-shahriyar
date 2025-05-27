@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import TabFilter from "@/components/ui/TabFilter";
-import AuthInfoTab from "./authInfo";
-import DocumentsInfoTab from "./documentsInfo";
-import TechnicalInfoTab from "./technicalInfo";
-import AgentInfoTab from "./agentInfo";
-import ContractInfoTab from "./contractInfo";
+import AuthInfoTab from "./components/authInfo";
+import DocumentsInfoTab from "./components/documentsInfo";
+import TechnicalInfoTab from "./components/technicalInfo";
+import AgentInfoTab from "./components/agentInfo";
+import ContractInfoTab from "./components/contractInfo";
 
 const tabs = [
   { id: "identity", label: "مشخصات هویتی" },
