@@ -13,58 +13,106 @@ const CompanyStep4 = ({
   onPrev: () => void;
   isCompany?: boolean;
 }) => {
-  const { setValue, watch, control } = useStepsForm();
-  const establishmentNotice = watch("establishmentNotice") || null;
-  const lastChangesNotice = watch("lastChangesNotice") || null;
-  const shareholdersNotice = watch("shareholdersNotice") || null;
-  const signatoriesNotice = watch("signatoriesNotice") || null;
-  const logo = watch("logo") || null;
+  const { control, handleSubmit, formState: { errors } } = useStepsForm();
 
-  const handleFileChange = (name: string, file: File | null) => {
-    setValue(name as any, file, { shouldValidate: true });
+  const onValid = () => {
+    onNext();
   };
 
   return (
     <StepLayout
       currentStep={2}
-      onNext={onNext}
+      onNext={handleSubmit(onValid)}
       onPrev={onPrev}
       isCompany={isCompany}
     >
       <form className="w-full flex flex-col gap-4 mt-2" dir="rtl">
         {/* Row 1 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FileUpload
-            label="آگهی تاسیس"
-            value={establishmentNotice}
-            onChange={(file) => handleFileChange("establishmentNotice", file)}
-          />
-          <FileUpload
-            label="آگهی آخرین تغییرات"
-            value={lastChangesNotice}
-            onChange={(file) => handleFileChange("lastChangesNotice", file)}
-          />
+          <div>
+            <Controller
+              name="establishmentNotice"
+              control={control}
+              rules={{ required: "بارگذاری آگهی تاسیس الزامی است." }}
+              render={({ field }) => (
+                <FileUpload
+                  label="آگهی تاسیس"
+                  onChange={field.onChange}
+                />
+              )}
+            />
+            {errors.establishmentNotice && (
+              <span className="text-error-500 text-xs mt-1">{errors.establishmentNotice.message}</span>
+            )}
+          </div>
+          <div>
+            <Controller
+              name="lastChangesNotice"
+              control={control}
+              rules={{ required: "بارگذاری آگهی آخرین تغییرات الزامی است." }}
+              render={({ field }) => (
+                <FileUpload
+                  label="آگهی آخرین تغییرات"
+                  onChange={field.onChange}
+                />
+              )}
+            />
+            {errors.lastChangesNotice && (
+              <span className="text-error-500 text-xs mt-1">{errors.lastChangesNotice.message}</span>
+            )}
+          </div>
         </div>
         {/* Row 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FileUpload
-            label="آگهی سهامداران"
-            value={shareholdersNotice}
-            onChange={(file) => handleFileChange("shareholdersNotice", file)}
-          />
-          <FileUpload
-            label="آگهی امضاداران"
-            value={signatoriesNotice}
-            onChange={(file) => handleFileChange("signatoriesNotice", file)}
-          />
+          <div>
+            <Controller
+              name="shareholdersNotice"
+              control={control}
+              rules={{ required: "بارگذاری آگهی سهامداران الزامی است." }}
+              render={({ field }) => (
+                <FileUpload
+                  label="آگهی سهامداران"
+                  onChange={field.onChange}
+                />
+              )}
+            />
+            {errors.shareholdersNotice && (
+              <span className="text-error-500 text-xs mt-1">{errors.shareholdersNotice.message}</span>
+            )}
+          </div>
+          <div>
+            <Controller
+              name="signatoriesNotice"
+              control={control}
+              rules={{ required: "بارگذاری آگهی امضاداران الزامی است." }}
+              render={({ field }) => (
+                <FileUpload
+                  label="آگهی امضاداران"
+                  onChange={field.onChange}
+                />
+              )}
+            />
+            {errors.signatoriesNotice && (
+              <span className="text-error-500 text-xs mt-1">{errors.signatoriesNotice.message}</span>
+            )}
+          </div>
         </div>
         {/* Row 3 */}
         <div className="w-full">
-          <FileUpload
-            label="بارگذاری لوگو"
-            value={logo}
-            onChange={(file) => handleFileChange("logo", file)}
+          <Controller
+            name="logo"
+            control={control}
+            rules={{ required: "بارگذاری لوگو الزامی است." }}
+            render={({ field }) => (
+              <FileUpload
+                label="بارگذاری لوگو"
+                onChange={field.onChange}
+              />
+            )}
           />
+          {errors.logo && (
+            <span className="text-error-500 text-xs mt-1">{errors.logo.message}</span>
+          )}
         </div>
       </form>
     </StepLayout>

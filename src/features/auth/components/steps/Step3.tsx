@@ -41,34 +41,17 @@ const Step3 = ({
   onPrev: () => void;
   isCompany?: boolean;
 }) => {
-  const {
-    register,
-    setValue,
-    watch,
-    formState: { errors },
-    control,
-  } = useStepsForm();
+  const { control, handleSubmit, formState: { errors } } = useStepsForm();
 
-  // Watch all fields for controlled components
-  const name = watch("name");
-  const lastName = watch("lastName");
-  const email = watch("email");
-  const brand = watch("brand");
-  const nationalId = watch("nationalId");
-  const phone = watch("phone");
-  const province = watch("province");
-  const city = watch("city");
-  const category = watch("category");
-  const address = watch("address");
-  const postalCode = watch("postalCode");
-  const accountNumber = watch("accountNumber");
-  const shaba = watch("shaba");
-  const logo = watch("logo");
+  // Handler for form submit
+  const onValid = () => {
+    onNext();
+  };
 
   return (
     <StepLayout
       currentStep={1}
-      onNext={onNext}
+      onNext={handleSubmit(onValid)}
       onPrev={onPrev}
       isCompany={isCompany}
     >
@@ -83,12 +66,13 @@ const Step3 = ({
       />
 
       {tab === "personal" && (
-        <form className="w-full flex flex-col gap-4 mt-2" dir="rtl">
+        <form className="w-full flex flex-col gap-4 mt-2" dir="rtl" onSubmit={handleSubmit(onValid)}>
           {/* Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Controller
               name="name"
               control={control}
+              rules={{ required: "نام الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="نام"
@@ -96,12 +80,15 @@ const Step3 = ({
                   placeholder="نام را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.name?.message}
+                  subtitleType={errors.name ? "error" : "info"}
                 />
               )}
             />
             <Controller
               name="lastName"
               control={control}
+              rules={{ required: "نام خانوادگی الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="نام خانوادگی"
@@ -109,12 +96,15 @@ const Step3 = ({
                   placeholder="نام خانوادگی را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.lastName?.message}
+                  subtitleType={errors.lastName ? "error" : "info"}
                 />
               )}
             />
             <Controller
               name="nationalId"
               control={control}
+              rules={{ required: "کدملی الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="کدملی"
@@ -122,12 +112,15 @@ const Step3 = ({
                   placeholder="کدملی را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.nationalId?.message}
+                  subtitleType={errors.nationalId ? "error" : "info"}
                 />
               )}
             />
             <Controller
               name="phone"
               control={control}
+              rules={{ required: "تلفن همراه الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="تلفن همراه"
@@ -135,6 +128,8 @@ const Step3 = ({
                   placeholder="تلفن همراه را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.phone?.message}
+                  subtitleType={errors.phone ? "error" : "info"}
                 />
               )}
             />
@@ -144,6 +139,7 @@ const Step3 = ({
             <Controller
               name="email"
               control={control}
+              rules={{ required: "ایمیل الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="ایمیل"
@@ -151,12 +147,15 @@ const Step3 = ({
                   placeholder="ایمیل را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.email?.message}
+                  subtitleType={errors.email ? "error" : "info"}
                 />
               )}
             />
             <Controller
               name="province"
               control={control}
+              rules={{ required: "استان الزامی است.", validate: v => v !== "" || "استان الزامی است." }}
               render={({ field }) => (
                 <Select
                   label="استان"
@@ -167,9 +166,11 @@ const Step3 = ({
                 />
               )}
             />
+            {errors.province && <span className="text-error-500 text-xs mt-1">{errors.province.message}</span>}
             <Controller
               name="city"
               control={control}
+              rules={{ required: "شهر الزامی است.", validate: v => v !== "" || "شهر الزامی است." }}
               render={({ field }) => (
                 <Select
                   label="شهر"
@@ -180,9 +181,11 @@ const Step3 = ({
                 />
               )}
             />
+            {errors.city && <span className="text-error-500 text-xs mt-1">{errors.city.message}</span>}
             <Controller
               name="postalCode"
               control={control}
+              rules={{ required: "کد پستی الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="کد پستی"
@@ -190,6 +193,8 @@ const Step3 = ({
                   placeholder="کد پستی را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.postalCode?.message}
+                  subtitleType={errors.postalCode ? "error" : "info"}
                 />
               )}
             />
@@ -199,6 +204,7 @@ const Step3 = ({
             <Controller
               name="brand"
               control={control}
+              rules={{ required: "برند الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="برند"
@@ -206,12 +212,15 @@ const Step3 = ({
                   placeholder="برند را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.brand?.message}
+                  subtitleType={errors.brand ? "error" : "info"}
                 />
               )}
             />
             <Controller
               name="category"
               control={control}
+              rules={{ required: "دسته‌بندی الزامی است.", validate: v => v !== "" || "دسته‌بندی الزامی است." }}
               render={({ field }) => (
                 <Select
                   label="دسته‌بندی"
@@ -222,9 +231,11 @@ const Step3 = ({
                 />
               )}
             />
+            {errors.category && <span className="text-error-500 text-xs mt-1">{errors.category.message}</span>}
             <Controller
               name="accountNumber"
               control={control}
+              rules={{ required: "شماره حساب الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="شماره حساب"
@@ -232,12 +243,15 @@ const Step3 = ({
                   placeholder="شماره حساب را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="ltr"
+                  subtitle={errors.accountNumber?.message}
+                  subtitleType={errors.accountNumber ? "error" : "info"}
                 />
               )}
             />
             <Controller
               name="shaba"
               control={control}
+              rules={{ required: "شماره شبا الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="شماره شبا"
@@ -247,8 +261,12 @@ const Step3 = ({
                   dir="ltr"
                   autoComplete="off"
                   startLogo={
-                    <span className="text-neutral-500 text-sm select-none">IR</span>
+                    <span className="text-neutral-500 text-sm select-none">
+                      IR
+                    </span>
                   }
+                  subtitle={errors.shaba?.message}
+                  subtitleType={errors.shaba ? "error" : "info"}
                 />
               )}
             />
@@ -258,6 +276,7 @@ const Step3 = ({
             <Controller
               name="address"
               control={control}
+              rules={{ required: "آدرس الزامی است." }}
               render={({ field }) => (
                 <Input
                   label="آدرس"
@@ -265,20 +284,23 @@ const Step3 = ({
                   placeholder="آدرس را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
+                  subtitle={errors.address?.message}
+                  subtitleType={errors.address ? "error" : "info"}
                 />
               )}
             />
             <Controller
               name="logo"
               control={control}
+              rules={{ required: "بارگذاری لوگو الزامی است." }}
               render={({ field }) => (
                 <FileUpload
                   label="بارگذاری لوگو"
-                  value={field.value || null}
-                  onChange={file => field.onChange(file)}
+                  onChange={(file) => field.onChange(file)}
                 />
               )}
             />
+            {errors.logo && <span className="text-error-500 text-xs mt-1">{errors.logo.message}</span>}
           </div>
         </form>
       )}

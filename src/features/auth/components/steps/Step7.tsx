@@ -15,7 +15,7 @@ interface Step7Props {
 }
 
 const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
-  const { setValue, watch, control } = useStepsForm();
+  const { setValue, watch, control, getValues } = useStepsForm();
   const [timer, setTimer] = useState(120); // 2 minutes
   const otp = watch("otp") || "";
 
@@ -26,10 +26,13 @@ const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
     }
   }, [timer]);
 
-  const handleChange = (value: string) => setValue("otp", value, { shouldValidate: true });
+  const handleChange = (value: string) =>
+    setValue("otp", value, { shouldValidate: true });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // handle OTP submit
+    const allData = getValues();
+    console.log("allData", allData); // handle OTP submit
     onNext();
   };
   const handleResend = () => {
@@ -58,10 +61,7 @@ const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
         </div>
       </div>
       {/* OTP Input */}
-      <form
-        onSubmit={handleSubmit}
-        className="w-full flex flex-col items-center gap-6 mt-2"
-      >
+      <form className="w-full flex flex-col items-center gap-6 mt-2">
         <Controller
           control={control}
           name="otp"
@@ -72,12 +72,12 @@ const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
                 field.onChange(value);
                 handleChange(value);
               }}
-              maxLength={4}
+              maxLength={5}
               containerClassName="justify-center"
               className="text-center text-lg font-bold tracking-widest ltr"
             >
               <InputOTPGroup style={{ direction: "ltr" }}>
-                {[0, 1, 2, 3].map((i) => (
+                {[0, 1, 2, 3, 4].map((i) => (
                   <InputOTPSlot key={i} index={i} />
                 ))}
               </InputOTPGroup>
@@ -103,8 +103,8 @@ const Step7: React.FC<Step7Props> = ({ onNext, onPrev }) => {
         {/* Submit Button */}
         <Button
           className="w-full mt-6 rounded-[6px] h-9 text-[14px] font-medium"
-          disabled={otp.length !== 4}
-          onClick={onNext}
+          disabled={otp.length !== 5}
+          onClick={handleSubmit}
         >
           ثبت‌نام و ورود به پنل
         </Button>

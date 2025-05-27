@@ -7,13 +7,13 @@ import { TOtpVerifyResponse } from "../types";
 export const requestOtp = async (
   payload: TOtpRequestPayload
 ): Promise<TOtpRequestResponse> => {
-  const url = "auth/otp/request";
+  const url = "otp/send";
   return await postService(url, payload);
 };
 
 export const requestOtpVerify = async (
   payload: TOtpVerifyPayload
 ): Promise<TOtpVerifyResponse> => {
-  const url = "auth/otp/verify";
+  const url = "otp/verify";
   return await postService(url, payload);
 };

@@ -40,23 +40,16 @@ const CompanyStep3 = ({
   onPrev: () => void;
   isCompany?: boolean;
 }) => {
-  const { register, setValue, watch, control } = useStepsForm();
-  const companyName = watch("companyName") || "";
-  const brandName = watch("brandName") || "";
-  const category = watch("category") || "";
-  const nationalId = watch("nationalId") || "";
-  const economicCode = watch("economicCode") || "";
-  const accountNumber = watch("accountNumber") || "";
-  const shaba = watch("shaba") || "";
-  const postalCode = watch("postalCode") || "";
-  const province = watch("province") || "";
-  const city = watch("city") || "";
-  const address = watch("address") || "";
+  const { control, handleSubmit, formState: { errors } } = useStepsForm();
+
+  const onValid = () => {
+    onNext();
+  };
 
   return (
     <StepLayout
       currentStep={1}
-      onNext={onNext}
+      onNext={handleSubmit(onValid)}
       onPrev={onPrev}
       isCompany={isCompany}
     >
@@ -75,60 +68,63 @@ const CompanyStep3 = ({
           <Controller
             name="companyName"
             control={control}
+            rules={{ required: "نام شرکت الزامی است." }}
             render={({ field }) => (
               <Input
                 label="نام شرکت"
                 {...field}
-                value={companyName}
-                onChange={e => setValue("companyName", e.target.value, { shouldValidate: true })}
                 placeholder="نام شرکت را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                subtitle={errors.companyName?.message}
+                subtitleType={errors.companyName ? "error" : "info"}
               />
             )}
           />
           <Controller
             name="brandName"
             control={control}
+            rules={{ required: "نام برند الزامی است." }}
             render={({ field }) => (
               <Input
                 label="نام برند"
                 {...field}
-                value={brandName}
-                onChange={e => setValue("brandName", e.target.value, { shouldValidate: true })}
                 placeholder="نام برند را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                subtitle={errors.brandName?.message}
+                subtitleType={errors.brandName ? "error" : "info"}
               />
             )}
           />
           <Controller
             name="category"
             control={control}
+            rules={{ required: "دسته بندی الزامی است.", validate: v => v !== "" || "دسته بندی الزامی است." }}
             render={({ field }) => (
               <Select
                 label="دسته بندی"
                 {...field}
-                value={category}
-                onChange={e => setValue("category", e.target.value, { shouldValidate: true })}
                 options={categories}
                 className="text-right placeholder:text-xs"
                 dir="rtl"
               />
             )}
           />
+          {errors.category && <span className="text-error-500 text-xs mt-1">{errors.category.message}</span>}
           <Controller
             name="nationalId"
             control={control}
+            rules={{ required: "شناسه ملی الزامی است." }}
             render={({ field }) => (
               <Input
                 label="شناسه ملی"
                 {...field}
-                value={nationalId}
-                onChange={e => setValue("nationalId", e.target.value, { shouldValidate: true })}
                 placeholder="شناسه ملی را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                subtitle={errors.nationalId?.message}
+                subtitleType={errors.nationalId ? "error" : "info"}
               />
             )}
           />
@@ -138,64 +134,70 @@ const CompanyStep3 = ({
           <Controller
             name="economicCode"
             control={control}
+            rules={{ required: "شماره اقتصادی الزامی است." }}
             render={({ field }) => (
               <Input
                 label="شماره اقتصادی"
                 {...field}
-                value={economicCode}
-                onChange={e => setValue("economicCode", e.target.value, { shouldValidate: true })}
                 placeholder="شماره اقتصادی را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                subtitle={errors.economicCode?.message}
+                subtitleType={errors.economicCode ? "error" : "info"}
               />
             )}
           />
           <Controller
             name="accountNumber"
             control={control}
+            rules={{ required: "شماره حساب الزامی است." }}
             render={({ field }) => (
               <Input
                 label="شماره حساب"
                 {...field}
-                value={accountNumber}
-                onChange={e => setValue("accountNumber", e.target.value, { shouldValidate: true })}
                 placeholder="شماره حساب را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="ltr"
+                subtitle={errors.accountNumber?.message}
+                subtitleType={errors.accountNumber ? "error" : "info"}
               />
             )}
           />
           <Controller
             name="shaba"
             control={control}
+            rules={{ required: "شماره شبا الزامی است." }}
             render={({ field }) => (
               <Input
                 label="شماره شبا"
                 {...field}
-                value={shaba}
-                onChange={e => setValue("shaba", e.target.value, { shouldValidate: true })}
                 placeholder="شماره شبا را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="ltr"
                 autoComplete="off"
                 startLogo={
-                  <span className="text-neutral-500 text-sm select-none">IR</span>
+                  <span className="text-neutral-500 text-sm select-none">
+                    IR
+                  </span>
                 }
+                subtitle={errors.shaba?.message}
+                subtitleType={errors.shaba ? "error" : "info"}
               />
             )}
           />
           <Controller
             name="postalCode"
             control={control}
+            rules={{ required: "کدپستی الزامی است." }}
             render={({ field }) => (
               <Input
                 label="کدپستی"
                 {...field}
-                value={postalCode}
-                onChange={e => setValue("postalCode", e.target.value, { shouldValidate: true })}
                 placeholder="کدپستی را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                subtitle={errors.postalCode?.message}
+                subtitleType={errors.postalCode ? "error" : "info"}
               />
             )}
           />
@@ -205,48 +207,49 @@ const CompanyStep3 = ({
           <Controller
             name="province"
             control={control}
+            rules={{ required: "استان الزامی است.", validate: v => v !== "" || "استان الزامی است." }}
             render={({ field }) => (
               <Select
                 label="استان"
                 {...field}
-                value={province}
-                onChange={e => setValue("province", e.target.value, { shouldValidate: true })}
                 options={provinces}
                 className="text-right placeholder:text-xs"
                 dir="rtl"
               />
             )}
           />
+          {errors.province && <span className="text-error-500 text-xs mt-1">{errors.province.message}</span>}
           <Controller
             name="city"
             control={control}
+            rules={{ required: "شهر الزامی است.", validate: v => v !== "" || "شهر الزامی است." }}
             render={({ field }) => (
               <Select
                 label="شهر"
                 {...field}
-                value={city}
-                onChange={e => setValue("city", e.target.value, { shouldValidate: true })}
                 options={cities}
                 className="text-right placeholder:text-xs"
                 dir="rtl"
               />
             )}
           />
+          {errors.city && <span className="text-error-500 text-xs mt-1">{errors.city.message}</span>}
         </div>
         {/* Row 4 */}
         <div className="w-full">
           <Controller
             name="address"
             control={control}
+            rules={{ required: "آدرس الزامی است." }}
             render={({ field }) => (
               <Input
                 label="آدرس"
                 {...field}
-                value={address}
-                onChange={e => setValue("address", e.target.value, { shouldValidate: true })}
                 placeholder="آدرس را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
+                subtitle={errors.address?.message}
+                subtitleType={errors.address ? "error" : "info"}
               />
             )}
           />

@@ -11,6 +11,9 @@ export type TOtpRequestResponse = {
 export type TOtpVerifyPayload = {
   phone_number: string;
   otp_code: string;
+  first_name?: string;
+  last_name?: string;
+  national_id?: string;
 };
 
 export type TOtpVerifyResponse = {

@@ -64,7 +64,7 @@ const Step6: React.FC<Step6Props> = ({
         <div className="relative bg-white rounded-2xl border border-neutral-200 shadow p-6">
           <IconButton
             className="absolute top-4 left-4 text-secondary-500 hover:bg-secondary-50 bg-secondary-50 rounded-full p-1"
-            onClick={() => goToStep && goToStep(5)}
+            onClick={() => goToStep && goToStep(isCompany ? 4 : 3)}
             aria-label="ویرایش مشخصات نماینده"
           >
             <Edit size={22} strokeWidth={2} color="#F4901E" />
@@ -114,7 +114,7 @@ const Step6: React.FC<Step6Props> = ({
         <div className="relative bg-white rounded-2xl border border-neutral-200 shadow p-6 flex-1">
           <IconButton
             className="absolute top-4 left-4 text-secondary-500 hover:bg-secondary-50 bg-secondary-50 rounded-full p-1"
-            onClick={() => goToStep && goToStep(4)}
+            onClick={() => goToStep && goToStep(isCompany ? 3 : 2)}
             aria-label="ویرایش مشخصات فنی"
           >
             <Edit size={22} strokeWidth={2} color="#F4901E" />
@@ -157,7 +157,7 @@ const Step6: React.FC<Step6Props> = ({
         <div className="relative bg-white rounded-2xl border border-neutral-200 shadow p-6 flex-1">
           <IconButton
             className="absolute top-4 left-4 text-secondary-500 hover:bg-secondary-50 bg-secondary-50 rounded-full p-1"
-            onClick={() => goToStep && goToStep(3)}
+            onClick={() => goToStep && goToStep(1)}
             aria-label="ویرایش مشخصات هویتی"
           >
             <Edit size={22} strokeWidth={2} color="#F4901E" />
@@ -166,62 +166,137 @@ const Step6: React.FC<Step6Props> = ({
             مشخصات هویتی
           </div>
           <div className="space-y-2 text-right">
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">نام:</span>
-              <span className="text-sm text-text-400">{name}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">نام خانوادگی:</span>
-              <span className="text-sm text-text-400">{lastName}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">کد ملی:</span>
-              <span className="text-sm text-text-400">{nationalId}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">تلفن همراه:</span>
-              <span className="text-sm text-text-400">{phone}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">ایمیل:</span>
-              <span className="text-sm text-text-400">{email3}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">استان:</span>
-              <span className="text-sm text-text-400">{province}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">شهر:</span>
-              <span className="text-sm text-text-400">{city}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">کدپستی:</span>
-              <span className="text-sm text-text-400">{postalCode}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">برند:</span>
-              <span className="text-sm text-text-400">{brand}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">دسته‌بندی:</span>
-              <span className="text-sm text-text-400">{category}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">شماره حساب:</span>
-              <span className="text-sm text-text-400">{accountNumber}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">شماره شبا:</span>
-              <span className="text-sm text-text-400">{shaba}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">آدرس:</span>
-              <span className="text-sm text-text-400">{address}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-500 text-sm">تصویر لوگو:</span>
-              <span className="text-sm text-text-400">{logo && (typeof logo === "string" ? logo : logo?.name)}</span>
-            </div>
+            {isCompany ? (
+              <>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">نام شرکت:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("companyName") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">نام برند:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("brandName") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">دسته بندی:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("category") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">شناسه ملی:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("nationalId") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">شماره اقتصادی:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("economicCode") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">شماره حساب:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("accountNumber") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">شماره شبا:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("shaba") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">کدپستی:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("postalCode") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">استان:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("province") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">شهر:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("city") || ""}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">آدرس:</span>
+                  <span className="text-sm text-text-400">
+                    {watch("address") || ""}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">نام:</span>
+                  <span className="text-sm text-text-400">{name}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">نام خانوادگی:</span>
+                  <span className="text-sm text-text-400">{lastName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">کد ملی:</span>
+                  <span className="text-sm text-text-400">{nationalId}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">تلفن همراه:</span>
+                  <span className="text-sm text-text-400">{phone}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">ایمیل:</span>
+                  <span className="text-sm text-text-400">{email3}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">استان:</span>
+                  <span className="text-sm text-text-400">{province}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">شهر:</span>
+                  <span className="text-sm text-text-400">{city}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">کدپستی:</span>
+                  <span className="text-sm text-text-400">{postalCode}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">برند:</span>
+                  <span className="text-sm text-text-400">{brand}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">دسته‌بندی:</span>
+                  <span className="text-sm text-text-400">{category}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">شماره حساب:</span>
+                  <span className="text-sm text-text-400">{accountNumber}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">شماره شبا:</span>
+                  <span className="text-sm text-text-400">{shaba}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">آدرس:</span>
+                  <span className="text-sm text-text-400">{address}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-text-500 text-sm">تصویر لوگو:</span>
+                  <span className="text-sm text-text-400">
+                    {logo && (typeof logo === "string" ? logo : logo?.name)}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

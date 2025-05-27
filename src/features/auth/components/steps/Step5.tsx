@@ -12,20 +12,17 @@ interface Step5Props {
 }
 
 const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany }) => {
-  const { register, setValue, watch, control } = useStepsForm();
-  const repName = watch("repName") || "";
-  const repLastName = watch("repLastName") || "";
-  const repNationalId = watch("repNationalId") || "";
-  const repPhone = watch("repPhone") || "";
-  const repLandline = watch("repLandline") || "";
-  const repEmail = watch("repEmail") || "";
-  const repWhatsapp = watch("repWhatsapp") || "";
-  const repTelegram = watch("repTelegram") || "";
+  const { control, handleSubmit, formState: { errors } } = useStepsForm();
+
+  // Handler for form submit
+  const onValid = () => {
+    onNext();
+  };
 
   return (
     <StepLayout
       currentStep={isCompany ? 4 : 3}
-      onNext={onNext}
+      onNext={handleSubmit(onValid)}
       onPrev={onPrev}
       isCompany={isCompany}
     >
@@ -38,65 +35,117 @@ const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany }) => {
         <Controller
           name="repName"
           control={control}
+          rules={{ required: "نام نماینده الزامی است." }}
           render={({ field }) => (
             <Input
               label="نام نماینده"
               {...field}
               placeholder="نام نماینده را وارد کنید"
+              subtitle={errors.repName?.message}
+              subtitleType={errors.repName ? "error" : "info"}
             />
           )}
         />
-        <Input
-          label="نام خانوادگی نماینده"
-          {...register("repLastName")}
-          value={repLastName}
-          onChange={e => setValue("repLastName", e.target.value, { shouldValidate: true })}
-          placeholder="نام خانوادگی نماینده را وارد کنید"
+        <Controller
+          name="repLastName"
+          control={control}
+          rules={{ required: "نام خانوادگی نماینده الزامی است." }}
+          render={({ field }) => (
+            <Input
+              label="نام خانوادگی نماینده"
+              {...field}
+              placeholder="نام خانوادگی نماینده را وارد کنید"
+              subtitle={errors.repLastName?.message}
+              subtitleType={errors.repLastName ? "error" : "info"}
+            />
+          )}
         />
-        <Input
-          label="کدملی نماینده"
-          {...register("repNationalId")}
-          value={repNationalId}
-          onChange={e => setValue("repNationalId", e.target.value, { shouldValidate: true })}
-          placeholder="کدملی نماینده را وارد کنید"
+        <Controller
+          name="repNationalId"
+          control={control}
+          rules={{ required: "کدملی نماینده الزامی است." }}
+          render={({ field }) => (
+            <Input
+              label="کدملی نماینده"
+              {...field}
+              placeholder="کدملی نماینده را وارد کنید"
+              subtitle={errors.repNationalId?.message}
+              subtitleType={errors.repNationalId ? "error" : "info"}
+            />
+          )}
         />
-        <Input
-          label="تلفن همراه نماینده"
-          {...register("repPhone")}
-          value={repPhone}
-          onChange={e => setValue("repPhone", e.target.value, { shouldValidate: true })}
-          placeholder="تلفن همراه نماینده را وارد کنید"
+        <Controller
+          name="repPhone"
+          control={control}
+          rules={{ required: "تلفن همراه نماینده الزامی است." }}
+          render={({ field }) => (
+            <Input
+              label="تلفن همراه نماینده"
+              {...field}
+              placeholder="تلفن همراه نماینده را وارد کنید"
+              subtitle={errors.repPhone?.message}
+              subtitleType={errors.repPhone ? "error" : "info"}
+            />
+          )}
         />
       </div>
       {/* Row 2 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
-        <Input
-          label="تلفن ثابت"
-          {...register("repLandline")}
-          value={repLandline}
-          onChange={e => setValue("repLandline", e.target.value, { shouldValidate: true })}
-          placeholder="تلفن ثابت را وارد کنید"
+        <Controller
+          name="repLandline"
+          control={control}
+          rules={{ required: "تلفن ثابت الزامی است." }}
+          render={({ field }) => (
+            <Input
+              label="تلفن ثابت"
+              {...field}
+              placeholder="تلفن ثابت را وارد کنید"
+              subtitle={errors.repLandline?.message}
+              subtitleType={errors.repLandline ? "error" : "info"}
+            />
+          )}
         />
-        <Input
-          label="ایمیل"
-          {...register("repEmail")}
-          value={repEmail}
-          onChange={e => setValue("repEmail", e.target.value, { shouldValidate: true })}
-          placeholder="ایمیل را وارد کنید"
+        <Controller
+          name="repEmail"
+          control={control}
+          rules={{ required: "ایمیل الزامی است." }}
+          render={({ field }) => (
+            <Input
+              label="ایمیل"
+              {...field}
+              placeholder="ایمیل را وارد کنید"
+              subtitle={errors.repEmail?.message}
+              subtitleType={errors.repEmail ? "error" : "info"}
+            />
+          )}
         />
-        <Input
-          label="شماره واتساپ"
-          {...register("repWhatsapp")}
-          value={repWhatsapp}
-          onChange={e => setValue("repWhatsapp", e.target.value, { shouldValidate: true })}
-          placeholder="شماره واتساپ را وارد کنید"
+        <Controller
+          name="repWhatsapp"
+          control={control}
+          rules={{ required: "شماره واتساپ الزامی است." }}
+          render={({ field }) => (
+            <Input
+              label="شماره واتساپ"
+              {...field}
+              placeholder="شماره واتساپ را وارد کنید"
+              subtitle={errors.repWhatsapp?.message}
+              subtitleType={errors.repWhatsapp ? "error" : "info"}
+            />
+          )}
         />
-        <Input
-          label="آیدی تلگرام"
-          {...register("repTelegram")}
-          value={repTelegram}
-          onChange={e => setValue("repTelegram", e.target.value, { shouldValidate: true })}
-          placeholder="آیدی تلگرام را وارد کنید"
+        <Controller
+          name="repTelegram"
+          control={control}
+          rules={{ required: "آیدی تلگرام الزامی است." }}
+          render={({ field }) => (
+            <Input
+              label="آیدی تلگرام"
+              {...field}
+              placeholder="آیدی تلگرام را وارد کنید"
+              subtitle={errors.repTelegram?.message}
+              subtitleType={errors.repTelegram ? "error" : "info"}
+            />
+          )}
         />
       </div>
     </StepLayout>
