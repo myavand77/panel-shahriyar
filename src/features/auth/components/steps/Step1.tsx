@@ -1,7 +1,40 @@
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import { useForm } from "react-hook-form";
+import { useOtpRequest } from "@/features/auth/login/hooks/useOtpRequest";
+import React from "react";
+import { handleApiError, isValidIranianPhoneNumber } from "@/lib/error";
 
 const Step1 = ({ onNext }: { onNext: () => void }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<{
+    phone: string;
+  }>({
+    mode: "onChange",
+    defaultValues: { phone: "" },
+  });
+  const { requestOtpMutate, isPending, error } = useOtpRequest();
+
+  // Show toast on error
+  React.useEffect(() => {
+    if (!error) return;
+    handleApiError(error, "خطا در ارسال درخواست. لطفا دوباره تلاش کنید.");
+  }, [error]);
+
+  const onSubmit = (data: { phone: string }) => {
+    requestOtpMutate(
+      { phone_number: data.phone },
+      {
+        onSuccess: () => {
+          onNext();
+        },
+      }
+    );
+  };
+
   return (
     <div
       className="w-[424px] bg-gradient-to-b from-white to-primary-50 rounded-2xl shadow-lg p-8 flex flex-col items-center gap-6 border border-neutral-200 font-sans"
@@ -23,23 +56,34 @@ const Step1 = ({ onNext }: { onNext: () => void }) => {
         </div>
       </div>
       {/* Input */}
-      <div className="w-full flex flex-col gap-6 mt-2">
+      <form
+        className="w-full flex flex-col gap-6 mt-2"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Input
           label="تلفن همراه"
           type="tel"
           placeholder="09123456789"
           className="text-right"
           dir="rtl"
+          {...register("phone", {
+            required: "شماره تلفن الزامی است.",
+            validate: (value) =>
+              isValidIranianPhoneNumber(value) || "شماره تلفن معتبر نیست.",
+          })}
+          subtitle={errors.phone?.message}
+          subtitleType={errors.phone ? "error" : "info"}
         />
-      </div>
-      {/* Main Button */}
-      <Button
-        className="w-full mt-6 rounded-[6px] h-9 text-[14px] font-medium"
-        style={{ opacity: 0.5 }}
-        onClick={onNext}
-      >
-        دریافت کد یکبارمصرف
-      </Button>
+        {/* Main Button */}
+        <Button
+          className="w-full"
+          type="submit"
+          variant="filled"
+          disabled={!isValid || isPending}
+        >
+          {isPending ? "در حال ارسال..." : "دریافت کد یکبارمصرف"}
+        </Button>
+      </form>
       {/* Bottom Links */}
       <div className="w-full flex flex-col gap-2 mt-2">
         <div className="flex flex-row-reverse justify-end items-center gap-3">

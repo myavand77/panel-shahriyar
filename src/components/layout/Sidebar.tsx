@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { Can } from "@casl/react";
 import { defineAbilityFor } from "@/lib/ability";
 import { cn } from "@/lib/utils";
-import { LogoIcon } from "@/components/Icons";
 import { getNavigationItems } from "@/config/navigation";
 import { useAuth } from "@/lib/auth";
 
@@ -19,7 +18,11 @@ export default function Sidebar() {
     <div className="h-full p-4 flex flex-col border-l border-gray-100">
       {/* Logo */}
       <div className="mt-8 mb-10 flex justify-center">
-        <LogoIcon className="text-primary-500" width={118} height={37} />
+        <img
+          src="/assets/figma/vibe-logo.svg"
+          alt="Vibe Logo"
+          className="h-[53px]"
+        />
       </div>
 
       {/* Navigation */}
