@@ -6,7 +6,7 @@ const TabFilter: React.FC<TabFilterProps> = ({
   onTabChange,
 }) => {
   return (
-    <div className="flex items-center gap-2 p-1 bg-neutral-50 rounded-lg w-fit">
+    <div className="flex items-center gap-2 p-1 bg-neutral-50 rounded-lg w-fit flex-wrap">
       {tabs.map((tab) => (
         <button
           key={tab.id}

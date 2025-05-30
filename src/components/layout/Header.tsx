@@ -2,12 +2,14 @@ import { FC, useRef, useState, useEffect } from "react";
 import { ArrowDownIcon, NotificationIcon, UserIcon } from "@/components/Icons";
 import { useAuth } from "@/lib/auth";
 import ConfirmationModal from "@/components/ui/ConfirmationModal";
+import { LogOutIcon, MenuIcon } from "lucide-react";
 
 interface HeaderProps {
   title?: string;
+  onMenuClick?: () => void;
 }
 
-const Header: FC<HeaderProps> = ({ title = "پنل ادمین" }) => {
+const Header: FC<HeaderProps> = ({ title = "پنل ادمین", onMenuClick }) => {
   const { user, loading, logout } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -44,16 +46,20 @@ const Header: FC<HeaderProps> = ({ title = "پنل ادمین" }) => {
   }, [dropdownOpen]);
 
   return (
-    <div className="flex justify-between items-center px-6 py-6 mb-8 bg-white">
+    <div className="fixed top-0 left-0 right-0 lg:right-[280px] z-50 flex justify-between items-center px-6 py-6 mb-8 bg-white">
       {/* Title */}
-      <h1 className="text-[18px] font-bold text-text-500">{title}</h1>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={onMenuClick}
+          className="lg:hidden hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <MenuIcon className="w-6 h-6 text-gray-600" />
+        </button>
+        <h1 className="text-[18px] font-bold text-text-500">{title}</h1>
+      </div>
 
       {/* Right Section */}
       <div className="flex items-center gap-6">
-        {/* Notification Bell */}
-        <button className="flex items-center">
-          <NotificationIcon width={24} height={24} />
-        </button>
         {/* User Profile */}
         <div className="relative flex items-center gap-2" ref={profileRef}>
           <button
@@ -62,7 +68,7 @@ const Header: FC<HeaderProps> = ({ title = "پنل ادمین" }) => {
             aria-haspopup="true"
             aria-expanded={dropdownOpen}
           >
-            <UserIcon width={24} height={24} />
+            <UserIcon width={24} height={24} className="!hidden lg:!flex" />
             <div className="flex items-center gap-1">
               <span className="text-xs text-text-500">
                 {loading ? "..." : userName || "-"}
@@ -73,23 +79,33 @@ const Header: FC<HeaderProps> = ({ title = "پنل ادمین" }) => {
           {/* Dropdown */}
           {dropdownOpen && (
             <div
-              className="absolute left-0 top-12 min-w-[140px] bg-white rounded-xl shadow-lg border border-muted-100 z-50 animate-fade-in"
+              className="absolute left-0 top-6 md:top-12 min-w-[140px] bg-white rounded-xl shadow-lg border border-muted-100 z-50 animate-fade-in"
               style={{ boxShadow: "0 4px 16px 0 rgba(0,0,0,0.08)" }}
             >
               <div className="flex flex-col py-2 px-4">
                 <button
-                  className="text-right text-base text-text-500 py-2 cursor-not-allowed bg-transparent border-0 outline-none"
+                  className="text-right text-sm text-text-500 py-2 flex items-center gap-2 bg-transparent border-0 outline-none"
                   disabled
                 >
+                  <UserIcon width={16} height={16} />
                   حساب کاربری
                 </button>
+                <button className="text-right text-sm text-text-500 py-2 flex items-center gap-2 bg-transparent border-0 outline-none">
+                  <NotificationIcon width={16} height={16} />
+                  اعلان ها
+                </button>
                 <button
-                  className="text-right text-base py-2 text-error-500 hover:bg-error-50 transition rounded-md bg-transparent border-0 outline-none"
+                  className="text-right text-sm py-2 text-error-500 hover:bg-error-50 transition rounded-md bg-transparent border-0 outline-none flex items-center gap-2"
                   onClick={() => {
                     setDropdownOpen(false);
                     setShowLogoutModal(true);
                   }}
                 >
+                  <LogOutIcon
+                    width={16}
+                    height={16}
+                    className="text-error-500"
+                  />
                   خروج
                 </button>
               </div>

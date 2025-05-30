@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { type UserRole } from "@/lib/ability";
@@ -16,6 +16,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { access_token, loading } = useAuth();
   const userRole = "Provider";
   const router = useRouter();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   React.useEffect(() => {
     if (!loading && !access_token) {
@@ -40,14 +41,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="h-screen overflow-hidden bg-gray-100 flex flex-row">
       <TokenRefreshProvider />
       {/* Right Sidebar */}
-      <div className="w-64 bg-white shadow-lg overflow-y-auto">
-        <Sidebar />
-      </div>
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header title={getTitleByRole(userRole)} />
-        <div className="px-6 h-full overflow-y-auto">
+        <Header
+          title={getTitleByRole(userRole)}
+          onMenuClick={() => setIsSidebarOpen((prev) => !prev)}
+        />
+        <div className="px-6 flex-1 overflow-y-auto pt-[88px] mb-5">
           {/* Content Area */}
           {children}
         </div>

@@ -29,7 +29,7 @@ function SettingsViewContent() {
   const [activeTab, setActiveTab] = useState("identity");
 
   return (
-    <div className="p-8">
+    <div className="py-5">
       <div className="mb-8">
         <TabFilter
           tabs={tabs}

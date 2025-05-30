@@ -9,7 +9,8 @@ export const GatewayInfo: FC<GatewayInfoProps> = ({
   return (
     <div className="w-full">
       <div className="w-full bg-white rounded-lg overflow-hidden">
-        <div className="grid grid-cols-3 border-b border-muted-100">
+        {/* Header - Hidden on mobile */}
+        <div className="hidden md:grid md:grid-cols-3 border-b border-muted-100">
           <div className="p-4 text-start text-sm text-muted-50">
             آدرس وب‌سرویس
           </div>
@@ -18,8 +19,11 @@ export const GatewayInfo: FC<GatewayInfoProps> = ({
             مستندات فنی
           </div>
         </div>
-        <div className="grid grid-cols-3">
-          <div className="p-4 text-start text-md">
+        {/* Content */}
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {/* Web Service Address */}
+          <div className="p-4 border-b md:border-b-0 border-muted-100">
+            <div className="md:hidden text-sm text-muted-50 mb-2">آدرس وب‌سرویس</div>
             <a
               href={swaggerAddress}
               target="_blank"
@@ -29,9 +33,17 @@ export const GatewayInfo: FC<GatewayInfoProps> = ({
               {swaggerAddress}
             </a>
           </div>
-          <div className="p-4 text-start text-text-900 text-md">{apiKey}</div>
-          <div className="p-4 flex justify-start items-center text-md">
-            <DocumentIcon width={20} height={20} className="text-primary-500" />
+          {/* API Key */}
+          <div className="p-4 border-b md:border-b-0 border-muted-100">
+            <div className="md:hidden text-sm text-muted-50 mb-2">API Key</div>
+            <div className="text-text-900">{apiKey}</div>
+          </div>
+          {/* Technical Documentation */}
+          <div className="p-4">
+            <div className="md:hidden text-sm text-muted-50 mb-2">مستندات فنی</div>
+            <div className="flex justify-start items-center">
+              <DocumentIcon width={20} height={20} className="text-primary-500" />
+            </div>
           </div>
         </div>
       </div>
