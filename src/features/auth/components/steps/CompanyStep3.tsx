@@ -9,7 +9,6 @@ import provincesData from "@/constants/provinces.json";
 import citiesData from "@/constants/provinces_cities.json";
 
 const categories = [
-  { value: "", label: "دسته‌بندی را انتخاب کنید" },
   { value: "shop", label: "فروشگاه" },
   { value: "service", label: "خدماتی" },
   { value: "other", label: "سایر" },
@@ -43,7 +42,6 @@ const CompanyStep3 = ({
   });
 
   const provinces = [
-    { value: "", label: "استان را انتخاب کنید" },
     ...provincesData.map((province) => ({
       value: province.provinceId,
       label: province.provinceName,
@@ -62,12 +60,9 @@ const CompanyStep3 = ({
           value: city.cityId,
           label: city.cityName,
         }));
-      setCities([
-        { value: "", label: "شهر را انتخاب کنید" },
-        ...filteredCities,
-      ]);
+      setCities([...filteredCities]);
     } else {
-      setCities([{ value: "", label: "شهر را انتخاب کنید" }]);
+      setCities([]);
     }
   }, [selectedProvince]);
 

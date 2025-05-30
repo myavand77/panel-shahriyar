@@ -3,6 +3,12 @@ import { useFileUpload } from "@/hooks/useFileUpload";
 import Button from "./Button";
 import Label from "./Label";
 
+const truncateFileName = (fileName: string, maxLength: number = 20): string => {
+  return fileName.length > maxLength
+    ? fileName.substring(0, maxLength) + "..."
+    : fileName;
+};
+
 interface FileUploadProps {
   label?: string;
   onChange: (url: string | null) => void;
@@ -95,6 +101,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           disabled={isPending}
           variant="warning"
           loading={isPending}
+          className="text-xs md:text-sm"
         >
           {displayUrl ? "بارگذاری مجدد" : "بارگذاری"}
         </Button>
@@ -110,8 +117,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
             />
           </div>
         )}
-        <span className="text-neutral-500 text-sm">
-          {selectedFile ? selectedFile.name : "فایل لوگو را بارگذاری کنید"}
+        <span className="text-neutral-500 text-xs">
+          {selectedFile
+            ? truncateFileName(selectedFile.name)
+            : "فایل لوگو را بارگذاری کنید"}
         </span>
       </div>
       <input

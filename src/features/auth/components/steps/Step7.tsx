@@ -97,7 +97,7 @@ const Step7: React.FC<Step7Props> = ({ onPrev, tab }) => {
 
   return (
     <div
-      className="w-[424px] bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center gap-6 border border-neutral-200 font-sans"
+      className="w-full md:w-[424px] bg-white rounded-2xl shadow-lg p-8 m-2 flex flex-col items-center gap-6 border border-neutral-200 font-sans"
       style={{ fontFamily: "Vazir, sans-serif" }}
     >
       {/* Logo */}

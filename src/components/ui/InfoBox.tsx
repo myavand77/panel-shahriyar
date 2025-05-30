@@ -37,9 +37,16 @@ const InfoBox: React.FC<InfoBoxProps> = ({
       {/* Info Rows */}
       <div className="">
         {Object.entries(info).map(([key, value]) => (
-          <div key={key} className="flex items-start justify-between px-6 py-1">
-            <span className="text-sm text-text-600">{key}</span>
-            <span className="text-sm text-text-400 text-end">{value}</span>
+          <div
+            key={key}
+            className="flex items-start justify-between px-6 py-1 flex-wrap mb-3"
+          >
+            <span className="w-full md:w-auto text-sm text-text-600">
+              {key}:
+            </span>
+            <span className="text-sm text-text-300 text-end flex-1">
+              {value}
+            </span>
           </div>
         ))}
       </div>

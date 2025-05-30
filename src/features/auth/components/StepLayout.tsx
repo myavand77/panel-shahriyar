@@ -23,7 +23,7 @@ const StepLayout: React.FC<StepLayoutProps> = ({
   showNext = true,
   showPrev = true,
 }) => (
-  <div className="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-8 m-3 flex flex-col gap-4 items-center border border-neutral-200">
+  <div className="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-2 md:p-8 m-3 flex flex-col gap-4 items-center border border-neutral-200">
     <AuthHeader currentStep={currentStep} isCompany={isCompany} />
     <div className="w-full flex flex-col gap-4">{children}</div>
     <div className="flex gap-4 mt-4 justify-center">

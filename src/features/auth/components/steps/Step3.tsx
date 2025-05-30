@@ -10,7 +10,6 @@ import provincesCitiesData from "@/constants/provinces_cities.json";
 
 // Get unique provinces
 const provinces = [
-  { value: "", label: "استان را انتخاب کنید" },
   ...Array.from(
     new Set(provincesCitiesData.map((item) => item.provinceName))
   ).map((province) => ({
@@ -53,9 +52,8 @@ const Step3 = ({
 
   // Filter cities based on selected province
   const cities = useMemo(() => {
-    const defaultOption = { value: "", label: "شهر را انتخاب کنید" };
     if (!selectedProvince) {
-      return [defaultOption];
+      return [];
     }
     const filteredCities = provincesCitiesData
       .filter((item) => item.provinceName === selectedProvince)
@@ -63,7 +61,7 @@ const Step3 = ({
         value: item.cityName,
         label: item.cityName,
       }));
-    return [defaultOption, ...filteredCities];
+    return [...filteredCities];
   }, [selectedProvince]);
 
   // Handler for form submit
@@ -354,9 +352,11 @@ const Step3 = ({
                   label="بارگذاری لوگو"
                   onChange={(file) => field.onChange(file)}
                   fileUrl={
-                    typeof window !== 'undefined' && field.value instanceof File
+                    typeof window !== "undefined" && field.value instanceof File
                       ? URL.createObjectURL(field.value)
-                      : typeof field.value === 'string' ? field.value : undefined
+                      : typeof field.value === "string"
+                      ? field.value
+                      : undefined
                   }
                   required
                   error={errors.logo?.message}
