@@ -35,7 +35,9 @@ const AuthInfoEditModal = ({
     defaultValues,
   });
   const { updateVendor } = useVendorData();
-  const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
+  const [cityOptions, setCityOptions] = useState<
+    { value: string; label: string }[]
+  >([]);
 
   // Watch for province changes
   const selectedProvince = watch("استان");
@@ -60,16 +62,21 @@ const AuthInfoEditModal = ({
     const update: TUpdateVendorRequest = {};
 
     // Helper to check if a field changed
-    const isChanged = (key: keyof AuthInfoFormValues) => data[key] !== defaultValues[key];
+    const isChanged = (key: keyof AuthInfoFormValues) =>
+      data[key] !== defaultValues[key];
 
     // basic_info_individual
-    const basicInfoIndividual: TUpdateVendorRequest["basic_info_individual"] = {};
+    const basicInfoIndividual: TUpdateVendorRequest["basic_info_individual"] =
+      {};
     if (isChanged("نام")) basicInfoIndividual.first_name = data["نام"];
-    if (isChanged("نام خانوادگی")) basicInfoIndividual.last_name = data["نام خانوادگی"];
+    if (isChanged("نام خانوادگی"))
+      basicInfoIndividual.last_name = data["نام خانوادگی"];
     if (isChanged("کد ملی")) basicInfoIndividual.national_id = data["کد ملی"];
-    if (isChanged("تلفن همراه")) basicInfoIndividual.mobile = data["تلفن همراه"];
+    if (isChanged("تلفن همراه"))
+      basicInfoIndividual.mobile = data["تلفن همراه"];
     if (isChanged("ایمیل")) basicInfoIndividual.email = data["ایمیل"];
-    if (Object.keys(basicInfoIndividual).length > 0) update.basic_info_individual = basicInfoIndividual;
+    if (Object.keys(basicInfoIndividual).length > 0)
+      update.basic_info_individual = basicInfoIndividual;
 
     // address
     const address: TUpdateVendorRequest["address"] = {};
@@ -86,7 +93,8 @@ const AuthInfoEditModal = ({
 
     // bank_account
     const bankAccount: TUpdateVendorRequest["bank_account"] = {};
-    if (isChanged("شماره حساب")) bankAccount.account_number = data["شماره حساب"];
+    if (isChanged("شماره حساب"))
+      bankAccount.account_number = data["شماره حساب"];
     if (isChanged("شماره شبا")) bankAccount.sheba_number = data["شماره شبا"];
     if (Object.keys(bankAccount).length > 0) update.bank_account = bankAccount;
 
@@ -115,71 +123,112 @@ const AuthInfoEditModal = ({
           <Controller
             name="نام"
             control={control}
-            render={({ field }) => <Input label="نام" {...field} />}
+            render={({ field }) => <Input label="نام" {...field} required />}
           />
           <Controller
             name="نام خانوادگی"
             control={control}
-            render={({ field }) => <Input label="نام خانوادگی" {...field} />}
+            render={({ field }) => (
+              <Input label="نام خانوادگی" {...field} required />
+            )}
           />
           <Controller
             name="کد ملی"
             control={control}
-            render={({ field }) => <Input label="کد ملی" {...field} />}
+            render={({ field }) => (
+              <Input
+                label="کد ملی"
+                {...field}
+                validationType="nationalCode"
+                required
+              />
+            )}
           />
           <Controller
             name="تلفن همراه"
             control={control}
-            render={({ field }) => <Input label="تلفن همراه" {...field} />}
+            render={({ field }) => (
+              <Input
+                label="تلفن همراه"
+                {...field}
+                validationType="mobile"
+                required
+              />
+            )}
           />
           <Controller
             name="ایمیل"
             control={control}
             render={({ field }) => (
-              <Input label="ایمیل" type="email" {...field} />
+              <Input label="ایمیل" {...field} validationType="email" required />
             )}
           />
           <Controller
             name="استان"
             control={control}
             render={({ field }) => (
-              <Select label="استان" options={provinceOptions} {...field} />
+              <Select
+                label="استان"
+                options={provinceOptions}
+                {...field}
+                required
+              />
             )}
           />
           <Controller
             name="شهر"
             control={control}
             render={({ field }) => (
-              <Select 
-                label="شهر" 
-                options={cityOptions} 
+              <Select
+                label="شهر"
+                options={cityOptions}
                 {...field}
                 disabled={!selectedProvince}
+                required
               />
             )}
           />
           <Controller
             name="کدپستی"
             control={control}
-            render={({ field }) => <Input label="کد پستی" {...field} />}
+            render={({ field }) => (
+              <Input
+                label="کد پستی"
+                {...field}
+                validationType="postalCode"
+                required
+              />
+            )}
           />
 
           <Controller
             name="برند"
             control={control}
-            render={({ field }) => <Input label="برند" {...field} />}
+            render={({ field }) => <Input label="برند" {...field} required />}
           />
           <Controller
             name="دسته‌بندی"
             control={control}
             render={({ field }) => (
-              <Select label="دسته‌بندی" options={categoryOptions} {...field} />
+              <Select
+                label="دسته‌بندی"
+                options={categoryOptions}
+                {...field}
+                required
+              />
             )}
           />
           <Controller
             name="شماره حساب"
             control={control}
-            render={({ field }) => <Input label="شماره حساب" {...field} />}
+            render={({ field }) => (
+              <Input
+                label="شماره حساب"
+                {...field}
+                validationType="number"
+                required
+              />
+            )}
           />
           <Controller
             name="شماره شبا"
@@ -188,11 +237,13 @@ const AuthInfoEditModal = ({
               <Input
                 label="شماره شبا"
                 {...field}
+                validationType="shaba"
                 startLogo={
                   <span className="text-neutral-500 text-sm select-none">
                     IR
                   </span>
                 }
+                required
               />
             )}
           />
@@ -200,7 +251,12 @@ const AuthInfoEditModal = ({
             name="آدرس"
             control={control}
             render={({ field }) => (
-              <Input label="آدرس" {...field} className="md:col-span-2" />
+              <Input
+                label="آدرس"
+                {...field}
+                className="md:col-span-2"
+                required
+              />
             )}
           />
         </div>

@@ -100,11 +100,12 @@ const Step3 = ({
             <Controller
               name="name"
               control={control}
-              rules={{ required: "نام الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="نام"
                   {...field}
+                  required
                   placeholder="نام را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
@@ -116,11 +117,12 @@ const Step3 = ({
             <Controller
               name="lastName"
               control={control}
-              rules={{ required: "نام خانوادگی الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="نام خانوادگی"
                   {...field}
+                  required
                   placeholder="نام خانوادگی را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
@@ -132,11 +134,13 @@ const Step3 = ({
             <Controller
               name="nationalId"
               control={control}
-              rules={{ required: "کدملی الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="کدملی"
+                  validationType="nationalCode"
                   {...field}
+                  required
                   placeholder="کدملی را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
@@ -148,11 +152,13 @@ const Step3 = ({
             <Controller
               name="phone"
               control={control}
-              rules={{ required: "تلفن همراه الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="تلفن همراه"
+                  validationType="mobile"
                   {...field}
+                  required
                   placeholder="تلفن همراه را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
@@ -167,11 +173,13 @@ const Step3 = ({
             <Controller
               name="email"
               control={control}
-              rules={{ required: "ایمیل الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="ایمیل"
+                  validationType="email"
                   {...field}
+                  required
                   placeholder="ایمیل را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
@@ -184,8 +192,7 @@ const Step3 = ({
               name="province"
               control={control}
               rules={{
-                required: "استان الزامی است.",
-                validate: (v) => v !== "" || "استان الزامی است.",
+                required: true,
               }}
               render={({ field }) => (
                 <Select
@@ -196,6 +203,7 @@ const Step3 = ({
                   dir="rtl"
                   subtitle={errors.province?.message}
                   subtitleType={errors.province ? "error" : "info"}
+                  required
                 />
               )}
             />
@@ -203,8 +211,7 @@ const Step3 = ({
               name="city"
               control={control}
               rules={{
-                required: "شهر الزامی است.",
-                validate: (v) => v !== "" || "شهر الزامی است.",
+                required: true,
               }}
               render={({ field }) => (
                 <Select
@@ -215,17 +222,20 @@ const Step3 = ({
                   dir="rtl"
                   subtitle={errors.city?.message}
                   subtitleType={errors.city ? "error" : "info"}
+                  required
                 />
               )}
             />
             <Controller
               name="postalCode"
               control={control}
-              rules={{ required: "کد پستی الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="کد پستی"
+                  validationType="postalCode"
                   {...field}
+                  required
                   placeholder="کد پستی را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
@@ -240,11 +250,12 @@ const Step3 = ({
             <Controller
               name="brand"
               control={control}
-              rules={{ required: "برند الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="برند"
                   {...field}
+                  required
                   placeholder="برند را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
@@ -257,8 +268,7 @@ const Step3 = ({
               name="category"
               control={control}
               rules={{
-                required: "دسته‌بندی الزامی است.",
-                validate: (v) => v !== "" || "دسته‌بندی الزامی است.",
+                required: true,
               }}
               render={({ field }) => (
                 <Select
@@ -269,17 +279,20 @@ const Step3 = ({
                   dir="rtl"
                   subtitle={errors.category?.message}
                   subtitleType={errors.category ? "error" : "info"}
+                  required
                 />
               )}
             />
             <Controller
               name="accountNumber"
               control={control}
-              rules={{ required: "شماره حساب الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="شماره حساب"
+                  validationType="number"
                   {...field}
+                  required
                   placeholder="شماره حساب را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="ltr"
@@ -291,15 +304,17 @@ const Step3 = ({
             <Controller
               name="shaba"
               control={control}
-              rules={{ required: "شماره شبا الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="شماره شبا"
+                  validationType="shaba"
                   {...field}
                   placeholder="شماره شبا را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="ltr"
                   autoComplete="off"
+                  required
                   startLogo={
                     <span className="text-neutral-500 text-sm select-none">
                       IR
@@ -316,11 +331,12 @@ const Step3 = ({
             <Controller
               name="address"
               control={control}
-              rules={{ required: "آدرس الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input
                   label="آدرس"
                   {...field}
+                  required
                   placeholder="آدرس را وارد کنید"
                   className="text-right placeholder:text-xs"
                   dir="rtl"
@@ -332,7 +348,7 @@ const Step3 = ({
             <Controller
               name="logo"
               control={control}
-              rules={{ required: "بارگذاری لوگو الزامی است." }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <FileUpload
                   label="بارگذاری لوگو"

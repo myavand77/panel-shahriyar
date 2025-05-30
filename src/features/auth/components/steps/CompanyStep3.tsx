@@ -94,7 +94,7 @@ const CompanyStep3 = ({
           <Controller
             name="companyName"
             control={control}
-            rules={{ required: "نام شرکت الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="نام شرکت"
@@ -104,13 +104,14 @@ const CompanyStep3 = ({
                 dir="rtl"
                 subtitle={errors.companyName?.message}
                 subtitleType={errors.companyName ? "error" : "info"}
+                required
               />
             )}
           />
           <Controller
             name="brandName"
             control={control}
-            rules={{ required: "نام برند الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="نام برند"
@@ -120,6 +121,7 @@ const CompanyStep3 = ({
                 dir="rtl"
                 subtitle={errors.brandName?.message}
                 subtitleType={errors.brandName ? "error" : "info"}
+                required
               />
             )}
           />
@@ -139,22 +141,25 @@ const CompanyStep3 = ({
                 dir="rtl"
                 subtitle={errors.category?.message}
                 subtitleType={errors.category ? "error" : "info"}
+                required
               />
             )}
           />
           <Controller
             name="nationalId"
             control={control}
-            rules={{ required: "شناسه ملی الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="شناسه ملی"
+                validationType="nationalCode"
                 {...field}
                 placeholder="شناسه ملی را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
                 subtitle={errors.nationalId?.message}
                 subtitleType={errors.nationalId ? "error" : "info"}
+                required
               />
             )}
           />
@@ -164,42 +169,47 @@ const CompanyStep3 = ({
           <Controller
             name="economicCode"
             control={control}
-            rules={{ required: "شماره اقتصادی الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="شماره اقتصادی"
+                validationType="number"
                 {...field}
                 placeholder="شماره اقتصادی را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
                 subtitle={errors.economicCode?.message}
                 subtitleType={errors.economicCode ? "error" : "info"}
+                required
               />
             )}
           />
           <Controller
             name="accountNumber"
             control={control}
-            rules={{ required: "شماره حساب الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="شماره حساب"
+                validationType="number"
                 {...field}
                 placeholder="شماره حساب را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="ltr"
                 subtitle={errors.accountNumber?.message}
                 subtitleType={errors.accountNumber ? "error" : "info"}
+                required
               />
             )}
           />
           <Controller
             name="shaba"
             control={control}
-            rules={{ required: "شماره شبا الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="شماره شبا"
+                validationType="shaba"
                 {...field}
                 placeholder="شماره شبا را وارد کنید"
                 className="text-right placeholder:text-xs"
@@ -212,22 +222,25 @@ const CompanyStep3 = ({
                 }
                 subtitle={errors.shaba?.message}
                 subtitleType={errors.shaba ? "error" : "info"}
+                required
               />
             )}
           />
           <Controller
             name="postalCode"
             control={control}
-            rules={{ required: "کدپستی الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="کدپستی"
+                validationType="postalCode"
                 {...field}
                 placeholder="کدپستی را وارد کنید"
                 className="text-right placeholder:text-xs"
                 dir="rtl"
                 subtitle={errors.postalCode?.message}
                 subtitleType={errors.postalCode ? "error" : "info"}
+                required
               />
             )}
           />
@@ -237,10 +250,7 @@ const CompanyStep3 = ({
           <Controller
             name="province"
             control={control}
-            rules={{
-              required: "استان الزامی است.",
-              validate: (v) => v !== "" || "استان الزامی است.",
-            }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Select
                 label="استان"
@@ -250,16 +260,14 @@ const CompanyStep3 = ({
                 dir="rtl"
                 subtitle={errors.province?.message}
                 subtitleType={errors.province ? "error" : "info"}
+                required
               />
             )}
           />
           <Controller
             name="city"
             control={control}
-            rules={{
-              required: "شهر الزامی است.",
-              validate: (v) => v !== "" || "شهر الزامی است.",
-            }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Select
                 label="شهر"
@@ -270,6 +278,7 @@ const CompanyStep3 = ({
                 disabled={!selectedProvince}
                 subtitle={errors.city?.message}
                 subtitleType={errors.city ? "error" : "info"}
+                required
               />
             )}
           />
@@ -279,7 +288,7 @@ const CompanyStep3 = ({
           <Controller
             name="address"
             control={control}
-            rules={{ required: "آدرس الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="آدرس"
@@ -289,6 +298,7 @@ const CompanyStep3 = ({
                 dir="rtl"
                 subtitle={errors.address?.message}
                 subtitleType={errors.address ? "error" : "info"}
+                required
               />
             )}
           />

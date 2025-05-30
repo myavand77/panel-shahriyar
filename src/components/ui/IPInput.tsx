@@ -10,26 +10,49 @@ interface IPInputProps {
   label?: string;
   value?: string[];
   onChange?: (ips: string[]) => void;
+  required?: boolean;
+  error?: string;
+  onValidationChange?: (isValid: boolean) => void;
 }
 
-const IPInput: React.FC<IPInputProps> = ({ label, value = [], onChange }) => {
+const IPInput: React.FC<IPInputProps> = ({
+  label,
+  value = [],
+  onChange,
+  required = false,
+  error: externalError,
+  onValidationChange,
+}) => {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
+  const [isTouched, setIsTouched] = useState(false);
+
+  const validateField = () => {
+    if (required && value.length === 0) {
+      setError(`${label || "این فیلد"} الزامی است`);
+      onValidationChange?.(false);
+      return false;
+    }
+    return true;
+  };
 
   const addIP = () => {
     if (!input.trim()) return;
     if (!isValidIP(input.trim())) {
       setError("آی پی معتبر نیست");
+      onValidationChange?.(false);
       return;
     }
     if (value.includes(input.trim())) {
       setError("این آی پی قبلاً اضافه شده است");
+      onValidationChange?.(false);
       return;
     }
     const newIps = [...value, input.trim()];
     onChange?.(newIps);
     setInput("");
     setError("");
+    onValidationChange?.(true);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -42,11 +65,30 @@ const IPInput: React.FC<IPInputProps> = ({ label, value = [], onChange }) => {
   const removeIP = (ip: string) => {
     const newIps = value.filter((item) => item !== ip);
     onChange?.(newIps);
+    if (required && newIps.length === 0) {
+      setError(`${label || "این فیلد"} الزامی است`);
+      onValidationChange?.(false);
+    } else {
+      setError("");
+      onValidationChange?.(true);
+    }
   };
+
+  const handleBlur = () => {
+    setIsTouched(true);
+    validateField();
+  };
+
+  const displayError = externalError || (isTouched ? error : "");
 
   return (
     <div>
-      {label && <Label>{label}</Label>}
+      {label && (
+        <Label>
+          {label}
+          {required && <span className="text-error-500 ml-1">*</span>}
+        </Label>
+      )}
       <div className="flex gap-2">
         <Input
           label=""
@@ -55,6 +97,7 @@ const IPInput: React.FC<IPInputProps> = ({ label, value = [], onChange }) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
         />
         <Button
           type="button"
@@ -65,7 +108,9 @@ const IPInput: React.FC<IPInputProps> = ({ label, value = [], onChange }) => {
           <span className="ml-1 text-xs">افزودن</span>
         </Button>
       </div>
-      {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
+      {displayError && (
+        <div className="text-red-500 text-xs mt-1">{displayError}</div>
+      )}
       <div className="flex flex-wrap gap-2 mt-3">
         {value.map((ip) => (
           <span

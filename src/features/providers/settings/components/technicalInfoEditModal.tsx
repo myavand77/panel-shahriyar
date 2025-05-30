@@ -72,6 +72,8 @@ const TechnicalInfoEditModal = ({
                 placeholder="وبسایت را وارد کنید"
                 subtitle="آدرس وبسایت را بدون www یا https:// وارد کنید."
                 {...field}
+                validationType="url"
+                required
               />
             )}
           />
@@ -83,6 +85,8 @@ const TechnicalInfoEditModal = ({
                 label="آدرس وب‌سرویس، کانال یا خدمات"
                 placeholder="آدرس وب‌سرویس را وارد کنید"
                 {...field}
+                validationType="url"
+                required
               />
             )}
           />
@@ -94,6 +98,7 @@ const TechnicalInfoEditModal = ({
                 label="کلید سرویس (API Key)"
                 placeholder="کلید سرویس (API Key) را وارد کنید"
                 {...field}
+                required
               />
             )}
           />
@@ -106,6 +111,8 @@ const TechnicalInfoEditModal = ({
                 placeholder="آدرس Callback را وارد کنید"
                 subtitle="بعد از تکمیل پرداخت نقدی و اعتباری، کاربر به این آدرس منتقل خواهد شد."
                 {...field}
+                validationType="url"
+                required
               />
             )}
           />
@@ -117,8 +124,9 @@ const TechnicalInfoEditModal = ({
                 label="ایمیل"
                 placeholder="ایمیل را وارد کنید"
                 subtitle="اطلاعات درگاه پرداخت اعتباری و کلید سرویس به این ایمیل ارسال خواهد شد."
-                type="email"
                 {...field}
+                validationType="email"
+                required
               />
             )}
           />
@@ -130,6 +138,7 @@ const TechnicalInfoEditModal = ({
                 label="IP فروشگاه"
                 value={field.value}
                 onChange={field.onChange}
+                required
               />
             )}
           />

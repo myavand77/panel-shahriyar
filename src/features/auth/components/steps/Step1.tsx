@@ -2,7 +2,7 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { useOtpRequest } from "@/features/auth/login/hooks/useOtpRequest";
 import React from "react";
-import { handleApiError, isValidIranianPhoneNumber } from "@/lib/error";
+import { handleApiError } from "@/lib/error";
 import { useStepsForm, StepsFormData } from "./StepsFormContext";
 import { Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -67,19 +67,14 @@ const Step1 = ({
         <Controller
           name="phone"
           control={control}
-          rules={{
-            required: "شماره تلفن الزامی است.",
-            validate: (value) =>
-              typeof value === "string"
-                ? isValidIranianPhoneNumber(value) || "شماره تلفن معتبر نیست."
-                : "شماره تلفن معتبر نیست.",
-          }}
+          rules={{ required: true }}
           render={({ field }) => (
             <Input
               label="تلفن همراه"
-              type="tel"
+              validationType="mobile"
               placeholder="09123456789"
               className="text-right"
+              required
               dir="rtl"
               {...field}
               subtitle={errors.phone?.message}

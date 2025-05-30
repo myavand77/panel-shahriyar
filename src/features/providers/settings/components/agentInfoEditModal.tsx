@@ -24,14 +24,20 @@ const AgentInfoEditModal = ({
     // Only include changed fields
     const agentUpdate: TUpdateVendorRequest["agent"] = {};
     // Helper to check if a field changed
-    const isChanged = (key: keyof AgentInfoFormValues) => data[key] !== defaultValues[key];
+    const isChanged = (key: keyof AgentInfoFormValues) =>
+      data[key] !== defaultValues[key];
 
     if (isChanged("نام نماینده")) agentUpdate.first_name = data["نام نماینده"];
-    if (isChanged("نام خانوادگی نماینده")) agentUpdate.last_name = data["نام خانوادگی نماینده"];
-    if (isChanged("کدملی نماینده")) agentUpdate.national_id = data["کدملی نماینده"];
-    if (isChanged("تلفن همراه نماینده")) agentUpdate.mobile = data["تلفن همراه نماینده"];
-    if (isChanged("آی‌دی تلگرام")) agentUpdate.telegram_id = data["آی‌دی تلگرام"];
-    if (isChanged("شماره واتساپ")) agentUpdate.whatsapp_id = data["شماره واتساپ"];
+    if (isChanged("نام خانوادگی نماینده"))
+      agentUpdate.last_name = data["نام خانوادگی نماینده"];
+    if (isChanged("کدملی نماینده"))
+      agentUpdate.national_id = data["کدملی نماینده"];
+    if (isChanged("تلفن همراه نماینده"))
+      agentUpdate.mobile = data["تلفن همراه نماینده"];
+    if (isChanged("آی‌دی تلگرام"))
+      agentUpdate.telegram_id = data["آی‌دی تلگرام"];
+    if (isChanged("شماره واتساپ"))
+      agentUpdate.whatsapp_id = data["شماره واتساپ"];
     if (isChanged("ایمیل")) agentUpdate.email = data["ایمیل"];
     if (isChanged("تلفن ثابت")) agentUpdate.phone = data["تلفن ثابت"];
 
@@ -63,48 +69,83 @@ const AgentInfoEditModal = ({
           <Controller
             name="نام نماینده"
             control={control}
-            render={({ field }) => <Input label="نام نماینده" {...field} />}
+            render={({ field }) => (
+              <Input label="نام نماینده" {...field} required />
+            )}
           />
           <Controller
             name="نام خانوادگی نماینده"
             control={control}
             render={({ field }) => (
-              <Input label="نام خانوادگی نماینده" {...field} />
+              <Input label="نام خانوادگی نماینده" {...field} required />
             )}
           />
           <Controller
             name="کدملی نماینده"
             control={control}
-            render={({ field }) => <Input label="کدملی نماینده" {...field} />}
+            render={({ field }) => (
+              <Input
+                label="کدملی نماینده"
+                {...field}
+                validationType="nationalCode"
+                required
+              />
+            )}
           />
           <Controller
             name="تلفن همراه نماینده"
             control={control}
             render={({ field }) => (
-              <Input label="تلفن همراه نماینده" {...field} />
+              <Input
+                label="تلفن همراه نماینده"
+                {...field}
+                validationType="mobile"
+                required
+              />
             )}
           />
           <Controller
             name="آی‌دی تلگرام"
             control={control}
-            render={({ field }) => <Input label="آی‌دی تلگرام" {...field} />}
+            render={({ field }) => (
+              <Input
+                label="آی‌دی تلگرام"
+                {...field}
+                validationType="telegramId"
+                required
+              />
+            )}
           />
           <Controller
             name="شماره واتساپ"
             control={control}
-            render={({ field }) => <Input label="شماره واتساپ" {...field} />}
+            render={({ field }) => (
+              <Input
+                label="شماره واتساپ"
+                {...field}
+                validationType="mobile"
+                required
+              />
+            )}
           />
           <Controller
             name="ایمیل"
             control={control}
             render={({ field }) => (
-              <Input label="ایمیل" type="email" {...field} />
+              <Input label="ایمیل" {...field} validationType="email" required />
             )}
           />
           <Controller
             name="تلفن ثابت"
             control={control}
-            render={({ field }) => <Input label="تلفن ثابت" {...field} />}
+            render={({ field }) => (
+              <Input
+                label="تلفن ثابت"
+                {...field}
+                validationType="constantPhone"
+                required
+              />
+            )}
           />
         </div>
       </form>

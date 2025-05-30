@@ -34,12 +34,14 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="website"
             control={control}
-            rules={{ required: "وارد کردن وبسایت الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="وبسایت"
                 {...field}
+                required
                 placeholder="وبسایت را وارد کنید"
+                validationType="url"
                 startLogo={<Globe className="w-4 h-4" />}
                 subtitle={errors.website?.message}
                 subtitleType={errors.website ? "error" : "info"}
@@ -55,12 +57,14 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="webservice"
             control={control}
-            rules={{ required: "وارد کردن آدرس وب‌سرویس الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="آدرس وب‌سرویس کالا یا خدمات"
                 {...field}
+                required
                 placeholder="آدرس وب‌سرویس را وارد کنید"
+                validationType="url"
                 startLogo={<Link className="w-4 h-4" />}
                 subtitle={errors.webservice?.message}
                 subtitleType={errors.webservice ? "error" : "info"}
@@ -73,11 +77,12 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="apiKey"
             control={control}
-            rules={{ required: "وارد کردن کلید سرویس (API Key) الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="کلید سرویس (API Key)"
                 {...field}
+                required
                 placeholder="کلید سرویس (API Key) را وارد کنید"
                 startLogo={<Key className="w-4 h-4" />}
                 subtitle={errors.apiKey?.message}
@@ -94,12 +99,14 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="email"
             control={control}
-            rules={{ required: "وارد کردن ایمیل الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="ایمیل"
                 {...field}
+                required
                 placeholder="ایمیل را وارد کنید"
+                validationType="email"
                 startLogo={<Mail className="w-4 h-4" />}
                 subtitle={errors.email?.message}
                 subtitleType={errors.email ? "error" : "info"}
@@ -116,12 +123,14 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="callback"
             control={control}
-            rules={{ required: "وارد کردن آدرس Callback الزامی است." }}
+            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="آدرس Callback"
                 {...field}
+                required
                 placeholder="آدرس Callback را وارد کنید"
+                validationType="url"
                 startLogo={<Link className="w-4 h-4" />}
                 subtitle={errors.callback?.message}
                 subtitleType={errors.callback ? "error" : "info"}
@@ -142,15 +151,14 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
             name="ips"
             control={control}
             rules={{
-              required: "وارد کردن حداقل یک IP الزامی است.",
-              validate: (v) =>
-                (v && v.length > 0) || "وارد کردن حداقل یک IP الزامی است.",
+              required: true,
             }}
             render={({ field }) => (
               <IPInput
                 label="IP فروشگاه"
                 value={field.value}
                 onChange={field.onChange}
+                required
               />
             )}
           />
