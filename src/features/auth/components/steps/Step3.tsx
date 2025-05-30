@@ -19,7 +19,6 @@ const provinces = [
 ];
 
 const categories = [
-  { value: "", label: "دسته‌بندی را انتخاب کنید" },
   { value: "shop", label: "فروشگاه" },
   { value: "service", label: "خدماتی" },
   { value: "other", label: "سایر" },

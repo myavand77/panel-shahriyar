@@ -33,7 +33,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [internalError, setInternalError] = useState<string>("");
-  const [isTouched, setIsTouched] = useState(false);
   const {
     uploadFileMutate,
     data,
@@ -57,6 +56,15 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      const maxSizeInBytes = 500 * 1024; // 500KB in bytes
+
+      if (file.size > maxSizeInBytes) {
+        setInternalError("حداکثر حجم فایل باید ۵۰۰ کیلوبایت باشد");
+        onChange(null);
+        setSelectedFile(null);
+        return;
+      }
+
       setSelectedFile(file);
       uploadFileMutate(file, {
         onSuccess: (res) => {
@@ -76,15 +84,15 @@ const FileUpload: React.FC<FileUploadProps> = ({
   };
 
   const handleBlur = () => {
-    setIsTouched(true);
     validateField(!!(fileUrl || data?.url));
   };
 
   const displayUrl = fileUrl || data?.url;
+
   const error =
-    externalError ||
-    (isTouched ? internalError : "") ||
-    (uploadError ? "خطا در بارگذاری فایل. لطفا دوباره تلاش کنید." : "");
+    internalError ||
+    (uploadError ? "خطا در بارگذاری فایل. لطفا دوباره تلاش کنید." : "") ||
+    (required && !displayUrl ? externalError : "");
 
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
@@ -120,7 +128,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         <span className="text-neutral-500 text-xs">
           {selectedFile
             ? truncateFileName(selectedFile.name)
-            : "فایل لوگو را بارگذاری کنید"}
+            : "فایل را بارگذاری کنید"}
         </span>
       </div>
       <input
