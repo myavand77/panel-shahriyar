@@ -57,12 +57,10 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="webservice"
             control={control}
-            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="آدرس وب‌سرویس کالا یا خدمات"
                 {...field}
-                required
                 placeholder="آدرس وب‌سرویس را وارد کنید"
                 validationType="url"
                 startLogo={<Link className="w-4 h-4" />}
@@ -77,12 +75,10 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="apiKey"
             control={control}
-            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="کلید سرویس (API Key)"
                 {...field}
-                required
                 placeholder="کلید سرویس (API Key) را وارد کنید"
                 startLogo={<Key className="w-4 h-4" />}
                 subtitle={errors.apiKey?.message}

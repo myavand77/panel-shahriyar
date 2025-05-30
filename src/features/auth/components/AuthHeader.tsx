@@ -30,7 +30,7 @@ const AuthHeader = ({
       وایب، خدمتی ویژه به صاحبان کسب‌وکار آنلاین
     </div>
     <div className="text-[16px] font-normal text-neutral-500 leading-[1.5] text-center w-full mb-4">
-      بیش از چهار میلیون مشتری بالقوه به صورت رایگان منتظر خرید از کسب و کار شما
+      بیش از ده میلیون مشتری بالقوه به صورت رایگان منتظر خرید از کسب و کار شما
       هستند!
     </div>
     <Stepper
