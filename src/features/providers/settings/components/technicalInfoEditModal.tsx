@@ -31,7 +31,12 @@ const TechnicalInfoEditModal = ({
   defaultValues,
   onSave,
 }: TechnicalInfoEditModalProps) => {
-  const { control, handleSubmit, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues,
   });
 
@@ -133,12 +138,16 @@ const TechnicalInfoEditModal = ({
           <Controller
             name="ips"
             control={control}
+            rules={{
+              required: "IP فروشگاه الزامی است",
+            }}
             render={({ field }) => (
               <IPInput
                 label="IP فروشگاه"
                 value={field.value}
                 onChange={field.onChange}
                 required
+                error={errors.ips?.message}
               />
             )}
           />

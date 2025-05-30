@@ -37,13 +37,17 @@ const CompanyStep4 = ({
               render={({ field }) => (
                 <FileUpload
                   label="آگهی تاسیس"
-                  onChange={field.onChange}
+                  onChange={(file) => field.onChange(file)}
+                  fileUrl={
+                    typeof window !== 'undefined' && field.value instanceof File
+                      ? URL.createObjectURL(field.value)
+                      : typeof field.value === 'string' ? field.value : undefined
+                  }
+                  required
+                  error={errors.establishmentNotice?.message}
                 />
               )}
             />
-            {errors.establishmentNotice && (
-              <span className="text-error-500 text-xs mt-1">{errors.establishmentNotice.message}</span>
-            )}
           </div>
           <div>
             <Controller
@@ -53,13 +57,17 @@ const CompanyStep4 = ({
               render={({ field }) => (
                 <FileUpload
                   label="آگهی آخرین تغییرات"
-                  onChange={field.onChange}
+                  onChange={(file) => field.onChange(file)}
+                  fileUrl={
+                    typeof window !== 'undefined' && field.value instanceof File
+                      ? URL.createObjectURL(field.value)
+                      : typeof field.value === 'string' ? field.value : undefined
+                  }
+                  required
+                  error={errors.lastChangesNotice?.message}
                 />
               )}
             />
-            {errors.lastChangesNotice && (
-              <span className="text-error-500 text-xs mt-1">{errors.lastChangesNotice.message}</span>
-            )}
           </div>
         </div>
         {/* Row 2 */}
@@ -72,13 +80,17 @@ const CompanyStep4 = ({
               render={({ field }) => (
                 <FileUpload
                   label="آگهی سهامداران"
-                  onChange={field.onChange}
+                  onChange={(file) => field.onChange(file)}
+                  fileUrl={
+                    typeof window !== 'undefined' && field.value instanceof File
+                      ? URL.createObjectURL(field.value)
+                      : typeof field.value === 'string' ? field.value : undefined
+                  }
+                  required
+                  error={errors.shareholdersNotice?.message}
                 />
               )}
             />
-            {errors.shareholdersNotice && (
-              <span className="text-error-500 text-xs mt-1">{errors.shareholdersNotice.message}</span>
-            )}
           </div>
           <div>
             <Controller
@@ -88,13 +100,17 @@ const CompanyStep4 = ({
               render={({ field }) => (
                 <FileUpload
                   label="آگهی امضاداران"
-                  onChange={field.onChange}
+                  onChange={(file) => field.onChange(file)}
+                  fileUrl={
+                    typeof window !== 'undefined' && field.value instanceof File
+                      ? URL.createObjectURL(field.value)
+                      : typeof field.value === 'string' ? field.value : undefined
+                  }
+                  required
+                  error={errors.signatoriesNotice?.message}
                 />
               )}
             />
-            {errors.signatoriesNotice && (
-              <span className="text-error-500 text-xs mt-1">{errors.signatoriesNotice.message}</span>
-            )}
           </div>
         </div>
         {/* Row 3 */}
@@ -106,13 +122,17 @@ const CompanyStep4 = ({
             render={({ field }) => (
               <FileUpload
                 label="بارگذاری لوگو"
-                onChange={field.onChange}
+                onChange={(file) => field.onChange(file)}
+                fileUrl={
+                  typeof window !== 'undefined' && field.value instanceof File
+                    ? URL.createObjectURL(field.value)
+                    : typeof field.value === 'string' ? field.value : undefined
+                }
+                required
+                error={errors.logo?.message}
               />
             )}
           />
-          {errors.logo && (
-            <span className="text-error-500 text-xs mt-1">{errors.logo.message}</span>
-          )}
         </div>
       </form>
     </StepLayout>

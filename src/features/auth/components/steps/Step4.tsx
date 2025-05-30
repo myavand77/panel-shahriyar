@@ -151,7 +151,7 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
             name="ips"
             control={control}
             rules={{
-              required: true,
+              required: "IP فروشگاه الزامی است",
             }}
             render={({ field }) => (
               <IPInput
@@ -159,14 +159,10 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
                 value={field.value}
                 onChange={field.onChange}
                 required
+                error={errors.ips?.message}
               />
             )}
           />
-          {errors.ips && (
-            <span className="text-error-500 text-xs mt-1">
-              {errors.ips.message}
-            </span>
-          )}
         </div>
         {/* InfoBanner (left) */}
         <div className="flex flex-col">

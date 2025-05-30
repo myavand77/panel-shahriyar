@@ -46,8 +46,17 @@ export const validations = {
 
   url: {
     validate: (value: string) => {
+      // URL pattern that includes localhost with ports and paths
+      const urlPattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](\.[a-zA-Z]{2,})+|localhost)(:\d+)?(\/[^\s]*)?$/;
+      
+      if (!urlPattern.test(value)) {
+        return false;
+      }
+
+      // Add http:// if no protocol is specified
+      const urlWithProtocol = value.match(/^https?:\/\//) ? value : `http://${value}`;
       try {
-        new URL(value);
+        new URL(urlWithProtocol);
         return true;
       } catch {
         return false;
@@ -66,7 +75,7 @@ export const validations = {
 
   constantPhone: {
     validate: (value: string) => {
-      const phoneRegex = /^0[0-9]{2,}-[0-9]{7,}$/;
+      const phoneRegex = /^0[0-9]{2,}(-[0-9]{7,})?$/;
       return phoneRegex.test(value);
     },
     message: "لطفا یک شماره تلفن ثابت معتبر وارد کنید",

@@ -45,36 +45,81 @@ const DocumentsInfoEditModal = ({
           <Controller
             name="tasis"
             control={control}
-            render={({ field: { onChange } }) => (
-              <FileUpload label="آگهی تاسیس" onChange={onChange} />
+            rules={{ required: "لطفا آگهی تاسیس را بارگذاری کنید" }}
+            render={({ field: { onChange, value } }) => (
+              <FileUpload
+                label="آگهی تاسیس"
+                onChange={onChange}
+                fileUrl={value as string}
+                required={true}
+                width={48}
+                height={48}
+                className="w-full"
+              />
             )}
           />
           <Controller
             name="taghirat"
             control={control}
-            render={({ field: { onChange } }) => (
-              <FileUpload label="آگهی آخرین تغییرات" onChange={onChange} />
+            rules={{ required: "لطفا آگهی آخرین تغییرات را بارگذاری کنید" }}
+            render={({ field: { onChange, value } }) => (
+              <FileUpload
+                label="آگهی آخرین تغییرات"
+                onChange={onChange}
+                fileUrl={value as string}
+                required={true}
+                width={48}
+                height={48}
+                className="w-full"
+              />
             )}
           />
           <Controller
             name="sahamdar"
             control={control}
-            render={({ field: { onChange } }) => (
-              <FileUpload label="آگهی سهامداران" onChange={onChange} />
+            rules={{ required: "لطفا آگهی سهامداران را بارگذاری کنید" }}
+            render={({ field: { onChange, value } }) => (
+              <FileUpload
+                label="آگهی سهامداران"
+                onChange={onChange}
+                fileUrl={value as string}
+                required={true}
+                width={48}
+                height={48}
+                className="w-full"
+              />
             )}
           />
           <Controller
             name="emzadar"
             control={control}
-            render={({ field: { onChange } }) => (
-              <FileUpload label="آگهی امضاداران" onChange={onChange} />
+            rules={{ required: "لطفا آگهی امضاداران را بارگذاری کنید" }}
+            render={({ field: { onChange, value } }) => (
+              <FileUpload
+                label="آگهی امضاداران"
+                onChange={onChange}
+                fileUrl={value as string}
+                required={true}
+                width={48}
+                height={48}
+                className="w-full"
+              />
             )}
           />
           <Controller
             name="logo"
             control={control}
-            render={({ field: { onChange } }) => (
-              <FileUpload label="بارگذاری لوگو" onChange={onChange} />
+            rules={{ required: "بارگذاری لوگو الزامی است" }}
+            render={({ field: { onChange, value } }) => (
+              <FileUpload
+                label="بارگذاری لوگو"
+                onChange={onChange}
+                fileUrl={value as string}
+                required={true}
+                width={48}
+                height={48}
+                className="w-full"
+              />
             )}
           />
         </div>

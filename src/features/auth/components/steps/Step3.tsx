@@ -348,19 +348,21 @@ const Step3 = ({
             <Controller
               name="logo"
               control={control}
-              rules={{ required: true }}
+              rules={{ required: "لطفا لوگو را بارگذاری کنید" }}
               render={({ field }) => (
                 <FileUpload
                   label="بارگذاری لوگو"
                   onChange={(file) => field.onChange(file)}
+                  fileUrl={
+                    typeof window !== 'undefined' && field.value instanceof File
+                      ? URL.createObjectURL(field.value)
+                      : typeof field.value === 'string' ? field.value : undefined
+                  }
+                  required
+                  error={errors.logo?.message}
                 />
               )}
             />
-            {errors.logo && (
-              <span className="text-error-500 text-xs mt-1">
-                {errors.logo.message}
-              </span>
-            )}
           </div>
         </form>
       )}
