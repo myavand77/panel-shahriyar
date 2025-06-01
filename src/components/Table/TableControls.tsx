@@ -19,7 +19,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
   ];
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4 p-4 border-b border-muted-100">
+    <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-b border-muted-100">
       <div className="flex items-center gap-4">
         {tabs && tabs.length > 0 && (
           <TabFilter

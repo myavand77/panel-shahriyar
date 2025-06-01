@@ -1,6 +1,6 @@
 import { PenIcon } from "@/components/Icons";
-import { BasicInfoDialog } from "../BasicInfoDialog";
-import { BusinessInfoDialog } from "../BusinessInfoDialog";
+import { BasicInfoDialog } from "./BasicInfoDialog";
+import { BusinessInfoDialog } from "./BusinessInfoDialog";
 
 interface BasicInfo {
   name: string;

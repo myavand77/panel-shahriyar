@@ -1,5 +1,5 @@
 import PageLayout from "@/components/layout/pageLayout";
-import SellersView from "@/features/admin/sellers/SellersView";
+import SellersView from "@/features/admin/sellers/list";
 
 export default function SellersPage() {
   return (

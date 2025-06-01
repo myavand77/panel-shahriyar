@@ -23,24 +23,19 @@ export function OrdersSection({
   onSortOrderChange,
 }: OrdersSectionProps) {
   return (
-    <div className="flex-1 overflow-hidden">
-      <Table
-        columns={columns}
-        data={data}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-        onRowClick={onRowClick}
-        controls={{
-          searchQuery: "",
-          onSearchChange: () => {},
-          sortOrder,
-          onSortOrderChange,
-          onDownload: () => {
-            console.log("download");
-          },
-        }}
-      />
-    </div>
+    <Table
+      columns={columns}
+      data={data}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={onPageChange}
+      onRowClick={onRowClick}
+      controls={{
+        searchQuery: "",
+        onSearchChange: () => {},
+        sortOrder,
+        onSortOrderChange,
+      }}
+    />
   );
-} 
+}

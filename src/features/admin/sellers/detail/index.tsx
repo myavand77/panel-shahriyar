@@ -66,7 +66,9 @@ export default function SellerDetailsView() {
   const [isEditBasicInfoOpen, setIsEditBasicInfoOpen] = useState(false);
   const [isEditBusinessInfoOpen, setIsEditBusinessInfoOpen] = useState(false);
   const [editBasicInfo, setEditBasicInfo] = useState(mockSellerData.basicInfo);
-  const [editBusinessInfo, setEditBusinessInfo] = useState(mockSellerData.businessInfo);
+  const [editBusinessInfo, setEditBusinessInfo] = useState(
+    mockSellerData.businessInfo
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
 
@@ -98,10 +100,6 @@ export default function SellerDetailsView() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">جزئیات فروشنده</h1>
-      </div>
-
       <div className="flex gap-4">
         {tabs.map((tab) => (
           <button

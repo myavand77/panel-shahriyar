@@ -31,7 +31,17 @@ const mockData: TableData[] = [
   },
 ];
 
+const tabs = [
+  { id: "all", label: "همه" },
+  { id: "pending", label: "در انتظار بررسی" },
+  { id: "sent", label: "ارسال شده" },
+  { id: "delivered", label: "تحویل داده‌شده" },
+  { id: "returned", label: "مرجوع شده" },
+  { id: "canceled", label: "ابطال" },
+];
+
 export default function SellersView() {
+  const [activeTab, setActiveTab] = useState("all");
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
@@ -42,28 +52,22 @@ export default function SellersView() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">فروشندگان</h1>
-      </div>
-
-      <Table
-        columns={columns}
-        data={mockData}
-        onRowClick={handleRowClick}
-        currentPage={currentPage}
-        totalPages={8}
-        onPageChange={setCurrentPage}
-        controls={{
-          searchQuery,
-          onSearchChange: setSearchQuery,
-          sortOrder,
-          onSortOrderChange: setSortOrder,
-          onDownload: () => {
-            console.log("download");
-          },
-        }}
-      />
-    </div>
+    <Table
+      columns={columns}
+      data={mockData}
+      onRowClick={handleRowClick}
+      currentPage={currentPage}
+      totalPages={8}
+      onPageChange={setCurrentPage}
+      controls={{
+        tabs,
+        activeTab,
+        onTabChange: setActiveTab,
+        searchQuery,
+        onSearchChange: setSearchQuery,
+        sortOrder,
+        onSortOrderChange: setSortOrder,
+      }}
+    />
   );
 }

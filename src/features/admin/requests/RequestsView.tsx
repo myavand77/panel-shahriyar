@@ -263,7 +263,9 @@ const mockData: TableData[] = [
 ];
 
 export function RequestsView() {
-  const [selectedRequest, setSelectedRequest] = useState<TableData | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<TableData | null>(
+    null
+  );
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 1;
@@ -284,10 +286,7 @@ export function RequestsView() {
   };
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">درخواست‌ها</h1>
-      </div>
+    <div className="p-6 h-full">
       <Table
         columns={columns}
         data={mockData}

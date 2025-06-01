@@ -31,8 +31,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   const userRole = user?.role as UserRole;
-  console.log("userRole", user);
-
   React.useEffect(() => {
     if (!loading && !access_token) {
       router.replace("/auth/login");

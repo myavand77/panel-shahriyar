@@ -83,26 +83,24 @@ export function OrdersView() {
   };
 
   return (
-    <div className="h-[calc(100vh-7rem)] flex flex-col">
-      <div className="flex-1 overflow-hidden">
-        <Table
-          columns={columns}
-          data={mockData}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          onRowClick={handleRowClick}
-          controls={{
-            tabs,
-            activeTab,
-            onTabChange: setActiveTab,
-            searchQuery: "",
-            onSearchChange: () => {},
-            sortOrder,
-            onSortOrderChange: setSortOrder,
-          }}
-        />
-      </div>
+    <div className="h-full">
+      <Table
+        columns={columns}
+        data={mockData}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        onRowClick={handleRowClick}
+        controls={{
+          tabs,
+          activeTab,
+          onTabChange: setActiveTab,
+          searchQuery: "",
+          onSearchChange: () => {},
+          sortOrder,
+          onSortOrderChange: setSortOrder,
+        }}
+      />
       <OrderDetailsModal
         open={modalOpen}
         onClose={handleModalClose}

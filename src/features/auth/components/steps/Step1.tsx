@@ -5,7 +5,7 @@ import React from "react";
 import { handleApiError } from "@/lib/error";
 import { useStepsForm, StepsFormData } from "./StepsFormContext";
 import { Controller } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Step1 = ({
   onNext,
@@ -20,7 +20,7 @@ const Step1 = ({
     control,
   } = useStepsForm();
   const { requestOtpMutate, isPending, error } = useOtpRequest();
-  const router = useRouter();
+
   // Show toast on error
   React.useEffect(() => {
     if (!error) return;
@@ -95,12 +95,12 @@ const Step1 = ({
       {/* Bottom Links */}
       <div className="w-full flex flex-col gap-2 mt-2">
         <div className="flex flex-row-reverse justify-center items-center gap-3">
-          <span
+          <Link
+            href="/auth/register"
             className="text-text-500 text-[14px] cursor-pointer"
-            onClick={() => router.push("/auth/register")}
           >
             ثبت‌نام
-          </span>
+          </Link>
           <span className="text-text-400 text-[14px]">حساب کاربری ندارید؟</span>
         </div>
         {/* <div className="flex flex-row-reverse justify-end items-center gap-3">

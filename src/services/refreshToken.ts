@@ -5,5 +5,5 @@ export async function refreshTokenService(refreshToken: string) {
     `auth/refresh?refresh_token=${encodeURIComponent(refreshToken)}`,
     {}
   );
-  return response.data;
+  return response;
 }
