@@ -1,4 +1,10 @@
-export const validations = {
+interface ValidationRule {
+  validate: (value: string) => boolean;
+  message: string;
+  inputType?: string;
+}
+
+export const validations: Record<string, ValidationRule> = {
   text: {
     validate: (value: string) => value.length > 0,
     message: "این فیلد الزامی است",
@@ -18,6 +24,7 @@ export const validations = {
       return numberRegex.test(value);
     },
     message: "لطفا فقط عدد وارد کنید",
+    inputType: "number",
   },
 
   mobile: {
@@ -26,6 +33,7 @@ export const validations = {
       return mobileRegex.test(value);
     },
     message: "لطفا یک شماره موبایل معتبر وارد کنید",
+    inputType: "number",
   },
 
   postalCode: {
@@ -34,6 +42,7 @@ export const validations = {
       return postalRegex.test(value);
     },
     message: "لطفا یک کد پستی معتبر وارد کنید",
+    inputType: "number",
   },
 
   shaba: {
@@ -42,6 +51,7 @@ export const validations = {
       return shabaRegex.test(value);
     },
     message: "لطفا یک شماره شبا معتبر وارد کنید (24 رقم)",
+    inputType: "number",
   },
 
   url: {
@@ -79,6 +89,7 @@ export const validations = {
       return phoneRegex.test(value);
     },
     message: "لطفا یک شماره تلفن ثابت معتبر وارد کنید",
+    inputType: "number",
   },
 
   nationalCode: {
@@ -118,6 +129,7 @@ export const validations = {
       return (c < 2 && a === c) || (c >= 2 && 11 - c === a);
     },
     message: "لطفا یک کد ملی معتبر وارد کنید",
+    inputType: "number",
   },
 };
 
@@ -133,4 +145,8 @@ export function validateField(
     isValid,
     message: isValid ? "" : validation.message,
   };
+}
+
+export function getInputType(type: ValidationType): string {
+  return validations[type].inputType || "text";
 }

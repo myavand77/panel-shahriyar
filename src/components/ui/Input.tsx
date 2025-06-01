@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes, useState } from "react";
-import { ValidationType, validateField } from "@/lib/validations";
+import { ValidationType, validateField, getInputType } from "@/lib/validations";
 import { cn } from "@/lib/utils";
 import Label from "./Label";
 import { convertPersianToEnglishNumbers } from "@/lib/utils";
@@ -17,6 +17,7 @@ interface InputProps
   subtitle?: React.ReactNode;
   subtitleType?: "info" | "warning" | "success" | "error";
   size?: "sm" | "md" | "lg" | "xl";
+  type?: string;
 }
 
 function Input({
@@ -32,6 +33,7 @@ function Input({
   subtitle,
   subtitleType,
   size,
+  type,
   ...props
 }: InputProps) {
   const [internalError, setInternalError] = useState<string>("");
@@ -105,6 +107,7 @@ function Input({
         )}
         <input
           {...props}
+          type={type || getInputType(validationType)}
           className={cn(
             "border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white w-full placeholder:text-xs placeholder:text-right",
             getBorderColor(),
