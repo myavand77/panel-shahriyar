@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Can } from "@casl/react";
-import { defineAbilityFor } from "@/lib/ability";
+import { defineAbilityFor, type UserRole } from "@/lib/ability";
 import { cn } from "@/lib/utils";
 import { getNavigationItems } from "@/config/navigation";
 import { useEffect } from "react";
@@ -12,12 +12,13 @@ import { X } from "lucide-react";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  userRole: UserRole;
 }
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
-  const ability = defineAbilityFor("Provider");
+export default function Sidebar({ isOpen, onClose, userRole }: SidebarProps) {
+  const ability = defineAbilityFor(userRole);
   const pathname = usePathname();
-  const navItems = getNavigationItems("Provider");
+  const navItems = getNavigationItems(userRole);
 
   // Close sidebar when clicking outside on mobile
   useEffect(() => {

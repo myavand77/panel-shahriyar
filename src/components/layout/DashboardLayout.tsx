@@ -13,8 +13,7 @@ interface DashboardLayoutProps {
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { access_token, loading } = useAuth();
-  const userRole = "Provider";
+  const { access_token, loading, user } = useAuth();
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -37,11 +36,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     }
   };
 
+  // Get user role from user object, default to Provider if not available
+  const userRole = user?.role || "Provider";
+
   return (
     <div className="h-screen overflow-hidden bg-gray-100 flex flex-row">
       <TokenRefreshProvider />
       {/* Right Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} userRole={userRole} />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">

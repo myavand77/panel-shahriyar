@@ -24,6 +24,7 @@ export interface User {
   name: string;
   email: string;
   email_verified: boolean;
+  role: UserRole;
 }
 
 export interface AuthContextType {
