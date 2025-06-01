@@ -15,6 +15,9 @@ import { useRouter } from "next/navigation";
 import { handleApiError } from "@/lib/error";
 import { showToast } from "@/lib/toast";
 import { convertPersianToEnglishNumbers } from "@/lib/utils";
+import { getDefaultRoute } from "@/config/routes";
+import { useAuth } from "@/lib/auth";
+import { UserRole } from "@/lib/ability";
 
 interface Step7Props {
   onPrev: () => void;
@@ -29,7 +32,7 @@ const Step7: React.FC<Step7Props> = ({ onPrev, tab }) => {
   // Add hooks for OTP verify
   const { verifyOtpMutate } = useOtpVerify();
   const { createVendorMutate } = useCreateVendor();
-
+  const { user } = useAuth();
   React.useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => setTimer((t) => t - 1), 1000);
@@ -69,7 +72,7 @@ const Step7: React.FC<Step7Props> = ({ onPrev, tab }) => {
                 text: "ثبت نام با موفقیت انجام شد",
                 type: "success",
               });
-              router.push("/provider/home");
+              router.push(getDefaultRoute(user?.role as UserRole));
             },
             onError: (error) => {
               handleApiError(error, "خطا در ثبت‌نام. لطفا دوباره تلاش کنید.");
@@ -85,6 +88,7 @@ const Step7: React.FC<Step7Props> = ({ onPrev, tab }) => {
       }
     );
   };
+
   const handleResend = () => {
     if (timer === 0) {
       setTimer(120);

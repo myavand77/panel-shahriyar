@@ -17,13 +17,13 @@ export interface AuthTokens {
 }
 
 export interface User {
-  sub: string;
-  preferred_username: string;
-  given_name: string;
-  family_name: string;
-  name: string;
-  email: string;
-  email_verified: boolean;
+  sub?: string;
+  preferred_username?: string;
+  given_name?: string;
+  family_name?: string;
+  name?: string;
+  email?: string;
+  email_verified?: boolean;
   role: UserRole;
 }
 

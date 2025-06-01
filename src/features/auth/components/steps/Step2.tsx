@@ -13,6 +13,9 @@ import { useStepsForm } from "./StepsFormContext";
 import { Controller } from "react-hook-form";
 import { StepsFormData } from "./StepsFormContext";
 import { convertPersianToEnglishNumbers } from "@/lib/utils";
+import { getDefaultRoute } from "@/config/routes";
+import { useAuth } from "@/lib/auth";
+import { UserRole } from "@/lib/ability";
 
 const Step2 = ({
   onPrev,
@@ -26,7 +29,7 @@ const Step2 = ({
   const { handleSubmit, watch, control, setValue } = useStepsForm();
   const otp = watch("otp") || "";
   const { verifyOtpMutate, isPending, error } = useOtpVerify();
-
+  const { user } = useAuth();
   const handleChange = (value: string) =>
     setValue("otp", value, { shouldValidate: true });
 
@@ -39,7 +42,7 @@ const Step2 = ({
       {
         onSuccess: () => {
           showToast({ text: "ورود شما با موفقیت انجام شد.", type: "success" });
-          router.push("/provider/home");
+          router.push(getDefaultRoute(user?.role as UserRole));
         },
       }
     );

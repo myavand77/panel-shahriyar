@@ -5,6 +5,7 @@ import Step2 from "../components/steps/Step2";
 import { useAuth } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { StepsFormProvider } from "../components/steps/StepsFormContext";
+import { getDefaultRoute } from "@/config/routes";
 
 const Login = () => {
   const [state, setState] = useState<{
@@ -15,14 +16,14 @@ const Login = () => {
     phone_number: "",
   });
 
-  const { access_token } = useAuth();
+  const { access_token, user } = useAuth();
   const router = useRouter();
 
   React.useEffect(() => {
-    if (access_token) {
-      router.replace("/provider/home");
+    if (access_token && user?.role) {
+      router.push(getDefaultRoute(user.role));
     }
-  }, [access_token, router]);
+  }, [access_token, router, user]);
 
   const handleNext = () => setState((s) => ({ ...s, step: s.step + 1 }));
   const handlePrev = () => setState((s) => ({ ...s, step: s.step - 1 }));

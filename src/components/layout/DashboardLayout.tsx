@@ -17,12 +17,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  React.useEffect(() => {
-    if (!loading && !access_token) {
-      router.replace("/auth/login");
-    }
-  }, [loading, access_token, router]);
-
   const getTitleByRole = (role: UserRole): string => {
     switch (role) {
       case "Admin":
@@ -36,14 +30,23 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     }
   };
 
-  // Get user role from user object, default to Provider if not available
-  const userRole = user?.role || "Provider";
+  const userRole = user?.role as UserRole;
+  console.log("userRole", user);
 
+  React.useEffect(() => {
+    if (!loading && !access_token) {
+      router.replace("/auth/login");
+    }
+  }, [loading, access_token, router]);
   return (
     <div className="h-screen overflow-hidden bg-gray-100 flex flex-row">
       <TokenRefreshProvider />
       {/* Right Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} userRole={userRole} />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        userRole={userRole}
+      />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">

@@ -11,14 +11,23 @@ import Cookies from "js-cookie";
 import { logoutUser } from "./logout";
 import { STORAGE_KEYS } from "@/constants/storage";
 import { useProfile } from "@/hooks/useProfile";
-import { AuthContextType, AuthTokens } from "@/types";
+import { AuthContextType, AuthTokens, UserRole } from "@/types";
 
 const defaultAuthContext: AuthContextType = {
   access_token: null,
   setAuthFromOtp: () => {},
   logout: () => {},
   loading: true,
-  user: null,
+  user: {
+    sub: "",
+    preferred_username: "",
+    given_name: "",
+    family_name: "",
+    name: "",
+    email: "",
+    email_verified: false,
+    role: "Admin",
+  },
 };
 
 const AuthContext = createContext<AuthContextType>(defaultAuthContext);
@@ -81,7 +90,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setAuthFromOtp,
     logout,
     loading: loading || profileLoading,
-    user,
+    user: { ...user, role: "Admin" as UserRole },
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

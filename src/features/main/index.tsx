@@ -5,17 +5,18 @@ import { useAuth } from "@/lib/auth";
 import { handleApiError } from "@/lib/error";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { getDefaultRoute } from "@/config/routes";
 
 export default function MainView() {
   const router = useRouter();
-  const { access_token } = useAuth();
+  const { access_token, user } = useAuth();
   const { profile } = useProfile(access_token);
-
+  
   useEffect(() => {
-    if (profile) {
-      router.push("/provider/home");
+    if (profile && user?.role) {
+      router.push(getDefaultRoute(user.role));
     }
-  }, [profile, router]);
+  }, [profile, router, user]);
 
   useEffect(() => {
     if (!access_token) {
