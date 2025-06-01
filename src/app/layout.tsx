@@ -6,6 +6,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/lib/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MainView from "@/features/main";
 // Toast support is available globally via showToast from src/lib/toast
 
 export default function RootLayout({
@@ -15,6 +16,7 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isAuthRoute = pathname.startsWith("/auth");
+  const isHomePage = pathname === "/";
 
   const [queryClient] = React.useState(() => new QueryClient());
 
@@ -25,6 +27,8 @@ export default function RootLayout({
           <AuthProvider>
             {isAuthRoute ? (
               children
+            ) : isHomePage ? (
+              <MainView />
             ) : (
               <DashboardLayout>{children}</DashboardLayout>
             )}
