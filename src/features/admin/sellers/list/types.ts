@@ -73,7 +73,7 @@ export interface Vendor {
   logo: string;
   category: string;
   shop_status: "ENABLE" | "DISABLE" | string;
-  documents: any[];
+  documents: string[];
   technical_info: TechnicalInfo;
   agent: Agent;
   status: "pending" | string;
