@@ -1,9 +1,8 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Table } from "@/components/Table/Table";
-import { Column, TableData, SortOrder } from "@/components/Table/types";
+import { Column, TableData } from "@/components/Table/types";
 import { Switch } from "@/components/ui/Switch";
 // import { InfoIcon } from "@/components/Icons";
 import { useVendors } from "./hooks/useVendors";
@@ -24,7 +23,6 @@ export default function SellersView() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(9); // Number of items to show per page
-  const [sortOrder, setSortOrder] = useState<SortOrder>("default");
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data: vendors, isLoading } = useVendors();
@@ -174,8 +172,6 @@ export default function SellersView() {
       controls={{
         searchQuery,
         onSearchChange: setSearchQuery,
-        sortOrder,
-        onSortOrderChange: setSortOrder,
       }}
       loading={isLoading}
     />

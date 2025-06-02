@@ -16,10 +16,10 @@ export interface TableControlsProps {
   tabs?: { id: string; label: string; count?: number }[];
   activeTab?: string;
   onTabChange?: (tabId: string) => void;
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
-  sortOrder: SortOrder;
-  onSortOrderChange: (value: SortOrder) => void;
+  searchQuery?: string;
+  onSearchChange?: (value: string) => void;
+  sortOrder?: SortOrder;
+  onSortOrderChange?: (value: SortOrder) => void;
   onDownload?: () => void;
 }
 
