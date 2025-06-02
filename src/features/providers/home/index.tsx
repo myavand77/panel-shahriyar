@@ -1,15 +1,10 @@
 import { FC } from "react";
 import { FinancialSection } from "./components/FinancialSection";
-import { GatewayInfoProps } from "./types";
 import { GatewayInfo } from "./components/GatewayInfo";
 import BoStatusRow from "./components/BoStatusRow";
 import Label from "@/components/ui/Label";
 
-interface HomeViewProps {
-  gatewayInfo?: GatewayInfoProps;
-}
-
-const HomeView: FC<HomeViewProps> = ({ gatewayInfo }) => {
+const HomeView: FC = () => {
   return (
     <div className="flex flex-col items-center gap-6">
       <BoStatusRow
@@ -35,7 +30,7 @@ const HomeView: FC<HomeViewProps> = ({ gatewayInfo }) => {
       <Label className="text-lg font-bold">گزارشات</Label>
       <FinancialSection />
       <Label className="text-lg font-bold">اطلاعات درگاه اعتباری</Label>
-      <GatewayInfo {...gatewayInfo} />
+      <GatewayInfo />
     </div>
   );
 };
