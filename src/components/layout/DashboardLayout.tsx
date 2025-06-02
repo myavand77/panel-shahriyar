@@ -2,7 +2,7 @@
 import { ReactNode, useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { type UserRole } from "@/lib/ability";
+import { UserRole } from "@/types";
 import { useAuth } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -19,11 +19,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const getTitleByRole = (role: UserRole): string => {
     switch (role) {
-      case "Admin":
+      case "commercial":
         return "پنل ادمین";
-      case "Provider":
+      case "provider":
         return "پنل فروشگاه";
-      case "User":
+      case "user":
         return "پنل کاربری";
       default:
         return "پنل ادمین";
@@ -31,11 +31,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   const userRole = user?.role as UserRole;
+
   React.useEffect(() => {
     if (!loading && !access_token) {
       router.replace("/auth/login");
     }
   }, [loading, access_token, router]);
+
   return (
     <div className="h-screen overflow-hidden bg-gray-100 flex flex-row">
       <TokenRefreshProvider />

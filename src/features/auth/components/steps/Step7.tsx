@@ -17,7 +17,7 @@ import { showToast } from "@/lib/toast";
 import { convertPersianToEnglishNumbers } from "@/lib/utils";
 import { getDefaultRoute } from "@/config/routes";
 import { useAuth } from "@/lib/auth";
-import { UserRole } from "@/lib/ability";
+import { UserRole } from "@/types";
 
 interface Step7Props {
   onPrev: () => void;

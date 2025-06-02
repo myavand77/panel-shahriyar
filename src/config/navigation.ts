@@ -1,5 +1,5 @@
 import { FileText } from "lucide-react";
-import { type UserRole } from "@/lib/ability";
+import { UserRole } from "@/types";
 import {
   RequestsIcon,
   OrdersIcon,
@@ -82,11 +82,11 @@ export const getNavigationItems = (role: UserRole): NavItem[] => {
   ];
 
   switch (role) {
-    case "Admin":
+    case "commercial":
       return adminItems;
-    case "Provider":
+    case "provider":
       return providerItems;
-    case "User":
+    case "user":
       return userItems;
     default:
       return [];

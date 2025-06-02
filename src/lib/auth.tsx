@@ -26,7 +26,7 @@ const defaultAuthContext: AuthContextType = {
     name: "",
     email: "",
     email_verified: false,
-    role: "Admin",
+    roles: [],
   },
 };
 
@@ -90,7 +90,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setAuthFromOtp,
     logout,
     loading: loading || profileLoading,
-    user: { ...user, role: "Admin" as UserRole },
+    user: { ...user, role: user?.roles?.[0] as UserRole },
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

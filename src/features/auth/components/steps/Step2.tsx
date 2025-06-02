@@ -15,7 +15,7 @@ import { StepsFormData } from "./StepsFormContext";
 import { convertPersianToEnglishNumbers } from "@/lib/utils";
 import { getDefaultRoute } from "@/config/routes";
 import { useAuth } from "@/lib/auth";
-import { UserRole } from "@/lib/ability";
+import { UserRole } from "@/types";
 
 const Step2 = ({
   onPrev,

@@ -34,7 +34,7 @@ export const GatewayInfo: FC = () => {
               href="https://credit.vibe.ir/merchants/api/v1/docs"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-900 hover:text-primary-500 transition-colors"
+              className="text-primary-500 transition-colors underline text-sm"
             >
               Vibe Swagger
             </a>
@@ -43,7 +43,7 @@ export const GatewayInfo: FC = () => {
           <div className="p-4 border-b md:border-b-0 border-muted-100">
             <div className="md:hidden text-sm text-muted-50 mb-2">API Key</div>
             <div className="text-text-900 break-all whitespace-pre-wrap">
-              {vendorInfo?.technical_info.api_key}
+              {vendorInfo?.technical_info.api_key || "-"}
             </div>
           </div>
           {/* Technical Documentation */}

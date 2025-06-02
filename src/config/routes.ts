@@ -1,4 +1,4 @@
-import { UserRole } from "@/lib/ability";
+import { UserRole } from "@/types";
 
 interface RoleRoute {
   defaultRoute: string;
@@ -8,7 +8,7 @@ interface RoleRoute {
 }
 
 const roleRoutes: Record<UserRole, RoleRoute> = {
-  Admin: {
+  commercial: {
     defaultRoute: "/admin/requests",
     routes: {
       requests: "/admin/requests",
@@ -16,7 +16,7 @@ const roleRoutes: Record<UserRole, RoleRoute> = {
       sellers: "/admin/sellers",
     },
   },
-  Provider: {
+  provider: {
     defaultRoute: "/provider/home",
     routes: {
       home: "/provider/home",
@@ -24,7 +24,7 @@ const roleRoutes: Record<UserRole, RoleRoute> = {
       settings: "/provider/settings",
     },
   },
-  User: {
+  user: {
     defaultRoute: "/user/credit",
     routes: {
       credit: "/user/credit",
@@ -42,4 +42,4 @@ export const getRouteByKey = (role: UserRole, key: string): string => {
   return roleRoutes[role]?.routes[key] || getDefaultRoute(role);
 };
 
-export default roleRoutes; 
+export default roleRoutes;

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Table } from "@/components/Table/Table";
 import { Column, TableData, SortOrder } from "@/components/Table/types";
 import { Switch } from "@/components/ui/Switch";
-import { InfoIcon } from "@/components/Icons";
+// import { InfoIcon } from "@/components/Icons";
 import { useVendors } from "./hooks/useVendors";
 import { useUpdateVendorShopStatus } from "./hooks/useUpdateVendorShopStatus";
 import { useUpdateVendorInstallmentStatus } from "./hooks/useUpdateVendorInstallmentStatus";
@@ -17,7 +17,7 @@ const columns: Column[] = [
   { key: "url", title: "آدرس سایت", width: "200px" },
   { key: "disputeStatus", title: "وضعیت متاسرچ", width: "120px" },
   { key: "gatewayStatus", title: "وضعیت درگاه", width: "120px" },
-  { key: "details", title: "جزئیات", width: "80px" },
+  // { key: "details", title: "جزئیات", width: "80px" },
 ];
 
 export default function SellersView() {
@@ -130,7 +130,7 @@ export default function SellersView() {
           disabled={pendingInstallment.has(vendor.id)}
         />
       ),
-      details: <InfoIcon width={20} height={20} />,
+      // details: <InfoIcon width={20} height={20} />,
     })
   );
 

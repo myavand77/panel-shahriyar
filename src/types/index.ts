@@ -1,5 +1,5 @@
 // Types
-export type UserRole = "Admin" | "Provider" | "User";
+export type UserRole = "user" | "commercial" | "provider";
 
 export interface UserData {
   id: string;
@@ -24,7 +24,8 @@ export interface User {
   name?: string;
   email?: string;
   email_verified?: boolean;
-  role: UserRole;
+  roles?: string[];
+  role?: UserRole;
 }
 
 export interface AuthContextType {

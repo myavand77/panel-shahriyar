@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Can } from "@casl/react";
-import { defineAbilityFor, type UserRole } from "@/lib/ability";
+import { UserRole } from "@/types";
 import { cn } from "@/lib/utils";
 import { getNavigationItems } from "@/config/navigation";
 import { useEffect } from "react";
@@ -16,7 +15,6 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose, userRole }: SidebarProps) {
-  const ability = defineAbilityFor(userRole);
   const pathname = usePathname();
   const navItems = getNavigationItems(userRole);
 
@@ -78,32 +76,26 @@ export default function Sidebar({ isOpen, onClose, userRole }: SidebarProps) {
           {/* Navigation */}
           <nav className="space-y-1">
             {navItems.map((item) => (
-              <Can
+              <Link
                 key={item.href}
-                I="read"
-                this={item.subject}
-                ability={ability}
+                href={item.href}
+                onClick={() => {
+                  if (window.innerWidth < 1024) {
+                    onClose();
+                  }
+                }}
+                className={cn(
+                  "flex items-center justify-start gap-3 rounded-lg px-3 py-2.5 text-gray-600 transition-all duration-200",
+                  "hover:bg-gray-50 hover:text-gray-900",
+                  "active:bg-gray-100 active:text-gray-900",
+                  pathname.startsWith(item.href)
+                    ? "bg-primary-50 text-primary-600 hover:bg-primary-50 hover:text-primary-600"
+                    : ""
+                )}
               >
-                <Link
-                  href={item.href}
-                  onClick={() => {
-                    if (window.innerWidth < 1024) {
-                      onClose();
-                    }
-                  }}
-                  className={cn(
-                    "flex items-center justify-start gap-3 rounded-lg px-3 py-2.5 text-gray-600 transition-all duration-200",
-                    "hover:bg-gray-50 hover:text-gray-900",
-                    "active:bg-gray-100 active:text-gray-900",
-                    pathname.startsWith(item.href)
-                      ? "bg-primary-50 text-primary-600 hover:bg-primary-50 hover:text-primary-600"
-                      : ""
-                  )}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span className="font-medium">{item.title}</span>
-                </Link>
-              </Can>
+                <item.icon className="h-5 w-5" />
+                <span className="font-medium">{item.title}</span>
+              </Link>
             ))}
           </nav>
         </div>
