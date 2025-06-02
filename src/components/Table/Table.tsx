@@ -62,7 +62,11 @@ export const Table: React.FC<TableProps> = ({
                     >
                       <div
                         className="truncate text-right"
-                        title={String(row[column.key])}
+                        title={
+                          typeof row[column.key] === "string"
+                            ? row[column.key]
+                            : undefined
+                        }
                       >
                         {row[column.key]}
                       </div>
