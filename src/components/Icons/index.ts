@@ -23,3 +23,5 @@ export const DangerIcon = createIconComponent("danger");
 export const ShopIcon = createIconComponent("shop");
 export const EditIcon = createIconComponent("edit");
 export const DocumentIcon = createIconComponent("document-download");
+export const QuestionIcon = createIconComponent("message-question");
+export const NoteIcon = createIconComponent("note-remove");

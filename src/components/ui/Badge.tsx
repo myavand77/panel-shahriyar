@@ -21,7 +21,7 @@ const Badge: FC<BadgeProps> = ({ children, className = "", type }) => {
   const typeClasses = type ? typeClassMap[type] || "" : "";
   return (
     <span
-      className={`rounded-full px-2 py-0.5 text-xs font-bold ${typeClasses} ${className}`}
+      className={`rounded-full px-3 text-xs font-bold ${typeClasses} ${className}`}
     >
       {children}
     </span>
