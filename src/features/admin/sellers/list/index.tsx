@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { Table } from "@/components/Table/Table";
 import { Column, TableData } from "@/components/Table/types";
 import { Switch } from "@/components/ui/Switch";
@@ -20,7 +20,7 @@ const columns: Column[] = [
 ];
 
 export default function SellersView() {
-  const router = useRouter();
+  // const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20); // Number of items to show per page
   const [searchQuery, setSearchQuery] = useState("");
@@ -133,7 +133,7 @@ export default function SellersView() {
   );
 
   const handleRowClick = (row: TableData) => {
-    router.push(`/admin/sellers/${row.id}`);
+    // router.push(`/admin/sellers/${row.id}`);
   };
 
   // Sync local state with vendor list, but only for non-pending vendors

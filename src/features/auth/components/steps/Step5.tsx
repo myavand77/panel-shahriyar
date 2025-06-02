@@ -120,13 +120,11 @@ const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany }) => {
         <Controller
           name="repEmail"
           control={control}
-          rules={{ required: true }}
           render={({ field }) => (
             <Input
               label="ایمیل"
               {...field}
               placeholder="ایمیل را وارد کنید"
-              required
               subtitle={errors.repEmail?.message}
               subtitleType={errors.repEmail ? "error" : "info"}
               validationType="email"
@@ -152,13 +150,11 @@ const Step5: React.FC<Step5Props> = ({ onNext, onPrev, isCompany }) => {
         <Controller
           name="repTelegram"
           control={control}
-          rules={{ required: true }}
           render={({ field }) => (
             <Input
               label="آیدی تلگرام"
               {...field}
               placeholder="آیدی تلگرام را وارد کنید"
-              required
               subtitle={errors.repTelegram?.message}
               subtitleType={errors.repTelegram ? "error" : "info"}
               validationType="telegramId"

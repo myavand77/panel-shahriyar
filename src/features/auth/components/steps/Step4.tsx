@@ -119,12 +119,10 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="callback"
             control={control}
-            rules={{ required: true }}
             render={({ field }) => (
               <Input
                 label="آدرس Callback"
                 {...field}
-                required
                 placeholder="آدرس Callback را وارد کنید"
                 validationType="url"
                 startLogo={<Link className="w-4 h-4" />}
@@ -146,15 +144,11 @@ const Step4: React.FC<Step4Props> = ({ onNext, onPrev, isCompany }) => {
           <Controller
             name="ips"
             control={control}
-            rules={{
-              required: "IP فروشگاه الزامی است",
-            }}
             render={({ field }) => (
               <IPInput
                 label="IP فروشگاه"
                 value={field.value}
                 onChange={field.onChange}
-                required
                 error={errors.ips?.message}
               />
             )}

@@ -2,12 +2,13 @@
 import { DocumentIcon } from "@/components/Icons";
 import { FC } from "react";
 import { useVendorInfo } from "../hooks/useVendorInfo";
+import Loading from "@/components/ui/Loading";
 
 export const GatewayInfo: FC = () => {
   const { data: vendorInfo, isLoading } = useVendorInfo();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

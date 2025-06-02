@@ -55,7 +55,7 @@ const Header: FC<HeaderProps> = ({ title = "پنل ادمین", onMenuClick }) =
         >
           <MenuIcon className="w-6 h-6 text-gray-600" />
         </button>
-        <h1 className="text-[18px] font-bold text-text-500">{title}</h1>
+        <h1 className="text-lg text-text-500">{title}</h1>
       </div>
 
       {/* Right Section */}

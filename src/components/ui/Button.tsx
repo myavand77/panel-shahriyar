@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "./Loading";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
@@ -48,11 +49,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={props.disabled || loading}
       {...props}
     >
-      {loading ? (
-        <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-      ) : (
-        children
-      )}
+      {loading ? <Loading /> : children}
     </button>
   );
 };
