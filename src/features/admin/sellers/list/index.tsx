@@ -133,6 +133,7 @@ export default function SellersView() {
   );
 
   const handleRowClick = (row: TableData) => {
+    console.log("row", row);
     // router.push(`/admin/sellers/${row.id}`);
   };
 
