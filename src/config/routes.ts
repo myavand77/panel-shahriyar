@@ -9,7 +9,7 @@ interface RoleRoute {
 
 const roleRoutes: Record<UserRole, RoleRoute> = {
   commercial: {
-    defaultRoute: "/admin/requests",
+    defaultRoute: "/admin/sellers",
     routes: {
       requests: "/admin/requests",
       orders: "/admin/orders",

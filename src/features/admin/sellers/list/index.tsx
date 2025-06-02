@@ -22,7 +22,7 @@ const columns: Column[] = [
 export default function SellersView() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(9); // Number of items to show per page
+  const [itemsPerPage] = useState(20); // Number of items to show per page
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data: vendors, isLoading } = useVendors();
