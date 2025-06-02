@@ -1,23 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Table } from "@/components/Table/Table";
 import { Column, TableData, SortOrder } from "@/components/Table/types";
-import Badge from "@/components/ui/Badge";
 import { Switch } from "@/components/ui/Switch";
 import { InfoIcon } from "@/components/Icons";
+import { useVendors } from "./hooks/useVendors";
+import { useUpdateVendorShopStatus } from "./hooks/useUpdateVendorShopStatus";
+import { useUpdateVendorInstallmentStatus } from "./hooks/useUpdateVendorInstallmentStatus";
+import { Vendor } from "./types";
 
 const columns: Column[] = [
   { key: "row", title: "ردیف", width: "60px" },
   { key: "brand", title: "برند", width: "100px" },
-  { key: "representative", title: "نماینده", width: "140px" },
-  { key: "salesAmount", title: "میزان فروش (ریال)", width: "140px" },
-  { key: "settled", title: "تسویه شده (ریال)", width: "140px" },
-  { key: "remaining", title: "مانده طلب (ریال)", width: "140px" },
+  { key: "url", title: "آدرس سایت", width: "200px" },
   { key: "disputeStatus", title: "وضعیت متاسرچ", width: "120px" },
   { key: "gatewayStatus", title: "وضعیت درگاه", width: "120px" },
-  { key: "gatewayType", title: "نوع درگاه", width: "120px" },
   { key: "details", title: "جزئیات", width: "80px" },
 ];
 
@@ -27,85 +26,111 @@ export default function SellersView() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
   const [searchQuery, setSearchQuery] = useState("");
-  const [metaStatus, setMetaStatus] = useState<{ [id: number]: boolean }>({
-    1: true,
-  });
-  const [gatewayStatus, setGatewayStatus] = useState<{ [id: number]: boolean }>(
-    { 1: false }
-  );
 
-  const handleMetaSwitch = (id: number, value: boolean) => {
-    setMetaStatus((prev) => ({ ...prev, [id]: value }));
-  };
-  const handleGatewaySwitch = (id: number, value: boolean) => {
-    setGatewayStatus((prev) => ({ ...prev, [id]: value }));
+  const { data: vendors, isLoading } = useVendors();
+  const { mutate: updateShopStatus } = useUpdateVendorShopStatus();
+  const { mutate: updateInstallmentStatus } =
+    useUpdateVendorInstallmentStatus();
+
+  // Local state for optimistic UI
+  const [shopStatusMap, setShopStatusMap] = useState<{ [id: string]: string }>({});
+  const [installmentStatusMap, setInstallmentStatusMap] = useState<{ [id: string]: string }>({});
+  const [pendingShop, setPendingShop] = useState<Set<string>>(new Set());
+  const [pendingInstallment, setPendingInstallment] = useState<Set<string>>(new Set());
+
+  // Sync local state with vendor list, but only for non-pending vendors
+  useEffect(() => {
+    if (vendors) {
+      setShopStatusMap((prev) => {
+        const next = { ...prev };
+        vendors.forEach((vendor: Vendor) => {
+          if (!pendingShop.has(vendor.id)) {
+            next[vendor.id] = vendor.shop_status;
+          }
+        });
+        return next;
+      });
+      setInstallmentStatusMap((prev) => {
+        const next = { ...prev };
+        vendors.forEach((vendor: Vendor) => {
+          if (!pendingInstallment.has(vendor.id)) {
+            next[vendor.id] = vendor.installment.status;
+          }
+        });
+        return next;
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vendors]);
+
+  const handleShopStatusChange = (vendorId: string, currentStatus: string) => {
+    const newStatus = currentStatus === "ENABLE" ? "DISABLE" : "ENABLE";
+    setShopStatusMap((prev) => ({ ...prev, [vendorId]: newStatus })); // Optimistic update
+    setPendingShop((prev) => new Set(prev).add(vendorId));
+    updateShopStatus(
+      { vendorId, shopStatus: newStatus },
+      {
+        onSettled: () => {
+          setPendingShop((prev) => {
+            const next = new Set(prev);
+            next.delete(vendorId);
+            return next;
+          });
+        },
+      }
+    );
   };
 
-  // Update mockData to include Switches
-  const data: TableData[] = [
-    {
-      id: 1,
-      row: 1,
-      brand: "سامسونگ",
-      representative: "احمد محمدنیا",
-      salesAmount: "۱,۲۰۰,۰۰۰,۰۰۰",
-      settled: "۱,۲۰۰,۰۰۰,۰۰۰",
-      remaining: "۱,۲۰۰,۰۰۰,۰۰۰",
+  const handleInstallmentStatusChange = (vendorId: string, currentStatus: string) => {
+    const newStatus = currentStatus === "ACTIVE_INSTALLMENT" ? "ACTIVE_CASH" : "ACTIVE_INSTALLMENT";
+    setInstallmentStatusMap((prev) => ({ ...prev, [vendorId]: newStatus })); // Optimistic update
+    setPendingInstallment((prev) => new Set(prev).add(vendorId));
+    updateInstallmentStatus(
+      { vendorId, installmentStatus: newStatus },
+      {
+        onSettled: () => {
+          setPendingInstallment((prev) => {
+            const next = new Set(prev);
+            next.delete(vendorId);
+            return next;
+          });
+        },
+      }
+    );
+  };
+
+  const data: TableData[] =
+    vendors?.map((vendor: Vendor, index: number) => ({
+      id: vendor.id,
+      row: index + 1,
+      brand: vendor.brand,
+      url: vendor.technical_info.url,
       disputeStatus: (
         <Switch
-          checked={metaStatus[1] ?? false}
-          onCheckedChange={(checked) => handleMetaSwitch(1, checked)}
+          checked={shopStatusMap[vendor.id] === "ENABLE"}
+          onCheckedChange={() =>
+            handleShopStatusChange(vendor.id, shopStatusMap[vendor.id])
+          }
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
-            e.preventDefault();
           }}
+          disabled={pendingShop.has(vendor.id)}
         />
       ),
       gatewayStatus: (
         <Switch
-          checked={gatewayStatus[1] ?? false}
-          onCheckedChange={(checked) => handleGatewaySwitch(1, checked)}
+          checked={installmentStatusMap[vendor.id] === "ACTIVE_INSTALLMENT"}
+          onCheckedChange={() =>
+            handleInstallmentStatusChange(vendor.id, installmentStatusMap[vendor.id])
+          }
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
-            e.preventDefault();
           }}
+          disabled={pendingInstallment.has(vendor.id)}
         />
       ),
-      gatewayType: <Badge type="info">زودهنگام</Badge>,
       details: <InfoIcon width={20} height={20} />,
-    },
-    {
-      id: 2,
-      row: 2,
-      brand: "سامسونگ",
-      representative: "احمد محمدنیا",
-      salesAmount: "۱,۲۰۰,۰۰۰,۰۰۰",
-      settled: "۱,۲۰۰,۰۰۰,۰۰۰",
-      remaining: "۱,۲۰۰,۰۰۰,۰۰۰",
-      disputeStatus: (
-        <Switch
-          checked={metaStatus[2] ?? false}
-          onCheckedChange={(checked) => handleMetaSwitch(2, checked)}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}
-        />
-      ),
-      gatewayStatus: (
-        <Switch
-          checked={gatewayStatus[2] ?? false}
-          onCheckedChange={(checked) => handleGatewaySwitch(2, checked)}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}
-        />
-      ),
-      gatewayType: <Badge type="warning">به‌هنگام</Badge>,
-      details: <InfoIcon width={20} height={20} />,
-    },
-  ];
+    })) || [];
 
   const tabs = [
     { id: "all", label: "همه" },
@@ -121,28 +146,23 @@ export default function SellersView() {
   };
 
   return (
-    <>
-      <Table
-        columns={columns}
-        data={data}
-        onRowClick={handleRowClick}
-        currentPage={currentPage}
-        totalPages={8}
-        onPageChange={setCurrentPage}
-        controls={{
-          tabs,
-          activeTab,
-          onTabChange: setActiveTab,
-          searchQuery,
-          onSearchChange: setSearchQuery,
-          sortOrder,
-          onSortOrderChange: setSortOrder,
-        }}
-      />
-      <Switch
-        checked={metaStatus[1] ?? false}
-        onCheckedChange={(checked) => handleMetaSwitch(1, checked)}
-      />
-    </>
+    <Table
+      columns={columns}
+      data={data}
+      onRowClick={handleRowClick}
+      currentPage={currentPage}
+      totalPages={8}
+      onPageChange={setCurrentPage}
+      controls={{
+        tabs,
+        activeTab,
+        onTabChange: setActiveTab,
+        searchQuery,
+        onSearchChange: setSearchQuery,
+        sortOrder,
+        onSortOrderChange: setSortOrder,
+      }}
+      loading={isLoading}
+    />
   );
 }
